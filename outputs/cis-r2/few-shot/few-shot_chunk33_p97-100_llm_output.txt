@@ -1,0 +1,274 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 96 
+Internal Only - General  4.3 CNI Plugin
+Page 97 
+Internal Only - General  4.3.1 Ensure CNI plugin supports network policies. (Manual)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+There are a variety of CNI plugins available for Kubernetes. If the CNI in use does not 
+support Network Policies it may not be possible to effectively restrict traffic in the 
+cluster.  
+Rationale:  
+Kubernetes network policies are enforced by the CNI plugin in use. As such it is 
+important to ensure that the CNI plugin supports both Ingress and Egress network 
+policies.  
+Impact:  
+None.  
+Audit:  
+Review the documentation of CNI plugin in use by the cluster, and confirm that it 
+supports network policies.  
+Remediation:  
+As with RBAC policies, network policies should adhere to the policy of least privileged 
+access. Start by creating a deny all policy that restricts all inbound and outbound traffic 
+from a namespace or create a global policy using Calico.  
+Default Value:  
+This will depend on the CNI plugin in use.  
+References:  
+1. https://kubernetes.io/docs/concepts/extend -kubernetes/compute -storage -
+net/network -plugins/  
+2. https://aws.github.io/aws -eks-best-practices/network/  
+Additional Information:  
+One example here is Flannel ( https://github.com/coreos/flannel ) which does not support 
+Network policy unless Calico is also in use.
+Page 98 
+Internal Only - General  CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 7.4 Perform Automated Application Patch Management  
+ Perform application updates on enterprise assets through automated patch 
+management on a monthly, or more frequent, basis. ● ● ● 
+v7 18.4 Only Use Up -to-date And Trusted Third -Party 
+Components  
+ Only use up -to-date and trusted third -party components for the software 
+developed by the organization.   ● ●
+Page 99 
+Internal Only - General  4.3.2 Ensure that all Namespaces have Network Policies defined 
+(Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Use network policies to isolate traffic in your cluster network.  
+Rationale:  
+Running different applications on the same Kubernetes cluster creates a risk of one 
+compromised application attacking a neighboring application. Network segmentation is 
+important to ensure that containers can communicate only with those they are supposed 
+to. A network policy is a specification of how selections of pods are allowed to 
+communicate with each other and other network endpoints.  
+Once there is any Network Policy in a namespace selecting a particular pod, that pod 
+will reject any connections that are not allowed by any Network Policy. Other pods in the 
+namespace that are not selected by any Network Policy will continue to accept all  
+traffic"  
+Impact:  
+Once there is any Network Policy in a namespace selecting a particular pod, that pod 
+will reject any connections that are not allowed by any Network Policy. Other pods in the 
+namespace that are not selected by any Network Policy will continue to accept all  
+traffic"  
+Audit:  
+Run the below command and review the NetworkPolicy  objects created in the cluster.  
+kubectl get networkpolicy --all-namespaces  
+Ensure that each namespace defined in the cluster has at least one Network Policy.  
+Remediation:  
+Follow the documentation and create NetworkPolicy  objects as you need them.  
+Default Value:  
+By default, network policies are not created.  
+References:  
+1. https://kubernetes.io/docs/concepts/services -networking/networkpolicies/  
+2. https://octetz.com/posts/k8s -network -policy -apis
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+  - "NetworkPolicy"
+

@@ -1,0 +1,137 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 123 
+Internal Only - General  5.2.1 Prefer using dedicated EKS Service Accounts (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Kubernetes workloads should not use cluster node service accounts to authenticate to 
+Amazon EKS APIs. Each Kubernetes workload that needs to authenticate to other AWS 
+services using AWS IAM should be provisioned with a dedicated Service account.  
+Rationale:  
+Manual approaches for authenticating Kubernetes workloads running on Amazon EKS 
+against AWS APIs are: storing service account keys as a Kubernetes secret (which 
+introduces manual key rotation and potential for key compromise); or use of the 
+underlying node s' IAM Service account, which violates the principle of least privilege on 
+a multi -tenanted node, when one pod needs to have access to a service, but every 
+other pod on the node that uses the Service account does not.  
+Audit:  
+For each namespace in the cluster, review the rights assigned to the default service 
+account and ensure that it has no roles or cluster roles bound to it apart from the 
+defaults.  
+Additionally ensure that the automountServiceAccountToken: false setting is i n place for 
+each default service account.  
+Remediation:  
+With IAM roles for service accounts on Amazon EKS clusters, you can associate an 
+IAM role with a Kubernetes service account. This service account can then provide 
+AWS permissions to the containers in any pod that uses that service account. With this 
+featur e, you no longer need to provide extended permissions to the worker node IAM 
+role so that pods on that node can call AWS APIs.  
+Applications must sign their AWS API requests with AWS credentials. This feature 
+provides a strategy for managing credentials for  your applications, similar to the way 
+that Amazon EC2 instance profiles provide credentials to Amazon EC2 instances. 
+Instead of creating and distributing your AWS credentials to the containers or using the 
+Amazon EC2 instance’s role, you can associate an IAM role with a Kubernetes service 
+account. The applications in the pod’s containers can then use an AWS SDK or the 
+AWS CLI to make API requests to authorized AWS services.  
+The IAM roles for service accounts feature provides the following benefits:  
+• Least privilege — By using the IAM roles for service accounts feature, you no 
+longer need to provide extended permissions to the worker node IAM role so that 
+pods on that node can call AWS APIs. You can scope IAM permissions to a 
+service account, and only pods that use that service account have access to
+Page 124 
+Internal Only - General  those permissions. This feature also eliminates the need for third -party solutions 
+such as kiam or kube2iam.  
+• Credential isolation — A container can only retrieve credentials for the IAM role 
+that is associated with the service account to which it belongs. A container never 
+has access to credentials that are intended for another container that belongs to 
+another p od. 
+• Audit -ability — Access and event logging is available through CloudTrail to help 
+ensure retrospective auditing.  
+To get started, see list text hereEnabling IAM roles for service accounts on your cluster.  
+For an end -to-end walkthrough using eksctl, see Walkthrough: Updating a DaemonSet 
+to use IAM for service accounts.  
+References:  
+1. https://docs.aws.amazon.com/eks/latest/userguide/iam -roles -for-service -
+accounts.html  
+2. https://docs.aws.amazon.com/eks/latest/userguide/iam -roles -for-service -
+accounts -cni-walkthrough.html  
+3. https://aws.github.io/aws -eks-best-practices/security/docs/iam/#scope -the-iam-
+role-trust-policy -for-irsa-to-the-service -account -name  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 12.8 Establish and Maintain Dedicated Computing 
+Resources for All Administrative Work  
+ Establish and maintain dedicated computing resources, either physically or 
+logically separated, for all administrative tasks or tasks requiring administrative 
+access. The computing resources should be segmented from the enterprise's 
+primary network and not  be allowed internet access.    ● 
+v7 4.3 Ensure the Use of Dedicated Administrative Accounts  
+ Ensure that all users with administrative account access use a dedicated or 
+secondary account for elevated activities. This account should only be used for 
+administrative activities and not internet browsing, email, or similar activities.  ● ● ●
+Page 125 
+Internal Only - General  5.3 AWS EKS Key Management Service  
+This section contains recommendations relating to using AWS EKS Key Management.
+Page 126 
+Internal Only - General  5.3.1 Ensure Kubernetes Secrets are encrypted using Customer 
+Master Keys (CMKs) managed in AWS KMS (Manual)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Encrypt Kubernetes secrets, stored in etcd, using secrets encryption feature during 
+Amazon EKS cluster creation.  
+Rationale:  
+Kubernetes can store secrets that pods can access via a mounted volume. Today, 
+Kubernetes secrets are stored with Base64 encoding, but encrypting is the 
+recommended approach. Amazon EKS clusters version 1.13 and higher support the 
+capability of encrypting your Kubernetes secrets using AWS Key Management Service 
+(KMS) Customer Managed Keys (CMK). The only requirement is to enable the 
+encryption provider support during EKS cluster creation.  
+Use AWS Key Management Service (KMS) keys to provide envelope encryption of 
+Kubernetes secrets stored in Amazon EKS. Implementing envelope encryption is 
+considered a security best practice for applications that store sensitive data and is part 
+of a defense  in depth security strategy.  
+Application -layer Secrets Encryption provides an additional layer of security for sensitive 
+data, such as user defined Secrets and Secrets required for the operation of the cluster, 
+such as service account keys, which are all stored in etcd.  
+Using this functionality, you can use a key, that you manage in AWS KMS, to encrypt 
+data at the application layer. This protects against attackers in the event that they 
+manage to gain access to etcd.  
+Audit:  
+For Amazon EKS clusters with Secrets Encryption enabled, run the AWS CLI 
+command:  
+aws eks describe -cluster --name=<cluster -name> 
+From the output of the command, search if the following configuration exist with valid 
+AWS keyArn  :
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+```

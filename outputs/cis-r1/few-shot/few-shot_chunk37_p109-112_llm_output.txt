@@ -1,0 +1,66 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 108 4.4.2 Consider external secret storage (Manual) Profile Applicability: •  Level 2 Description: Consider the use of an external secrets storage and management system, instead of using Kubernetes Secrets directly, if you have more complex secret management needs. Ensure the solution requires authentication to access secrets, has auditing of access to and use of secrets, and encrypts secrets. Some solutions also make it easier to rotate secrets. Rationale: Kubernetes supports secrets as first-class objects, but care needs to be taken to ensure that access to secrets is carefully limited. Using an external secrets provider can ease the management of access to secrets, especially where secrests are used across both Kubernetes and non-Kubernetes environments. Impact: None Audit: Review your secrets management implementation. Remediation: Refer to the secrets management options offered by your cloud provider or a third-party secrets management solution. Default Value: By default, no external secret management is configured. CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 3.11 Encrypt Sensitive Data at Rest  Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.   ● ●
+Page 109 Controls Version Control IG 1 IG 2 IG 3 v7 14.8 Encrypt Sensitive Information at Rest  Encrypt all sensitive information at rest using a tool that requires a secondary authentication mechanism not integrated into the operating system, in order to access the information.   ●  4.5 Extensible Admission Control
+Page 110 4.6 General Policies These policies relate to general cluster management topics, like namespace best practices and policies applied to pod objects in the cluster.
+Page 111 4.6.1 Create administrative boundaries between resources using namespaces (Manual) Profile Applicability: •  Level 1 Description: Use namespaces to isolate your Kubernetes objects. Rationale: Limiting the scope of user permissions can reduce the impact of mistakes or malicious activities. A Kubernetes namespace allows you to partition created resources into logically named groups. Resources created in one namespace can be hidden from other namespaces. By default, each resource created by a user in an Amazon EKS cluster runs in a default namespace, called default. You can create additional namespaces and attach resources and users to them. You can use Kubernetes Authorization plugins to create policies that segregate access to namespace resources between different users. Impact: You need to switch between namespaces for administration. Audit: Run the below command and review the namespaces created in the cluster. kubectl get namespaces Ensure that these namespaces are the ones you need and are adequately administered as per your requirements. Remediation: Follow the documentation and create namespaces for objects in your deployment as you need them. Default Value: By default, Kubernetes starts with two initial namespaces: 1. default - The default namespace for objects with no other namespace 2. kube-system - The namespace for objects created by the Kubernetes system 3. kube-public - The namespace for public-readable ConfigMap 4. kube-node-lease - The namespace for associated lease object for each node
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Controls Version Control IG 1 IG 2 IG 3 v8 3.11"
+  - "Encrypt Sensitive Data at Rest"
+  - "Encrypt Sensitive Information at Rest"
+  - "Create administrative boundaries between resources using namespaces"
+  - "Use Kubernetes Authorization plugins to create policies that segregate access to namespace resources between different users"
+  - "Run the below command and review the namespaces created in the cluster"
+  - "Ensure that these namespaces are the ones you need and are adequately administered as per your requirements"
+  - "Follow the documentation and create namespaces for objects in your deployment as you need them"
+  - "Default Value: By default, Kubernetes starts with two initial namespaces: 1. default - The default namespace for objects with no other namespace 2. kube-system - The namespace for objects created by the Kubernetes system 3. kube-public - The namespace for public-readable ConfigMap 4. kube-node-lease - The namespace for associated lease object for each node"
+```

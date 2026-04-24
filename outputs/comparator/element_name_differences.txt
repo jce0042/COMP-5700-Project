@@ -1,0 +1,9 @@
+Elements present only in cis-r1-kdes.yaml:
+- page_6
+- page_7
+- page_8
+
+Elements present only in cis-r2-kdes.yaml:
+- page_12
+- page_13
+- page_14

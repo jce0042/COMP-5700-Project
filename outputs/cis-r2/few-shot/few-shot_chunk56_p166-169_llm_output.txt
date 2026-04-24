@@ -1,0 +1,254 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 165 
+Internal Only - General  Appendix: Change History  
+Date  Version  Changes for this version             
+5/14/2024  1.5.0  AAC updated and tested against Latest 
+Cluster available v1.31  
+5/12/2024  1.5.0  4.1.7  Cluster Access Manager API to 
+streamline and enhance the 
+management of access controls within  
+EKS clusters                                           
+5/12/2024  1.5.0  3.1.1  Ensure that the kubeconfig file 
+permissions are set to 644 or more 
+restrictive  
+5/12/2024  1.5.0  3.1.2 Ensure that the kubelet 
+kubeconfig file ownership is set to 
+root:root  
+5/12/2024  1.5.0  3.1.3  Ensure that the kubelet  
+configuration file has permissions set to 
+644 or more restrictive  
+5/12/2024  1.5.0  3.1.4  Ensure that the kubelet 
+configuration file ownership is set to 
+root:root  
+5/12/2024  1.5.0  4.2.1  Minimize the admission of 
+privileged containers  
+5/12/2024  1.5.0  4.2.2 Minimize the admission of 
+containers wishing to share the host 
+process ID namespace  
+5/12/2024  1.5.0  4.2.3  Minimize the admission of 
+containers wishing to share the host 
+IPC namespace  
+5/12/2024  1.5.0  4.2.4  Minimize the admission of 
+containers wishing to share the host 
+network namespace  
+5/12/2024  1.5.0  4.2.5  Minimize the admission of 
+containers with 
+allowPrivilegeEscalation  
+5/12/2024  1.5.0  4.5.3  The default namespace should 
+not be used
+Page 166 
+Internal Only - General  Date  Version  Changes for this version             
+5/12/2024  1.5.0  3.3.1  Prefer using a container -
+optimized OS when possible  
+5/12/2024  1.5.0  4.2.6  Minimize the admission of root 
+containers  
+5/12/2024  1.5.0  4.2.7  Minimize the admission of 
+containers with added capabilities  
+5/12/2024  1.5.0  4.2.8  Minimize the admission of 
+containers with capabilities assigned  
+5/12/2024  1.5.0  6.1 Consider Fargate for running 
+untrusted workloads  
+5/12/2024  1.5.0  3.2.4  Ensure that the --read-only-port is 
+disabled  
+5/12/2024  1.5.0  3.2.8  Ensure that the --rotate -
+certificates argument is not present or 
+is set to true  
+5/12/2024  1.5.0  4.1.1 Ensure that the cluster -admin role 
+is only used where required  
+5/11/2024  1.5.0  4.1.2 Minimize access to secrets  
+5/11/2024  1.5.0  4.1.4  Minimize access to create pods  
+5/11/2024  1.5.0  4.1.5  Ensure that default service 
+accounts are not actively used  
+5/11/2024  1.5.0  4.1.6  Ensure that Service Account 
+Tokens are only mounted where 
+necessary  
+5/1/2024  1.5.0  Added AAC for 4.1.7  Avoid use of 
+system:masters group  
+5/1/2024  1.5.0  Added AAC for 4.3.2  Ensure that all 
+Namespaces have Network Policies 
+defined  
+5/1/2024  1.5.0  Added AAC for 4.4.1  Prefer using secrets 
+as files over secrets as environment 
+variables  
+5/1/2024  1.5.0  Added AAC for 5.2.1 Prefer using 
+dedicated EKS Service Accounts
+Page 167 
+Internal Only - General  Date  Version  Changes for this version             
+9/17/2023  1.4.0  Added support the latest Kubernetes 
+version Cluster creation option/s  
+9/15/2023  1.4.0  Ticket 19589 – Reassessed EKS 3.2.7 
+Hostname override recommendation  
+5/5/2023  1.3.0  Ticket 18577 – Added specific audit 
+command for ensuring clusters are created 
+with private endpoints – recommendation 
+5.3.3  
+4/30/2023  1.3.0  Ticket 18578 – updated audit and 
+remediation guidance for ensure network 
+policy is enabled – recommendation 5.4.4  
+4/29/2023  1.3.0  Ticket 18576 – updated audit procedure 
+guidance for restricting access to the 
+control plane – recommendation 5.4.1  
+3/15/2023  1.3.0  Ticket 18580 – Added Audit procedure for 
+running untrusted workloads – 
+recommendation 5.6.1  
+3/11/2023  1.3.0  Ticket 18579 – Added specific audit and 
+remediation guidance to recommendation 
+5.4.5  
+03/11/2023  1.3.0  Ticket 17212 – Edited 4.5 Admission 
+Controls Section.  It will be revised in 
+VNext.  
+02/22/2023  1.3.0  Ticket 17102 – Replaced deprecated and 
+out of date Pod Security Policy verbiage 
+with pod Security Standards.  
+11/14/2022  1.2.0  Ticket 15928 – Recommendation 3.2.9 
+updated  
+11/14/2022  1.2.0  Ticket 15915 – Pod Security Policy 
+deprecated  
+11/12/2022  1.2.0  Ticket 15913 – recommendation 3.2.9 
+updated Event QPS deprecated  
+11/12/2022  1.2.0  Ticket 16516 – recommendation 3.2.2 
+updated configuration guidance regarding 
+“always allow”  
+11/12/2022  1.2.0  Ticket 15485 – ELS Audit Log impact 
+statement updated.
+Page 168 
+Internal Only - General  Date  Version  Changes for this version             
+11/12/2022  1.2.0  Ticket 15654 – recommendation 3.2.3 audit  
+11/01/2022  1.2.0  Ticket 15618 – recommendation 3.2.9 
+profile updated to level 2  
+11/01/2022  1.2.0  Ticket 15616 – recommendation 3.2.8 -
+hostname -overide remediation process 
+updated.  
+11/01/2022  1.2.0  Ticket 15805 – recommendation 3.3.1 audit 
+procedure updated.  
+10/10/2022  1.2.0  Ticket 15843 – remediation process 
+updated to set  .spec.privileged field to 
+false.  
+10/10/2022  1.2.0  Ticket 15849 – PSP has 
+allowedCapabilities Set by Default  
+10/10/2022  1.2.0  Ticket 15850 – recommendation 4.2.7 
+combined with 4.2.9  
+10/08/2022  1.2.0  Ticket 15532 – recommendation 5.4.2 
+updated remediation process  
+10/08/2022  1.2.0  Ticket 15804 – recommendation 3.3.1 
+description updated  
+10/08/2022  1.2.0  Ticket 15602 – recommendation 3.2.6 audit 
+procedure updated  
+10/08/2022  1.2.0  Ticket 16433 – recommendation 3.2.10 
+updated the default value  
+10/08/2022  1.2.0  Ticket 15613 – recommendations 3.2.1, 
+3.2.2, 3.2.3 updated to reflect 
+authentication vs authorization exec 
+arguments   
+10/08/2022  1.2.0  Ticket 15677 – recommendation 5.2.1 
+updated to reflect EKS specifics  
+10/08/2022  1.2.0  Ticket 15533 -recommendation 5.4.4 
+updated recommendation for EKS specifics  
+9/01/2022  1.2.0  Ticket 15615 – recommendation 3.2.8 
+updated impact statement  
+9/01/2022  1.2.0  Ticket 15611 – recommendation 3.2.5 
+updated audit and remediation methods
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Password Complexity"
+  - "Data Encryption"
+  - "Access Logging"
+  - "EKS Cluster Availability"
+  - "Kubeconfig File Permissions"
+  - "Kubelet Kubeconfig File Permissions"
+  - "Kubelet Configuration File Permissions"
+  - "kubelet Privilege Escalation"
+  - "Admission Controls"
+  - "Namespace Network Policies"
+  - "Network Policies"
+  - "EKS Service Accounts"
+  - "Container -optimized OS"
+  - "Secrets Management"
+  - "Secrets as Environment Variables"
+  - "AAC for 4.1.7"
+  - "AAC for 4.3.2"
+  - "AAC for 4.4.1"
+  - "Fargate for Untrusted Workloads"
+  - "Ticket 19589 - EKS 3.2.7 Hostname Override"
+  - "Ticket 18577 - EKS 3.2.7 Hostname Override"
+  - "Ticket 18578 - EKS 3.2.7 Hostname Override"
+  - "Ticket 18576 - EKS 3.2.7 Hostname Override"
+  - "Ticket 18580 - EKS 3.2.7 Hostname Override"
+  - "Ticket 15928 - EKS 3.2.7 Hostname Override"
+  - "Ticket 15654 - EKS 3.2.9 Audit Procedure"
+  - "Ticket 15618 - EKS 3.2.8 - Hostname Override Remediation"
+  - "Ticket 15616 - EKS 3.2.8 - Hostname Override Configuration"
+  - "Ticket 15613 - EKS 3.2.9 Audit Procedure"
+  - "Ticket 15677 - EKS 3.2.8 - Hostname Overide Remediation"
+  - "Ticket 15532 - EKS 3.2.6 Audit Procedure"
+  - "Ticket 15805 - EKS 3.3.1 Audit Procedure"
+  - "Ticket 15843 - EKS 3.2.9 Remediation"
+  - "Ticket 15849 - EKS 3.2.9 - Hostname Overide Remediation"
+  - "Ticket 15850 - EKS 3.3.1 Audit Procedure"
+  - "Ticket 15804 - EKS 3.3.1 Audit Procedure"
+  - "Ticket 15602 - EKS 3.2.6 Audit Procedure"
+  - "Ticket 15613 - EKS 3.2.1, 3.2.2, 3.2.3 Audit"
+  - "Ticket 15677 - EKS 3.2.8 - Hostname Overide Remediation"
+  - "Ticket 15533 - EKS 3.2.6 Audit Procedure"
+  - "Ticket 15804 - EKS 3.3.1 Audit Procedure"
+  - "Ticket 15615 - EKS 3.2.8 -Hostname Override Remediation"
+  - "Ticket 15611 - EKS 3.2.5 Audit"
+  - "Ticket 15616 - EKS 3.2.8 -Hostname Overide Remediation"
+  - "Ticket 15613 - EKS 3.2.5 Audit"
+  - "Ticket 15677 - EKS 3.2.8 -Hostname Overide Remediation"
+  - "Ticket 15532 - EKS 3.2.6 Audit Procedure"
+  - "Ticket 15804 - EKS 3.3.1 Audit Procedure"
+  - "Ticket 15602 - EKS 3.2.6 Audit Procedure"
+  - "Ticket 15613 - EKS 3.2.1, 3.2.2, 3.2.3 Audit"
+  - "Ticket 15677 - EKS 3.2.8 -Hostname Overide Remediation"
+  - "Ticket 15533 - EKS 3.2.6 Audit Procedure"

@@ -1,0 +1,162 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 21 
+Internal Only - General  apiVersion: audit.k8s.io/v1  
+kind: Policy  
+rules: 
+  - level: Metadata  
+    resources:  
+      - group: ""  
+        resources: ["pods"]  
+ 
+2. Apply the audit policy configuration to the cluster:  
+kubectl apply -f <path-to-audit-policy>.yaml  
+ 
+3. Ensure audit logs are forwarded to a centralized logging system like CloudWatch, 
+Elasticsearch, or another log management solution:  
+kubectl create configmap cluster -audit-policy --from-file=audit -policy.yaml -
+n kube-system 
+kubectl apply -f - <<EOF 
+apiVersion: v1  
+kind: Pod  
+metadata:  
+  name: audit -logging 
+  namespace: kube -system 
+spec: 
+  containers:  
+  - name: audit -log-forwarder  
+    image: my-log-forwarder -image 
+    volumeMounts:  
+    - mountPath: /etc/kubernetes/audit  
+      name: audit -config 
+  volumes:  
+  - name: audit -config 
+    configMap:  
+      name: cluster -audit-policy 
+EOF 
+Default Value:  
+By default, Kubernetes does not enable detailed audit logging. Configuration is required 
+to enable and manage audit logs.  
+References:  
+1. https://kubernetes.io/docs/tasks/debug -application -cluster/audit/  
+2. https://kubernetes.io/docs/tasks/debug -application -cluster/audit/#audit -policy
+Page 22 
+Internal Only - General  CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 8.1 Establish and Maintain an Audit Log Management 
+Process  
+ Establish and maintain an audit log management process that defines the 
+enterprise’s logging requirements. At a minimum, address the collection, review, 
+and retention of audit logs for enterprise assets. Review and update documentation 
+annually, or when si gnificant enterprise changes occur that could impact this 
+Safeguard.  ● ● ● 
+v8 8.2 Collect Audit Logs  
+ Collect audit logs. Ensure that logging, per the enterprise’s audit log 
+management process, has been enabled across enterprise assets.  ● ● ● 
+v7 6.2 Activate audit logging  
+ Ensure that local logging has been enabled on all systems and networking 
+devices.  ● ● ● 
+v7 6.3 Enable Detailed Logging  
+ Enable system logging to include detailed information such as an event source, 
+date, user, timestamp, source addresses, destination addresses, and other useful 
+elements.   ● ● 
+ 
+3 Worker Nodes  
+This section consists of security recommendations for the components that run on 
+Amazon EKS worker nodes.
+Page 23 
+Internal Only - General  3.1 Worker Node Configuration Files  
+This section covers recommendations for configuration files on Amazon EKS worker 
+nodes.
+Page 24 
+Internal Only - General  3.1.1 Ensure that the kubeconfig  file permissions are set to 644 or 
+more restrictive (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+If kubelet is running, and if it is configured by a kubeconfig file, ensure that the proxy 
+kubeconfig  file has permissions of 644 or more restrictive.  
+Rationale:  
+The kubelet  kubeconfig file controls various parameters of the kubelet  service in the 
+worker node. You should restrict its file permissions to maintain the integrity of the file. 
+The file should be writable by only the administrators on the system.  
+It is possible to run kubelet  with the kubeconfig parameters configured as a 
+Kubernetes ConfigMap instead of a file. In this case, there is no proxy kubeconfig file.  
+Impact:  
+Ensuring that the kubeconfig file permissions are set to 644 or more restrictive 
+significantly strengthens the security posture of the Kubernetes environment by 
+preventing unauthorized modifications. This restricts write access to the kubeconfig file, 
+ensu ring only administrators can alter crucial kubelet configurations, thereby reducing 
+the risk of malicious alterations that could compromise the cluster's integrity.  
+However, this configuration may slightly impact usability, as it limits the ability for non -
+administrative users to make quick adjustments to the kubelet settings. Administrators 
+will need to balance security needs with operational flexibility, potentially  requiring 
+adjustments to workflows for managing kubelet configurations.  
+Audit:  
+Method 1  
+SSH to the worker nodes  
+To check to see if the Kubelet Service is running:  
+sudo systemctl status kubelet  
+The output should return Active: active (running) since..  
+Run the following command on each node to find the appropriate kubeconfig file:  
+ps -ef | grep kubelet  
+The output of the above command should return something similar to --kubeconfig 
+/var/lib/kubelet/kubeconfig  which is the location of the kubeconfig file.  
+Run this command to obtain the kubeconfig file permissions:
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  name: "Security Recommendations"
+  requirements:
+    - "Ensure that the kubeconfig file permissions are set to 644 or more restrictive"
+    - "To check to see if the Kubelet Service is running"
+    - "To find the appropriate kubeconfig file"
+```

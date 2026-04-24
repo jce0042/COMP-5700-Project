@@ -1,0 +1,249 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 162 
+Internal Only - General  Recommendation  Set 
+Correctly  
+Yes No 
+4.1.5  Ensure that default service accounts are not actively 
+used.    
+4.1.6  Ensure that Service Account Tokens are only mounted 
+where necessary    
+4.1.7  Cluster Access Manager API to streamline and enhance 
+the management of access controls within EKS clusters    
+4.1.8  Limit use of the Bind, Impersonate and Escalate 
+permissions in the Kubernetes cluster    
+4.2.1  Minimize the admission of privileged containers    
+4.2.2  Minimize the admission of containers wishing to share 
+the host process ID namespace    
+4.2.3  Minimize the admission of containers wishing to share 
+the host IPC namespace    
+4.2.4  Minimize the admission of containers wishing to share 
+the host network namespace    
+4.2.5  Minimize the admission of containers with 
+allowPrivilegeEscalation    
+4.3.1  Ensure CNI plugin supports network policies.    
+4.3.2  Ensure that all Namespaces have Network Policies 
+defined    
+4.4.1  Prefer using secrets as files over secrets as environment 
+variables    
+4.4.2  Consider external secret storage    
+4.5.1  Create administrative boundaries between resources 
+using namespaces    
+4.5.2  The default namespace should not be used    
+5.1.1  Ensure Image Vulnerability Scanning using Amazon ECR 
+image scanning or a third party provider    
+5.1.2  Minimize user access to Amazon ECR    
+5.1.3  Minimize cluster access to read -only for Amazon ECR    
+5.1.4  Minimize Container Registries to only those approved    
+5.2.1  Prefer using dedicated EKS Service Accounts    
+5.3.1  Ensure Kubernetes Secrets are encrypted using 
+Customer Master Keys (CMKs) managed in AWS KMS    
+5.4.1  Restrict Access to the Control Plane Endpoint   
+Page 163 
+Internal Only - General  Recommendation  Set 
+Correctly  
+Yes No 
+5.4.2  Ensure clusters are created with Private Endpoint 
+Enabled and Public Access Disabled    
+5.4.3  Ensure clusters are created with Private Nodes    
+5.4.4  Ensure Network Policy is Enabled and set as appropriate    
+5.4.5  Encrypt traffic to HTTPS load balancers with TLS 
+certificates    
+5.5.1  Manage Kubernetes RBAC users with AWS IAM 
+Authenticator for Kubernetes or Upgrade to AWS CLI 
+v1.16.156 or greater   
+Page 164 
+Internal Only - General  Appendix: CIS Controls v8 Unmapped 
+Recommendations  
+Recommendation  Set 
+Correctly  
+Yes No 
+ No unmapped recommendations to CIS Controls v8   
+Page 165 
+Internal Only - General  Appendix: Change History  
+Date  Version  Changes for this version             
+5/14/2024  1.5.0  AAC updated and tested against Latest 
+Cluster available v1.31  
+5/12/2024  1.5.0  4.1.7  Cluster Access Manager API to 
+streamline and enhance the 
+management of access controls within  
+EKS clusters                                           
+5/12/2024  1.5.0  3.1.1  Ensure that the kubeconfig file 
+permissions are set to 644 or more 
+restrictive  
+5/12/2024  1.5.0  3.1.2 Ensure that the kubelet 
+kubeconfig file ownership is set to 
+root:root  
+5/12/2024  1.5.0  3.1.3  Ensure that the kubelet  
+configuration file has permissions set to 
+644 or more restrictive  
+5/12/2024  1.5.0  3.1.4  Ensure that the kubelet 
+configuration file ownership is set to 
+root:root  
+5/12/2024  1.5.0  4.2.1  Minimize the admission of 
+privileged containers  
+5/12/2024  1.5.0  4.2.2 Minimize the admission of 
+containers wishing to share the host 
+process ID namespace  
+5/12/2024  1.5.0  4.2.3  Minimize the admission of 
+containers wishing to share the host 
+IPC namespace  
+5/12/2024  1.5.0  4.2.4  Minimize the admission of 
+containers wishing to share the host 
+network namespace  
+5/12/2024  1.5.0  4.2.5  Minimize the admission of 
+containers with 
+allowPrivilegeEscalation  
+5/12/2024  1.5.0  4.5.3  The default namespace should 
+not be used
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "req1"
+  - "req2"
+  - "req3"
+  - "req4"
+  - "req5"
+  - "req6"
+  - "req7"
+  - "req8"
+  - "req9"
+  - "req10"
+  - "req11"
+  - "req12"
+  - "req13"
+  - "req14"
+  - "req15"
+  - "req16"
+  - "req17"
+  - "req18"
+  - "req19"
+  - "req20"
+  - "req21"
+  - "req22"
+  - "req23"
+  - "req24"
+  - "req25"
+  - "req26"
+  - "req27"
+  - "req28"
+  - "req29"
+  - "req30"
+  - "req31"
+  - "req32"
+  - "req33"
+  - "req34"
+  - "req35"
+  - "req36"
+  - "req37"
+  - "req38"
+  - "req39"
+  - "req40"
+  - "req41"
+  - "req42"
+  - "req43"
+  - "req44"
+  - "req45"
+  - "req46"
+  - "req47"
+  - "req48"
+  - "req49"
+  - "req50"
+  - "req51"
+  - "req52"
+  - "req53"
+  - "req54"
+  - "req55"
+  - "req56"
+  - "req57"
+  - "req58"
+  - "req59"
+  - "req60"
+  - "req61"
+  - "req62"
+  - "req63"
+  - "req64"
+  - "req65"
+  - "req66"
+  - "req67"
+  - "req68"
+  - "req69"
+  - "req70"
+  - "req71"
+  - "req72"
+  - "req73"
+  - "req74"
+  - "req75"
+  - "req76"
+  - "req77"
+  - "req78"
+  - "req79"
+  - "req80"
+  - "req81"
+  - "req82"
+  - "req83"
+  - "req84"
+  - "req85"
+  - "req86"
+  - "req87"
+  - "req88"
+  - "req89"
+  - "req90"
+  - "req91"
+  - "req92"
+  - "req93"
+  - "req94"
+  - "req95"
+  - "req96"
+  - "req97"
+  - "req98"
+  - "req99"
+  - "req100"
+  - "req101"
+  - "req102"
+  - "req103"
+  - "req104"
+  - "req105"
+  - "req106"
+  - "req107"
+  - "req108"
+  - "req109"
+  - "req110"
+  - "req111"
+  - "req112"
+  - "req113"
+  - "req114"
+  - "req115"
+  - "req116"
+  - "req117"
+  - "req118"
+  - "req119"
+  - "req120"
+  - "req121"
+  - "req122"
+  - "req123"
+  - "req124"
+

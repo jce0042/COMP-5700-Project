@@ -1,0 +1,217 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 168 
+Internal Only - General  Date  Version  Changes for this version             
+11/12/2022  1.2.0  Ticket 15654 – recommendation 3.2.3 audit  
+11/01/2022  1.2.0  Ticket 15618 – recommendation 3.2.9 
+profile updated to level 2  
+11/01/2022  1.2.0  Ticket 15616 – recommendation 3.2.8 -
+hostname -overide remediation process 
+updated.  
+11/01/2022  1.2.0  Ticket 15805 – recommendation 3.3.1 audit 
+procedure updated.  
+10/10/2022  1.2.0  Ticket 15843 – remediation process 
+updated to set  .spec.privileged field to 
+false.  
+10/10/2022  1.2.0  Ticket 15849 – PSP has 
+allowedCapabilities Set by Default  
+10/10/2022  1.2.0  Ticket 15850 – recommendation 4.2.7 
+combined with 4.2.9  
+10/08/2022  1.2.0  Ticket 15532 – recommendation 5.4.2 
+updated remediation process  
+10/08/2022  1.2.0  Ticket 15804 – recommendation 3.3.1 
+description updated  
+10/08/2022  1.2.0  Ticket 15602 – recommendation 3.2.6 audit 
+procedure updated  
+10/08/2022  1.2.0  Ticket 16433 – recommendation 3.2.10 
+updated the default value  
+10/08/2022  1.2.0  Ticket 15613 – recommendations 3.2.1, 
+3.2.2, 3.2.3 updated to reflect 
+authentication vs authorization exec 
+arguments   
+10/08/2022  1.2.0  Ticket 15677 – recommendation 5.2.1 
+updated to reflect EKS specifics  
+10/08/2022  1.2.0  Ticket 15533 -recommendation 5.4.4 
+updated recommendation for EKS specifics  
+9/01/2022  1.2.0  Ticket 15615 – recommendation 3.2.8 
+updated impact statement  
+9/01/2022  1.2.0  Ticket 15611 – recommendation 3.2.5 
+updated audit and remediation methods
+Page 169 
+Internal Only - General  Date  Version  Changes for this version             
+9/01/2022  1.2.0  Ticket 15610 – recommendation 3.2.6 
+updated description  
+9/01/2022  1.2.0  Ticket 15531 – recommendation 5.4.1 
+updated remediation process  
+9/01/2022  1.2.0  Ticket 15533 – recommendation 5.4.4 
+updated  
+9/01/2022  1.2.0  Ticket 15599 – recommendation 5.4.5 
+reviewed load balancer scope  
+9/01/2022  1.2.0  Ticket 15554 – recommendation 5.5.1 
+updated default configuration  
+9/01/2022  1.2.0  Ticket 16573 - recommendation 3.2.1 and 
+3.2.2 updated and aligned based on new 
+functionality  
+9/01/2022  1.2.0  Ticket 16612 – recommendation 5.4.2 
+updated audit procedure  
+9/01/2022  1.2.0  Ticket 16674 – recommendation 3.2.3 
+updated out of date guidance  
+9/01/2022  1.2.0  Ticket 15533 – recommendation 5.5.1 
+updated description  
+9/01/2022  1.2.0  Ticket 15539 – recommendation 5.4.3 
+updated remediation process  
+9/01/2022  1.2.0  Ticket 15614 – recommendation 3.2.1 
+updated remediation process  
+9/01/2022  1.2.0  Ticket 17054 – recommendation 5.4.1 
+updated for EKS specifically
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "req1"
+  - "req2"
+  - "req3"
+  - "req4"
+  - "req5"
+  - "req6"
+  - "req7"
+  - "req8"
+  - "req9"
+  - "req10"
+  - "req11"
+  - "req12"
+  - "req13"
+  - "req14"
+  - "req15"
+  - "req16"
+  - "req17"
+  - "req18"
+  - "req19"
+  - "req20"
+  - "req21"
+  - "req22"
+  - "req23"
+  - "req24"
+  - "req25"
+  - "req26"
+  - "req27"
+  - "req28"
+  - "req29"
+  - "req30"
+  - "req31"
+  - "req32"
+  - "req33"
+  - "req34"
+  - "req35"
+  - "req36"
+  - "req37"
+  - "req38"
+  - "req39"
+  - "req40"
+  - "req41"
+  - "req42"
+  - "req43"
+  - "req44"
+  - "req45"
+  - "req46"
+  - "req47"
+  - "req48"
+  - "req49"
+  - "req50"
+  - "req51"
+  - "req52"
+  - "req53"
+  - "req54"
+  - "req55"
+  - "req56"
+  - "req57"
+  - "req58"
+  - "req59"
+  - "req60"
+  - "req61"
+  - "req62"
+  - "req63"
+  - "req64"
+  - "req65"
+  - "req66"
+  - "req67"
+  - "req68"
+  - "req69"
+  - "req70"
+  - "req71"
+  - "req72"
+  - "req73"
+  - "req74"
+  - "req75"
+  - "req76"
+  - "req77"
+  - "req78"
+  - "req79"
+  - "req80"
+  - "req81"
+  - "req82"
+  - "req83"
+  - "req84"
+  - "req85"
+  - "req86"
+  - "req87"
+  - "req88"
+  - "req89"
+  - "req90"
+  - "req91"
+  - "req92"
+  - "req93"
+  - "req94"
+  - "req95"
+  - "req96"
+  - "req97"
+  - "req98"
+  - "req99"
+  - "req100"
+  - "req101"
+  - "req102"
+  - "req103"
+  - "req104"
+  - "req105"
+  - "req106"
+  - "req107"
+  - "req108"
+  - "req109"
+  - "req110"
+  - "req111"
+  - "req112"
+  - "req113"
+  - "req114"
+  - "req115"
+  - "req116"
+  - "req117"
+  - "req118"
+  - "req119"
+  - "req120"
+  - "req121"
+  - "req122"
+  - "req123"
+  - "req124"
+

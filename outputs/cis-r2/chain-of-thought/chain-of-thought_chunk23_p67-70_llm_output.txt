@@ -1,0 +1,154 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 66 
+Internal Only - General  kubectl delete clusterrolebinding [name]  
+Default Value:  
+By default a single clusterrolebinding  called cluster-admin  is provided with the 
+system:masters  group as its principal.  
+References:  
+1. https://kubernetes.io/docs/admin/authorization/rbac/#user -facing -roles  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 5.4 Restrict Administrator Privileges to Dedicated 
+Administrator Accounts  
+ Restrict administrator privileges to dedicated administrator accounts on 
+enterprise assets. Conduct general computing activities, such as internet 
+browsing, email, and productivity suite use, from the user’s primary, non -privileged 
+account.  ● ● ● 
+v7 4.3 Ensure the Use of Dedicated Administrative Accounts  
+ Ensure that all users with administrative account access use a dedicated or 
+secondary account for elevated activities. This account should only be used for 
+administrative activities and not internet browsing, email, or similar activities.  ● ● ●
+Page 67 
+Internal Only - General  4.1.2 Minimize access to secrets (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+The Kubernetes API stores secrets, which may be service account tokens for the 
+Kubernetes API or credentials used by workloads in the cluster. Access to these secrets 
+should be restricted to the smallest possible group of users to reduce the risk of 
+privilege escalation.  
+Rationale:  
+Inappropriate access to secrets stored within the Kubernetes cluster can allow for an 
+attacker to gain additional access to the Kubernetes cluster or external resources 
+whose credentials are stored as secrets.  
+Impact:  
+Care should be taken not to remove access to secrets to system components which 
+require this for their operation  
+Audit:  
+Review the users who have get, list  or watch  access to secrets  objects in the 
+Kubernetes API.  
+Remediation:  
+Where possible, remove get, list  and watch  access to secret  objects in the cluster.  
+Default Value:  
+By default, the following list of principals have get privileges on secret  objects
+Page 68 
+Internal Only - General  CLUSTERROLEBINDING                                    SUBJECT                             
+TYPE            SA -NAMESPACE  
+cluster-admin                                         system:masters                      
+Group            
+system:controller:clusterrole -aggregation -controller  clusterrole -
+aggregation -controller  ServiceAccount  kube -system 
+system:controller:expand -controller                   expand -controller                   
+ServiceAccount  kube -system 
+system:controller:generic -garbage-collector           generic -garbage-
+collector           ServiceAccount  kube -system 
+system:controller:namespace -controller                namespace -controller                
+ServiceAccount  kube -system 
+system:controller:persistent -volume-binder            persistent -volume-
+binder            ServiceAccount  kube -system 
+system:kube -controller -manager                        system:kube -controller -
+manager      User  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 4.1 Establish and Maintain a Secure Configuration Process  
+ Establish and maintain a secure configuration process for enterprise assets 
+(end-user devices, including portable and mobile, non -computing/IoT devices, and 
+servers) and software (operating systems and applications). Review and update 
+documentation annually, or when significant enterprise changes occur that could 
+impact this Safeguard.  ● ● ● 
+v7 5.2 Maintain Secure Images  
+ Maintain secure images or templates for all systems in the enterprise based on 
+the organization's approved configuration standards. Any new system deployment 
+or existing system that becomes compromised should be imaged using one of 
+those images or template s.  ● ●
+Page 69 
+Internal Only - General  4.1.3 Minimize wildcard use in Roles and ClusterRoles 
+(Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Kubernetes Roles and ClusterRoles provide access to resources based on sets of 
+objects and actions that can be taken on those objects. It is possible to set either of 
+these to be the wildcard "*" which matches all items.  
+Use of wildcards is not optimal from a security perspective as it may allow for 
+inadvertent access to be granted when new resources are added to the Kubernetes API 
+either as CRDs or in later versions of the product.  
+Rationale:  
+The principle of least privilege recommends that users are provided only the access 
+required for their role and nothing more. The use of wildcard rights grants is likely to 
+provide excessive rights to the Kubernetes API.  
+Audit:  
+Retrieve the roles defined across each namespaces in the cluster and review for 
+wildcards  
+kubectl get roles --all-namespaces -o yaml 
+Retrieve the cluster roles defined in the cluster and review for wildcards  
+kubectl get clusterroles -o yaml 
+Remediation:  
+Where possible replace any use of wildcards in clusterroles and roles with specific 
+objects or actions.  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 5.2 Use Unique Passwords  
+ Use unique passwords for all enterprise assets. Best practice implementation 
+includes, at a minimum, an 8 -character password for accounts using MFA and a 
+14-character password for accounts not using MFA.  ● ● ●
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - name: Readable KDE Name
+    requirements:
+      - req1
+      - req2
+  - name: Secure Configuration Process
+    requirements:
+      - req1
+      - req2
+  - name: Secure Images
+    requirements:
+      - req1
+      - req2
+  - name: Minimize wildcard use in Roles and ClusterRoles
+    requirements:
+      - req1
+      - req2
+  - name: Use Unique Passwords
+    requirements:
+      - req1
+      - req2
+```

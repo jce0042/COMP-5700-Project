@@ -1,0 +1,17 @@
+# Python environments
+.venv/
+comp5700-venv/
+
+# Python caches
+__pycache__/
+.pytest_cache/
+
+# Build artifacts
+build/
+
+# IDE metadata
+.idea/
+
+# OS metadata
+.DS_Store
+Thumbs.db

@@ -1,0 +1,35 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 78 4.1.7 Avoid use of system:masters group (Manual) Profile Applicability: •  Level 1 Description: The special group system:masters should not be used to grant permissions to any user or service account, except where strictly necessary (e.g. bootstrapping access prior to RBAC being fully available) Rationale: The system:masters group has unrestricted access to the Kubernetes API hard-coded into the API server source code. An authenticated user who is a member of this group cannot have their access reduced, even if all bindings and cluster role bindings which mention it, are removed. When combined with client certificate authentication, use of this group can allow for irrevocable cluster-admin level credentials to exist for a cluster. Impact: Once the RBAC system is operational in a cluster system:masters should not be specifically required, as ordinary bindings from principals to the cluster-admin cluster role can be made where unrestricted access is required. Audit: Review a list of all credentials which have access to the cluster and ensure that the group system:masters is not used. Remediation: Remove the system:masters group from all users in the cluster. Default Value: By default some clusters will create a "break glass" client certificate which is a member of this group. Access to this client certificate should be carefully controlled and it should not be used for general cluster operations. References: 1. https://github.com/kubernetes/kubernetes/blob/master/pkg/registry/rbac/escalation_check.go#L38
+Page 79 CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 4.8 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software  Uninstall or disable unnecessary services on enterprise assets and software, such as an unused file sharing service, web application module, or service function.  ● ● v7 14.7 Enforce Access Control to Data through Automated Tools  Use an automated tool, such as host-based Data Loss Prevention, to enforce access controls to data even when data is copied off a system.   ●
+Page 80 4.1.8 Limit use of the Bind, Impersonate and Escalate permissions in the Kubernetes cluster (Manual) Profile Applicability: •  Level 1 Description: Cluster roles and roles with the impersonate, bind or escalate permissions should not be granted unless strictly required. Each of these permissions allow a particular subject to escalate their privileges beyond those explicitly granted by cluster administrators Rationale: The impersonate privilege allows a subject to impersonate other users gaining their rights to the cluster. The bind privilege allows the subject to add a binding to a cluster role or role which escalates their effective permissions in the cluster. The escalate privilege allows a subject to modify cluster roles to which they are bound, increasing their rights to that level. Each of these permissions has the potential to allow for privilege escalation to cluster-admin level. Impact: There are some cases where these permissions are required for cluster service operation, and care should be taken before removing these permissions from system service accounts. Audit: Review the users who have access to cluster roles or roles which provide the impersonate, bind or escalate privileges. Remediation: Where possible, remove the impersonate, bind and escalate rights from subjects. Default Value: In a default kubeadm cluster, the system:masters group and clusterrole-aggregation-controller service account have access to the escalate privilege. The system:masters group also has access to bind and impersonate. References: 1. https://www.impidio.com/blog/kubernetes-rbac-security-pitfalls 2. https://raesene.github.io/blog/2020/12/12/Escalating_Away/ 3. https://raesene.github.io/blog/2021/01/16/Getting-Into-A-Bind-with-Kubernetes/
+Page 81 CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 4.8 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software  Uninstall or disable unnecessary services on enterprise assets and software, such as an unused file sharing service, web application module, or service function.  ● ● v7 14.7 Enforce Access Control to Data through Automated Tools  Use an automated tool, such as host-based Data Loss Prevention, to enforce access controls to data even when data is copied off a system.   ●
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "req1"
+  - "req2"
+```

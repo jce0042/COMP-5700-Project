@@ -1,0 +1,34 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 90 4.2.4 Minimize the admission of containers wishing to share the host network namespace (Automated) Profile Applicability: •  Level 1 Description: Do not generally permit containers to be run with the hostNetwork flag set to true. Rationale: A container running in the host's network namespace could access the local loopback device, and could access network traffic to and from other pods. There should be at least one PodSecurityPolicy (PSP) defined which does not permit containers to share the host network namespace. If you have need to run containers which require hostNetwork, this should be defined in a separate PSP and you should carefully check RBAC controls to ensure that only limited service accounts and users are given permission to access that PSP. Impact: Pods defined with spec.hostNetwork: true will not be permitted unless they are run under a specific PSP. Audit: Get the set of PSPs with the following command: kubectl get psp For each PSP, check whether privileged is enabled: kubectl get psp <name> -o=jsonpath='{.spec.hostNetwork}' Verify that there is at least one PSP which does not return true. Remediation: Create a PSP as described in the Kubernetes documentation, ensuring that the .spec.hostNetwork field is omitted or set to false. Default Value: By default, PodSecurityPolicies are not defined. References: 1. https://kubernetes.io/docs/concepts/policy/pod-security-policy
+Page 91 CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts  Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account. ● ● ● v7 4.3 Ensure the Use of Dedicated Administrative Accounts  Ensure that all users with administrative account access use a dedicated or secondary account for elevated activities. This account should only be used for administrative activities and not internet browsing, email, or similar activities. ● ● ●
+Page 92 4.2.5 Minimize the admission of containers with allowPrivilegeEscalation (Automated) Profile Applicability: •  Level 1 Description: Do not generally permit containers to be run with the allowPrivilegeEscalation flag set to true. Rationale: A container running with the allowPrivilegeEscalation flag set to true may have processes that can gain more privileges than their parent. There should be at least one PodSecurityPolicy (PSP) defined which does not permit containers to allow privilege escalation. The option exists (and is defaulted to true) to permit setuid binaries to run. If you have need to run containers which use setuid binaries or require privilege escalation, this should be defined in a separate PSP and you should carefully check RBAC controls to ensure that only limited service accounts and users are given permission to access that PSP. Impact: Pods defined with spec.allowPrivilegeEscalation: true will not be permitted unless they are run under a specific PSP. Audit: Get the set of PSPs with the following command: kubectl get psp For each PSP, check whether privileged is enabled: kubectl get psp <name> -o=jsonpath='{.spec.allowPrivilegeEscalation}' Verify that there is at least one PSP which does not return true. Remediation: Create a PSP as described in the Kubernetes documentation, ensuring that the .spec.allowPrivilegeEscalation field is omitted or set to false. Default Value: By default, PodSecurityPolicies are not defined.
+Page 93 References: 1. https://kubernetes.io/docs/concepts/policy/pod-security-policy CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts  Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account. ● ● ● v7 4.3 Ensure the Use of Dedicated Administrative Accounts  Ensure that all users with administrative account access use a dedicated or secondary account for elevated activities. This account should only be used for administrative activities and not internet browsing, email, or similar activities. ● ● ●
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "requirements"
+```

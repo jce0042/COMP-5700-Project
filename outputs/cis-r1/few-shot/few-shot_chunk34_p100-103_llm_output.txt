@@ -1,0 +1,59 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 99 CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts  Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account. ● ● ● v7 4.3 Ensure the Use of Dedicated Administrative Accounts  Ensure that all users with administrative account access use a dedicated or secondary account for elevated activities. This account should only be used for administrative activities and not internet browsing, email, or similar activities. ● ● ●
+Page 100 4.3 CNI Plugin
+Page 101 4.3.1 Ensure CNI plugin supports network policies. (Manual) Profile Applicability: •  Level 1 Description: There are a variety of CNI plugins available for Kubernetes. If the CNI in use does not support Network Policies it may not be possible to effectively restrict traffic in the cluster. Rationale: Kubernetes network policies are enforced by the CNI plugin in use. As such it is important to ensure that the CNI plugin supports both Ingress and Egress network policies. Impact: None. Audit: Review the documentation of CNI plugin in use by the cluster, and confirm that it supports network policies. Remediation: As with RBAC policies, network policies should adhere to the policy of least privileged access. Start by creating a deny all policy that restricts all inbound and outbound traffic from a namespace or create a global policy using Calico. Default Value: This will depend on the CNI plugin in use. References: 1. https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/ 2. https://aws.github.io/aws-eks-best-practices/network/ Additional Information: One example here is Flannel (https://github.com/coreos/flannel) which does not support Network policy unless Calico is also in use.
+Page 102 CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 7.4 Perform Automated Application Patch Management  Perform application updates on enterprise assets through automated patch management on a monthly, or more frequent, basis. ● ● ● v7 18.4 Only Use Up-to-date And Trusted Third-Party Components  Only use up-to-date and trusted third-party components for the software developed by the organization.  ● ●
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 7.4"
+  - "Automated Application Patch Management"
+```

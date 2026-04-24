@@ -1,0 +1,137 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 39 "authentication": { "x509": {"clientCAFile": <path/to/client-ca-file> } }" Remediation Method 2: If using executable arguments, edit the kubelet service file on each worker node and ensure the below parameters are part of the KUBELET_ARGS variable string. For systems using systemd, such as the Amazon EKS Optimised Amazon Linux or Bottlerocket AMIs, then this file can be found at /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf. Otherwise, you may need to look up documentation for your chosen operating system to determine which service manager is configured: --client-ca-file=<path/to/client-ca-file> For Both Remediation Steps: Based on your system, restart the kubelet service and check the service status. The following example is for operating systems using systemd, such as the Amazon EKS Optimised Amazon Linux or Bottlerocket AMIs, and invokes the systemctl command. If systemctl is not available then you will need to look up documentation for your chosen operating system to determine which service manager is configured: systemctl daemon-reload systemctl restart kubelet.service systemctl status kubelet -l Default Value: See the EKS documentation for the default value. References: 1. https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/ 2. https://kubernetes.io/docs/reference/access-authn-authz/kubelet-authn-authz/#kubelet-authentication 3. https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 3.10 Encrypt Sensitive Data in Transit  Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).  ● ● v7 14.4 Encrypt All Sensitive Information in Transit  Encrypt all sensitive information in transit.  ● ●
+Page 40 3.2.4 Ensure that the --read-only-port is disabled (Manual) Profile Applicability: •  Level 1 Description: Disable the read-only port. Rationale: The Kubelet process provides a read-only API in addition to the main Kubelet API. Unauthenticated access is provided to this read-only API which could possibly retrieve potentially sensitive information about the cluster. Impact: Removal of the read-only port will require that any service which made use of it will need to be re-configured to use the main Kubelet API. Audit: If using a Kubelet configuration file, check that there is an entry for authentication: anonymous: enabled set to 0. First, SSH to the relevant node: Run the following command on each node to find the appropriate Kubelet config file: ps -ef | grep kubelet The output of the above command should return something similar to --config /etc/kubernetes/kubelet/kubelet-config.json which is the location of the Kubelet config file. Open the Kubelet config file: cat /etc/kubernetes/kubelet/kubelet-config.json Verify that the --read-only-port argument exists and is set to 0. If the --read-only-port argument is not present, check that there is a Kubelet config file specified by --config. Check that if there is a readOnlyPort entry in the file, it is set to 0. Remediation: If modifying the Kubelet config file, edit the kubelet-config.json file /etc/kubernetes/kubelet/kubelet-config.json and set the below parameter to 0 "readOnlyPort": 0 If using executable arguments, edit the kubelet service file /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf on each worker node and add the below parameter at the end of the KUBELET_ARGS variable string.
+Page 41 --read-only-port=0 For each remediation: Based on your system, restart the kubelet service and check status systemctl daemon-reload systemctl restart kubelet.service systemctl status kubelet -l Default Value: See the Amazon EKS documentation for the default value. References: 1. https://kubernetes.io/docs/admin/kubelet/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 12.6 Use of Secure Network Management and Communication Protocols   Use secure network management and communication protocols (e.g., 802.1X, Wi-Fi Protected Access 2 (WPA2) Enterprise or greater).  ● ● v7 9.2 Ensure Only Approved Ports, Protocols and Services Are Running  Ensure that only network ports, protocols, and services listening on a system with validated business needs, are running on each system.  ● ●
+Page 42 3.2.5 Ensure that the --streaming-connection-idle-timeout argument is not set to 0 (Automated) Profile Applicability: •  Level 1 Description: Do not disable timeouts on streaming connections. Rationale: Setting idle timeouts ensures that you are protected against Denial-of-Service attacks, inactive connections and running out of ephemeral ports. Note: By default, --streaming-connection-idle-timeout is set to 4 hours which might be too high for your environment. Setting this as appropriate would additionally ensure that such streaming connections are timed out after serving legitimate use cases. Impact: Long-lived connections could be interrupted. Audit: Audit Method 1: First, SSH to the relevant node: Run the following command on each node to find the running kubelet process: ps -ef | grep kubelet If the command line for the process includes the argument streaming-connection-idle-timeout verify that it is not set to 0. If the streaming-connection-idle-timeout argument is not present in the output of the above command, refer instead to the config argument that specifies the location of the Kubelet config file e.g. --config /etc/kubernetes/kubelet/kubelet-config.json. Open the Kubelet config file: cat /etc/kubernetes/kubelet/kubelet-config.json Verify that the streamingConnectionIdleTimeout argument is not set to 0. Audit Method 2: If using the api configz endpoint consider searching for the status of "streamingConnectionIdleTimeout":"4h0m0s" by extracting the live configuration from the nodes running kubelet. Set the local proxy port and the following variables and provide proxy port number and node name; HOSTNAME_PORT="localhost-and-port-number" NODE_NAME="The-Name-Of-Node-To-Extract-Configuration" from the output of "kubectl get nodes"
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - name: Readable KDE Name
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 2
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 3
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 4
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 5
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 6
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 7
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 8
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 9
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 10
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 11
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 12
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 13
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 14
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 15
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 16
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 17
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 18
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 19
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 20
+    requirements:
+      - "req1"
+      - "req2"
+```

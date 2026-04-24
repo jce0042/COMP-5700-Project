@@ -1,0 +1,66 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 60 kubectl proxy --port=8001 &  export HOSTNAME_PORT=localhost:8001 (example host and port number) export NODE_NAME=ip-192.168.31.226.ec2.internal (example node name from "kubectl get nodes")  curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy/configz" For all three remediation methods: Restart the kubelet service and check status. The example below is for when using systemctl to manage services: systemctl daemon-reload systemctl restart kubelet.service systemctl status kubelet -l Default Value: See the Amazon EKS documentation for the default value. References: 1. https://github.com/kubernetes/kubernetes/pull/45059 2. https://kubernetes.io/docs/admin/kubelet-tls-bootstrapping/#kubelet-configuration CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 3.10 Encrypt Sensitive Data in Transit  Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).  ● ● v7 14.4 Encrypt All Sensitive Information in Transit  Encrypt all sensitive information in transit.  ● ●
+Page 61 3.3 Container Optimized OS
+Page 62 3.3.1 Prefer using a container-optimized OS when possible (Manual) Profile Applicability: •  Level 2 Description: A container-optimized OS is an operating system image that is designed for secure managed hosting of containers on compute instances. Use cases for container-optimized OSes might include: • Docker container or Kubernetes support with minimal setup. • A small-secure container footprint. • An OS that is tested, hardened and verified for running Kubernetes nodes in your compute instances. Rationale: Container-optimized OSes have a smaller footprint which will reduce the instance's potential attack surface. The container runtime is pre-installed and security settings like locked-down firewall is configured by default. Container-optimized images may also be configured to automatically update on a regular period in the background. Impact: A container-optimized OS may have limited or no support for package managers, execution of non-containerized applications, or ability to install third-party drivers or kernel modules. Conventional remote access to the host (i.e. ssh) may not be possible, with access and debugging being intended via a management tool. Audit: If a container-optimized OS is required examine the nodes in EC2 and click on their AMI to ensure that it is a container-optimized OS like Amazon Bottlerocket; or connect to the worker node and check its OS. Remediation: Default Value: A container-optimized OS is not the default. References: 1. https://aws.amazon.com/blogs/containers/bottlerocket-a-special-purpose-container-operating-system/
+Page 63 2. https://aws.amazon.com/bottlerocket/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 16.7 Use Standard Hardening Configuration Templates for Application Infrastructure  Use standard, industry-recommended hardening configuration templates for application infrastructure components. This includes underlying servers, databases, and web servers, and applies to cloud containers, Platform as a Service (PaaS) components, and SaaS components. Do not allow in-house developed software to weaken configuration hardening.  ● ● v7 5.2 Maintain Secure Images  Maintain secure images or templates for all systems in the enterprise based on the organization's approved configuration standards. Any new system deployment or existing system that becomes compromised should be imaged using one of those images or templates.  ● ●
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Password Complexity"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Container Optimized OS"
+  - "CIS Controls: Controls Version Control"
+  - "IG 1 IG 2 IG 3 v8"
+  - "IG 1 IG 2 IG 3 v8"
+  - "IG 1 IG 2 IG 3 v8"
+```

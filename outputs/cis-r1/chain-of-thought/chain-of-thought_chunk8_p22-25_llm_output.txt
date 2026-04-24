@@ -1,0 +1,34 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 21 chmod 644 <kubeconfig file> Default Value: See the AWS EKS documentation for the default value. References: 1. https://kubernetes.io/docs/admin/kube-proxy/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 3.3 Configure Data Access Control Lists  Configure data access control lists based on a user’s need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications. ● ● ● v7 5.2 Maintain Secure Images  Maintain secure images or templates for all systems in the enterprise based on the organization's approved configuration standards. Any new system deployment or existing system that becomes compromised should be imaged using one of those images or templates.  ● ●
+Page 22 3.1.2 Ensure that the kubelet kubeconfig file ownership is set to root:root (Manual) Profile Applicability: •  Level 1 Description: If kubelet is running, ensure that the file ownership of its kubeconfig file is set to root:root. Rationale: The kubeconfig file for kubelet controls various parameters for the kubelet service in the worker node. You should set its file ownership to maintain the integrity of the file. The file should be owned by root:root. Impact: None Audit: SSH to the worker nodes To check to see if the Kubelet Service is running: sudo systemctl status kubelet The output should return Active: active (running) since.. Run the following command on each node to find the appropriate kubeconfig file: ps -ef | grep kubelet The output of the above command should return something similar to --kubeconfig /var/lib/kubelet/kubeconfig which is the location of the kubeconfig file. Run this command to obtain the kubeconfig file ownership: stat -c %U:%G /var/lib/kubelet/kubeconfig The output of the above command gives you the kubeconfig file's ownership. Verify that the ownership is set to root:root. Remediation: Run the below command (based on the file location on your system) on each worker node. For example,
+Page 23 chown root:root <proxy kubeconfig file> Default Value: See the AWS EKS documentation for the default value. References: 1. https://kubernetes.io/docs/admin/kube-proxy/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 3.3 Configure Data Access Control Lists  Configure data access control lists based on a user’s need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications. ● ● ● v7 5.2 Maintain Secure Images  Maintain secure images or templates for all systems in the enterprise based on the organization's approved configuration standards. Any new system deployment or existing system that becomes compromised should be imaged using one of those images or templates.  ● ●
+Page 24 3.1.3 Ensure that the kubelet configuration file has permissions set to 644 or more restrictive (Manual) Profile Applicability: •  Level 1 Description: Ensure that if the kubelet refers to a configuration file with the --config argument, that file has permissions of 644 or more restrictive. Rationale: The kubelet reads various parameters, including security settings, from a config file specified by the --config argument. If this file is specified you should restrict its file permissions to maintain the integrity of the file. The file should be writable by only the administrators on the system. Impact: None. Audit: First, SSH to the relevant worker node: To check to see if the Kubelet Service is running: sudo systemctl status kubelet The output should return Active: active (running) since.. Run the following command on each node to find the appropriate Kubelet config file: ps -ef | grep kubelet The output of the above command should return something similar to --config /etc/kubernetes/kubelet/kubelet-config.json which is the location of the Kubelet config file. Run the following command: stat -c %a /etc/kubernetes/kubelet/kubelet-config.json The output of the above command is the Kubelet config file's permissions. Verify that the permissions are 644 or more restrictive. Remediation: Run the following command (using the config file location identified in the Audit step)
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "requirements"
+```

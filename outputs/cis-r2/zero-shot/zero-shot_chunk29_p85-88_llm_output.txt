@@ -1,0 +1,150 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 84 
+Internal Only - General  4.2.1 Minimize the admission of privileged containers (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Do not generally permit containers to be run with the securityContext.privileged  
+flag set to true . 
+Rationale:  
+Privileged containers have access to all Linux Kernel capabilities and devices. A 
+container running with full privileges can do almost everything that the host can do. This 
+flag exists to allow special use -cases, like manipulating the network stack and 
+accessing devices.  
+There should be at least one admission control policy defined which does not permit 
+privileged containers.  
+If you need to run privileged containers, this should be defined in a separate policy and 
+you should carefully check to ensure that only limited service accounts and users are 
+given permission to use that policy.  
+Impact:  
+Pods defined with spec.containers[].securityContext.privileged: true , 
+spec.initContainers[].securityContext.privileged: true  and 
+spec.ephemeralContainers[].securityContext.privileged: true  will not be 
+permitted.
+Page 85 
+Internal Only - General  Audit:  
+List the policies in use for each namespace in the cluster, ensure that each policy 
+disallows the admission of privileged containers.  
+Since manually searching through each pod's configuration might be tedious, especially 
+in environments with many pods, you can use a more automated approach with grep or 
+other command -line tools.  
+Here's an example of how you might approach this with a combination of kubectl, grep, 
+and shell scripting for a more automated solution:  
+kubectl get pods --all-namespaces -o json | jq -r '.items[] | 
+select(.spec.containers[].security Context.privileged == true) | 
+.metadata.name'  
+OR 
+kubectl get pods --all-namespaces -o json | jq '.items[] | 
+select(.metadata.namespace != "kube -system" and 
+.spec.containers[]?.securityContext?.privileged == true) | {pod: 
+.metadata.name, namespace: .metadata.namespace, container: 
+.spec.containers[].name}'  
+When creating a Pod Security Policy, ["kube -system"] namespaces are excluded by 
+default.  
+This command uses jq, a command -line JSON processor, to parse the JSON output 
+from kubectl get pods and filter out po ds where any container has the 
+securityContext.privileged flag set to true. Please note that you might need to adjust the 
+command depending on your specific requirements and the structure of your pod 
+specifications.  
+Remediation:  
+Add policies to each namespace in the cluster which has user workloads to restrict the 
+admission of privileged containers.  
+To enable PSA for a namespace in your cluster, set the pod -
+security.kubernetes.io/enforce label with the policy value you want to enf orce.  
+kubectl label --overwrite ns NAMESPACE pod -
+security.kubernetes.io/enforce=restricted  
+The above command enforces the restricted policy for the NAMESPACE namespace.  
+You can also enable Pod Security Admission for all your namespaces. For example:  
+kubectl label --overwrite ns --all pod-
+security.kubernetes.io/warn=baseline  
+Default Value:  
+By default, there are no restrictions on the creation of privileged containers.  
+References:  
+1. https://kubernetes.io/docs/concepts/security/pod -security -admission/  
+2. https://aws.github.io/aws -eks-best-practices/pods/#restrict -the-containers -that-
+can-run-as-privileged
+Page 86 
+Internal Only - General  CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 5.4 Restrict Administrator Privileges to Dedicated 
+Administrator Accounts  
+ Restrict administrator privileges to dedicated administrator accounts on 
+enterprise assets. Conduct general computing activities, such as internet 
+browsing, email, and productivity suite use, from the user’s primary, non -privileged 
+account.  ● ● ● 
+v7 4.3 Ensure the Use of Dedicated Administrative Accounts  
+ Ensure that all users with administrative account access use a dedicated or 
+secondary account for elevated activities. This account should only be used for 
+administrative activities and not internet browsing, email, or similar activities.  ● ● ●
+Page 87 
+Internal Only - General  4.2.2 Minimize the admission of containers wishing to share the 
+host process ID namespace (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Do not generally permit containers to be run with the hostPID  flag set to true.  
+Rationale:  
+A container running in the host's PID namespace can inspect processes running outside 
+the container. If the container also has access to ptrace capabilities this can be used to 
+escalate privileges outside of the container.  
+There should be at least one admission control policy defined which does not permit 
+containers to share the host PID namespace.  
+If you need to run containers which require hostPID, this should be defined in a 
+separate policy and you should carefully check to ensure that only limited service 
+accounts and users are given permission to use that policy.  
+Impact:  
+Pods defined with spec.hostPID: true  will not be permitted unless they are run under 
+a specific policy.  
+Audit:  
+List the policies in use for each namespace in the cluster, ensure that each policy 
+disallows the admission of hostPID  containers  
+Search for the hostPID Flag: In the YAML output, look for the hostPID  setting under the 
+spec section to check if it is set to true . 
+kubectl get pods --all-namespaces -o json | jq -r '.items[] | 
+select(.spec.hostPID == true) | 
+"\(.metadata.namespace)/ \(.metadata.name)"'  
+OR 
+kubectl get pods --all-namespaces -o json | jq '.items[] | 
+select(.metadata.namespace != "kube -system" and .s pec.hostPID == true) 
+| {pod: .metadata.name, namespace: .metadata.namespace, container: 
+.spec.containers[].name}'  
+When creating a Pod Security Policy, ["kube -system"] namespaces are excluded by 
+default.  
+This command retrieves all pods across all namespaces in JSON format, then uses jq 
+to filter out those with the hostPID  flag set to true , and finally formats the output to 
+show the namespace and name of each matching pod.
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - name: Readable KDE Name
+    requirements:
+      - req1
+      - req2
+  - name:  Audit
+    requirements:
+      - "list the policies in use for each namespace in the cluster, ensure that each policy disallows the admission of hostPID containers"
+```

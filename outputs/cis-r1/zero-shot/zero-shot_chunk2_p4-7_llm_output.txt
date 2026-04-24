@@ -1,0 +1,236 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 3 3.2.2 Ensure that the --authorization-mode argument is not set to AlwaysAllow (Automated) .................... 33 3.2.3 Ensure that a Client CA File is Configured (Manual) .......................................................................... 37 3.2.4 Ensure that the --read-only-port is disabled (Manual) ........................................................................ 40 3.2.5 Ensure that the --streaming-connection-idle-timeout argument is not set to 0 (Automated) .............. 42 3.2.6 Ensure that the --protect-kernel-defaults argument is set to true (Automated) .................................. 45 3.2.7 Ensure that the --make-iptables-util-chains argument is set to true (Automated) .............................. 48 3.2.8 Ensure that the --hostname-override argument is not set (Manual) ................................................... 51 3.2.9 Ensure that the --eventRecordQPS argument is set to 0 or a level which ensures appropriate event capture (Automated) .................................................................................................................................... 53 3.2.10 Ensure that the --rotate-certificates argument is not present or is set to true (Manual) ................... 56 3.2.11 Ensure that the RotateKubeletServerCertificate argument is set to true (Automated) ..................... 58 3.3 Container Optimized OS ............................................................................................................... 61 3.3.1 Prefer using a container-optimized OS when possible (Manual) ........................................................ 62 4 Policies ................................................................................................................................. 64 4.1 RBAC and Service Accounts ....................................................................................................... 65 4.1.1 Ensure that the cluster-admin role is only used where required (Manual) ......................................... 66 4.1.2 Minimize access to secrets (Manual) ................................................................................................. 68 4.1.3 Minimize wildcard use in Roles and ClusterRoles (Manual) ............................................................... 70 4.1.4 Minimize access to create pods (Manual) .......................................................................................... 72 4.1.5 Ensure that default service accounts are not actively used. (Manual) ............................................... 74 4.1.6 Ensure that Service Account Tokens are only mounted where necessary (Manual) ......................... 76 4.1.7 Avoid use of system:masters group (Manual) .................................................................................... 78 4.1.8 Limit use of the Bind, Impersonate and Escalate permissions in the Kubernetes cluster (Manual) ... 80 4.2 Pod Security Policies .................................................................................................................... 82 4.2.1 Minimize the admission of privileged containers (Automated) ........................................................... 83 4.2.2 Minimize the admission of containers wishing to share the host process ID namespace (Automated) ..................................................................................................................................................................... 86 4.2.3 Minimize the admission of containers wishing to share the host IPC namespace (Automated) ........ 88 4.2.4 Minimize the admission of containers wishing to share the host network namespace (Automated) .. 90 4.2.5 Minimize the admission of containers with allowPrivilegeEscalation (Automated) ............................. 92 4.2.6 Minimize the admission of root containers (Automated) ..................................................................... 94 4.2.7 Minimize the admission of containers with added capabilities (Manual) ............................................ 96 4.2.8 Minimize the admission of containers with capabilities assigned (Automated) .................................. 98 4.3 CNI Plugin .................................................................................................................................... 100 4.3.1 Ensure CNI plugin supports network policies. (Manual) ................................................................... 101 4.3.2 Ensure that all Namespaces have Network Policies defined (Manual) ............................................ 103 4.4 Secrets Management .................................................................................................................. 105 4.4.1 Prefer using secrets as files over secrets as environment variables (Manual) ................................. 106 4.4.2 Consider external secret storage (Manual) ...................................................................................... 108 4.5 Extensible Admission Control ................................................................................................... 109 4.6 General Policies .......................................................................................................................... 110 4.6.1 Create administrative boundaries between resources using namespaces (Manual) ....................... 111 4.6.2 Apply Security Context to Your Pods and Containers (Manual) ....................................................... 113 4.6.3 The default namespace should not be used (Manual) ..................................................................... 116 5 Managed services ............................................................................................................. 117 5.1 Image Registry and Image Scanning ........................................................................................ 118 5.1.1 Ensure Image Vulnerability Scanning using Amazon ECR image scanning or a third party provider (Manual) .................................................................................................................................................... 119 5.1.2 Minimize user access to Amazon ECR (Manual) ............................................................................. 122 5.1.3 Minimize cluster access to read-only for Amazon ECR (Manual) .................................................... 125 5.1.4 Minimize Container Registries to only those approved (Manual) ..................................................... 127
+Page 4 5.2 Identity and Access Management (IAM) ................................................................................... 129 5.2.1 Prefer using dedicated EKS Service Accounts (Manual) ................................................................. 130 5.3 AWS EKS Key Management Service ......................................................................................... 132 5.3.1 Ensure Kubernetes Secrets are encrypted using Customer Master Keys (CMKs) managed in AWS KMS (Manual) ............................................................................................................................................ 133 5.4 Cluster Networking ..................................................................................................................... 135 5.4.1 Restrict Access to the Control Plane Endpoint (Manual) .................................................................. 136 5.4.2 Ensure clusters are created with Private Endpoint Enabled and Public Access Disabled (Manual) 139 5.4.3 Ensure clusters are created with Private Nodes (Manual) ............................................................... 141 5.4.4 Ensure Network Policy is Enabled and set as appropriate (Manual) ................................................ 142 5.4.5 Encrypt traffic to HTTPS load balancers with TLS certificates (Manual) .......................................... 144 5.5 Authentication and Authorization ............................................................................................. 145 5.5.1 Manage Kubernetes RBAC users with AWS IAM Authenticator for Kubernetes (Manual) .............. 146 5.6 Other Cluster Configurations ..................................................................................................... 148 5.6.1 Consider Fargate for running untrusted workloads (Manual) ........................................................... 149 Appendix: Summary Table ........................................................................................ 151 Appendix: CIS Controls v7 IG 1 Mapped Recommendations ................................ 156 Appendix: CIS Controls v7 IG 2 Mapped Recommendations ................................ 158 Appendix: CIS Controls v7 IG 3 Mapped Recommendations ................................ 161 Appendix: CIS Controls v7 Unmapped Recommendations ................................... 164 Appendix: CIS Controls v8 IG 1 Mapped Recommendations ................................ 165 Appendix: CIS Controls v8 IG 2 Mapped Recommendations ................................ 167 Appendix: CIS Controls v8 IG 3 Mapped Recommendations ................................ 170 Appendix: CIS Controls v8 Unmapped Recommendations ................................... 173 Appendix: Change History ........................................................................................ 174
+Page 5 Overview All CIS Benchmarks focus on technical configuration settings used to maintain and/or increase the security of the addressed technology, and they should be used in conjunction with other essential cyber hygiene tasks like: • Monitoring the base operating system for vulnerabilities and quickly updating with the latest security patches  • Monitoring applications and libraries for vulnerabilities and quickly updating with the latest security patches In the end, the CIS Benchmarks are designed as a key component of a comprehensive cybersecurity program.   This document provides prescriptive guidance for running Amazon Elastic Kubernetes Service (EKS) following recommended security controls. This benchmark only includes controls which can be modified by an end user of Amazon EKS. To obtain the latest version of this guide, please visit www.cisecurity.org. If you have questions, comments, or have identified ways to improve this guide, please write us at support@cisecurity.org.  Intended Audience This document is intended for cluster administrators, security specialists, auditors, and any personnel who plan to develop, deploy, assess, or secure solutions that incorporate Amazon EKS using managed and self-managed nodes. Customers using Amazon EKS on AWS Fargate are not responsible for node management. Hence, this document is not scoped for Amazon EKS on AWS Fargate customers.
+Page 6 Consensus Guidance This CIS Benchmark was created using a consensus review process comprised of a global community of subject matter experts. The process combines real world experience with data-based information to create technology specific guidance to assist users to secure their environments. Consensus participants provide perspective from a diverse set of backgrounds including consulting, software development, audit and compliance, security research, operations, government, and legal.  Each CIS Benchmark undergoes two phases of consensus review. The first phase occurs during initial Benchmark development. During this phase, subject matter experts convene to discuss, create, and test working drafts of the Benchmark. This discussion occurs until consensus has been reached on Benchmark recommendations. The second phase begins after the Benchmark has been published. During this phase, all feedback provided by the Internet community is reviewed by the consensus team for incorporation in the Benchmark. If you are interested in participating in the consensus process, please visit https://workbench.cisecurity.org/.
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - Readable KDE Name
+  - Requirements
+    - req1
+    - req2
+  - Requirements
+    - req3
+    - req4
+  - Requirements
+    - req5
+  - Requirements
+    - req6
+  - Requirements
+    - req7
+  - Requirements
+    - req8
+  - Requirements
+    - req9
+  - Requirements
+    - req10
+  - Requirements
+    - req11
+  - Requirements
+    - req12
+  - Requirements
+    - req13
+  - Requirements
+    - req14
+  - Requirements
+    - req15
+  - Requirements
+    - req16
+  - Requirements
+    - req17
+  - Requirements
+    - req18
+  - Requirements
+    - req19
+  - Requirements
+    - req20
+  - Requirements
+    - req21
+  - Requirements
+    - req22
+  - Requirements
+    - req23
+  - Requirements
+    - req24
+  - Requirements
+    - req25
+  - Requirements
+    - req26
+  - Requirements
+    - req27
+  - Requirements
+    - req28
+  - Requirements
+    - req29
+  - Requirements
+    - req30
+  - Requirements
+    - req31
+  - Requirements
+    - req32
+  - Requirements
+    - req33
+  - Requirements
+    - req34
+  - Requirements
+    - req35
+  - Requirements
+    - req36
+  - Requirements
+    - req37
+  - Requirements
+    - req38
+  - Requirements
+    - req39
+  - Requirements
+    - req40
+  - Requirements
+    - req41
+  - Requirements
+    - req42
+  - Requirements
+    - req43
+  - Requirements
+    - req44
+  - Requirements
+    - req45
+  - Requirements
+    - req46
+  - Requirements
+    - req47
+  - Requirements
+    - req48
+  - Requirements
+    - req49
+  - Requirements
+    - req50
+  - Requirements
+    - req51
+  - Requirements
+    - req52
+  - Requirements
+    - req53
+  - Requirements
+    - req54
+  - Requirements
+    - req55
+  - Requirements
+    - req56
+  - Requirements
+    - req57
+  - Requirements
+    - req58
+  - Requirements
+    - req59
+  - Requirements
+    - req60
+  - Requirements
+    - req61
+  - Requirements
+    - req62
+  - Requirements
+    - req63
+  - Requirements
+    - req64
+  - Requirements
+    - req65
+  - Requirements
+    - req66
+  - Requirements
+    - req67
+  - Requirements
+    - req68
+  - Requirements
+    - req69
+  - Requirements
+    - req70
+  - Requirements
+    - req71
+  - Requirements
+    - req72
+  - Requirements
+    - req73
+  - Requirements
+    - req74
+  - Requirements
+    - req75
+  - Requirements
+    - req76
+  - Requirements
+    - req77
+  - Requirements
+    - req78
+  - Requirements
+    - req79
+  - Requirements
+    - req80
+  - Requirements
+    - req81
+  - Requirements
+    - req82
+  - Requirements
+    - req83
+  - Requirements
+    - req84
+  - Requirements
+    - req85
+  - Requirements
+    - req86
+  - Requirements
+    - req87
+  - Requirements
+    - req88
+  - Requirements
+    - req89
+  - Requirements
+    - req90
+  - Requirements
+    - req91
+  - Requirements
+    - req92
+  - Requirements
+    - req93
+  - Requirements
+    - req94
+  - Requirements
+    - req95
+  - Requirements
+    - req96
+  - Requirements
+    - req97
+  - Requirements
+    - req98
+  - Requirements
+    - req99
+  - Requirements
+    - req100
+  - Requirements
+    - req101
+  - Requirements
+    - req102
+  - Requirements
+

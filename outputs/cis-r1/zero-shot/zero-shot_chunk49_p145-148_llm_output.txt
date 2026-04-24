@@ -1,0 +1,35 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 144 5.4.5 Encrypt traffic to HTTPS load balancers with TLS certificates (Manual) Profile Applicability: •  Level 2 Description: Encrypt traffic to HTTPS load balancers using TLS certificates. Rationale: Encrypting traffic between users and your Kubernetes workload is fundamental to protecting data sent over the web. Audit: Remediation: References: 1. https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/data-protection.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 3.10 Encrypt Sensitive Data in Transit  Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).  ● ● v7 14.4 Encrypt All Sensitive Information in Transit  Encrypt all sensitive information in transit.  ● ●
+Page 145 5.5 Authentication and Authorization This section contains recommendations relating to authentication and authorization in Amazon EKS.
+Page 146 5.5.1 Manage Kubernetes RBAC users with AWS IAM Authenticator for Kubernetes (Manual) Profile Applicability: •  Level 2 Description: Amazon EKS uses IAM to provide authentication to your Kubernetes cluster through the AWS IAM Authenticator for Kubernetes. You can configure the stock kubectl client to work with Amazon EKS by installing the AWS IAM Authenticator for Kubernetes and modifying your kubectl configuration file to use it for authentication. Rationale: On- and off-boarding users is often difficult to automate and prone to error. Using a single source of truth for user permissions reduces the number of locations that an individual must be off-boarded from, and prevents users gaining unique permissions sets that increase the cost of audit. Impact: Users must now be assigned to the IAM group created to use this namespace and deploy applications. If they are not they will not be able to access the namespace or deploy. Audit: To Audit access to the namespace $NAMESPACE, assume the IAM role yourIAMRoleName for a user that you created, and then run the following command: $ kubectl get role -n $NAMESPACE The response lists the RBAC role that has access to this Namespace. Remediation: Refer to the 'Managing users or IAM roles for your cluster' in Amazon EKS documentation. Note: If using AWS CLI version 1.16.156 or later there is no need to install the AWS IAM Authenticator anymore. The relevant AWS CLI commands, depending on the use case, are: aws eks update-kubeconfig aws eks get-token Default Value: For role-based access control (RBAC), system:masters permissions are configured in the Amazon EKS control plane
+Page 147 References: 1. https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html 2. https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 6.8 Define and Maintain Role-Based Access Control  Define and maintain role-based access control, through determining and documenting the access rights necessary for each role within the enterprise to successfully carry out its assigned duties. Perform access control reviews of enterprise assets to validate that all privileges are authorized, on a recurring schedule at a minimum annually, or more frequently.   ● v7 16.2 Configure Centralized Point of Authentication  Configure access for all accounts through as few centralized points of authentication as possible, including network, security, and cloud systems.  ● ●
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "req1"
+  - "req2"
+```

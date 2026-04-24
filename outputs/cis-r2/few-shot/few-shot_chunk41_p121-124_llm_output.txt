@@ -1,0 +1,166 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 120 
+Internal Only - General  5.1.4 Minimize Container Registries to only those approved 
+(Manual)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Use approved container registries.  
+Rationale:  
+Allowing unrestricted access to external container registries provides the opportunity for 
+malicious or unapproved containers to be deployed into the cluster. Allowlisting only 
+approved container registries reduces this risk.  
+Impact:  
+All container images to be deployed to the cluster must be hosted within an approved 
+container image registry.  
+Audit:  
+Remediation:  
+To minimize AWS ECR container registries to only those approved, you can follow 
+these steps:  
+1. Define your approval criteria: Determine the criteria that containers must meet to 
+be considered approved. This can include factors such as security, compliance, 
+compatibility, and other requirements.  
+2. Identify all existing ECR registries: Identify all ECR registries that are currently 
+being used in your organization.  
+3. Evaluate ECR registries against approval criteria: Evaluate each ECR registry 
+against your approval criteria to determine whether it should be approved or not. 
+This can be done by reviewing the registry settings and configuration, as well as 
+conducting sec urity assessments and vulnerability scans.  
+4. Establish policies and procedures: Establish policies and procedures that outline 
+how ECR registries will be approved, maintained, and monitored. This should 
+include guidelines for developers to follow when selecting a registry for their 
+container images.  
+5. Implement access controls: Implement access controls to ensure that only 
+approved ECR registries are used to store and distribute container images. This 
+can be done by setting up IAM policies and roles that restrict access to 
+unapproved registries or creat e a whitelist of approved registries.  
+6. Monitor and review: Continuously monitor and review the use of ECR registries 
+to ensure that they continue to meet your approval criteria. This can include
+Page 121 
+Internal Only - General  regularly reviewing access logs, scanning for vulnerabilities, and conducting 
+periodic audits.  
+By following these steps, you can minimize AWS ECR container registries to only those 
+approved, which can help to improve security, reduce complexity, and streamline 
+container management in your organization. Additionally, AWS provides several tools 
+and se rvices that can help you manage your ECR registries, such as AWS Config, AWS 
+CloudFormation, and AWS Identity and Access Management (IAM).  
+Default Value:  
+Container registries are not restricted by default and Kubernetes assumes your default 
+CR is Docker Hub.  
+References:  
+1. https://aws.amazon.com/blogs/opensource/using -open -policy -agent -on-amazon -
+eks/ 
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 2.5 Allowlist Authorized Software  
+ Use technical controls, such as application allowlisting, to ensure that only 
+authorized software can execute or be accessed. Reassess  bi-annually, or more 
+frequently.   ● ● 
+v7 5.3 Securely Store Master Images  
+ Store the master images and templates on securely configured servers, 
+validated with integrity monitoring tools, to ensure that only authorized changes 
+to the images are possible.   ● ● 
+v7 13.4 Only Allow Access to Authorized Cloud Storage or 
+Email Providers  
+ Only allow access to authorized cloud storage or email providers.   ● ●
+Page 122 
+Internal Only - General  5.2 Identity and Access Management (IAM)  
+This section contains recommendations relating to using AWS IAM with Amazon EKS.
+Page 123 
+Internal Only - General  5.2.1 Prefer using dedicated EKS Service Accounts (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Kubernetes workloads should not use cluster node service accounts to authenticate to 
+Amazon EKS APIs. Each Kubernetes workload that needs to authenticate to other AWS 
+services using AWS IAM should be provisioned with a dedicated Service account.  
+Rationale:  
+Manual approaches for authenticating Kubernetes workloads running on Amazon EKS 
+against AWS APIs are: storing service account keys as a Kubernetes secret (which 
+introduces manual key rotation and potential for key compromise); or use of the 
+underlying node s' IAM Service account, which violates the principle of least privilege on 
+a multi -tenanted node, when one pod needs to have access to a service, but every 
+other pod on the node that uses the Service account does not.  
+Audit:  
+For each namespace in the cluster, review the rights assigned to the default service 
+account and ensure that it has no roles or cluster roles bound to it apart from the 
+defaults.  
+Additionally ensure that the automountServiceAccountToken: false setting is i n place for 
+each default service account.  
+Remediation:  
+With IAM roles for service accounts on Amazon EKS clusters, you can associate an 
+IAM role with a Kubernetes service account. This service account can then provide 
+AWS permissions to the containers in any pod that uses that service account. With this 
+featur e, you no longer need to provide extended permissions to the worker node IAM 
+role so that pods on that node can call AWS APIs.  
+Applications must sign their AWS API requests with AWS credentials. This feature 
+provides a strategy for managing credentials for  your applications, similar to the way 
+that Amazon EC2 instance profiles provide credentials to Amazon EC2 instances. 
+Instead of creating and distributing your AWS credentials to the containers or using the 
+Amazon EC2 instance’s role, you can associate an IAM role with a Kubernetes service 
+account. The applications in the pod’s containers can then use an AWS SDK or the 
+AWS CLI to make API requests to authorized AWS services.  
+The IAM roles for service accounts feature provides the following benefits:  
+• Least privilege — By using the IAM roles for service accounts feature, you no 
+longer need to provide extended permissions to the worker node IAM role so that 
+pods on that node can call AWS APIs. You can scope IAM permissions to a 
+service account, and only pods that use that service account have access to
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  name: "Container Registry Requirements"
+  requirements:
+    - "Approved container registries"
+    - "Security assessments and vulnerability scans"
+    - "Access controls to approved registries"
+    - "Regular monitoring and review"
+```

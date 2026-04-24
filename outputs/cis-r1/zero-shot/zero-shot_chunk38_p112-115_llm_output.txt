@@ -1,0 +1,35 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 111 4.6.1 Create administrative boundaries between resources using namespaces (Manual) Profile Applicability: •  Level 1 Description: Use namespaces to isolate your Kubernetes objects. Rationale: Limiting the scope of user permissions can reduce the impact of mistakes or malicious activities. A Kubernetes namespace allows you to partition created resources into logically named groups. Resources created in one namespace can be hidden from other namespaces. By default, each resource created by a user in an Amazon EKS cluster runs in a default namespace, called default. You can create additional namespaces and attach resources and users to them. You can use Kubernetes Authorization plugins to create policies that segregate access to namespace resources between different users. Impact: You need to switch between namespaces for administration. Audit: Run the below command and review the namespaces created in the cluster. kubectl get namespaces Ensure that these namespaces are the ones you need and are adequately administered as per your requirements. Remediation: Follow the documentation and create namespaces for objects in your deployment as you need them. Default Value: By default, Kubernetes starts with two initial namespaces: 1. default - The default namespace for objects with no other namespace 2. kube-system - The namespace for objects created by the Kubernetes system 3. kube-public - The namespace for public-readable ConfigMap 4. kube-node-lease - The namespace for associated lease object for each node
+Page 112 References: 1. https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ 2. http://blog.kubernetes.io/2016/08/security-best-practices-kubernetes-deployment.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 12.8 Establish and Maintain Dedicated Computing Resources for All Administrative Work  Establish and maintain dedicated computing resources, either physically or logically separated, for all administrative tasks or tasks requiring administrative access. The computing resources should be segmented from the enterprise's primary network and not be allowed internet access.   ● v7 12.1 Maintain an Inventory of Network Boundaries  Maintain an up-to-date inventory of all of the organization's network boundaries. ● ● ●
+Page 113 4.6.2 Apply Security Context to Your Pods and Containers (Manual) Profile Applicability: •  Level 2 Description: Apply Security Context to Your Pods and Containers Rationale: A security context defines the operating system security settings (uid, gid, capabilities, SELinux role, etc..) applied to a container. When designing your containers and pods, make sure that you configure the security context for your pods, containers, and volumes. A security context is a property defined in the deployment yaml. It controls the security parameters that will be assigned to the pod/container/volume. There are two levels of security context: pod level security context, and container level security context. Impact: If you incorrectly apply security contexts, you may have trouble running the pods. Audit: Review the pod definitions in your cluster and verify that you have security contexts defined as appropriate. Remediation: As a best practice we recommend that you scope the binding for privileged pods to service accounts within a particular namespace, e.g. kube-system, and limiting access to that namespace. For all other serviceaccounts/namespaces, we recommend implementing a more restrictive policy such as this:
+Page 114 apiVersion: policy/v1beta1 kind: PodSecurityPolicy metadata:     name: restricted     annotations:     seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default,runtime/default'     apparmor.security.beta.kubernetes.io/allowedProfileNames: 'runtime/default'     seccomp.security.alpha.kubernetes.io/defaultProfileName:  'runtime/default'     apparmor.security.beta.kubernetes.io/defaultProfileName:  'runtime/default' spec:     privileged: false     # Required to prevent escalations to root.     allowPrivilegeEscalation: false     # This is redundant with non-root + disallow privilege escalation,     # but we can provide it for defense in depth.     requiredDropCapabilities:     - ALL     # Allow core volume types.     volumes:     - 'configMap'     - 'emptyDir'     - 'projected'     - 'secret'     - 'downwardAPI'     # Assume that persistentVolumes set up by the cluster admin are safe to use.     - 'persistentVolumeClaim'     hostNetwork: false     hostIPC: false     hostPID: false     runAsUser:     # Require the container to run without root privileges.     rule: 'MustRunAsNonRoot'     seLinux:     # This policy assumes the nodes are using AppArmor rather than SELinux.     rule: 'RunAsAny'     supplementalGroups:     rule: 'MustRunAs'     ranges:         # Forbid adding the root group.         - min: 1         max: 65535     fsGroup:     rule: 'MustRunAs'     ranges:         # Forbid adding the root group.         - min: 1         max: 65535     readOnlyRootFilesystem: false
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements for Readable KDE Name"
+  - "Requirements for Readable KDE Name"
+```

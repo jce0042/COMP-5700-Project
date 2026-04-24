@@ -1,0 +1,203 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 42 
+Internal Only - General  sudo less /path/to/kubelet -config.json  
+Verify that Webhook Authentication is enabled. This may be enabled as a command line 
+argument to the kubelet service with --authentication -token-webhook  or in the 
+kubelet configuration file via "authentication": { "webhook": { "enabled": 
+true } } . 
+Verify that the Authorization Mode is set to WebHook . This may be set as a command 
+line argument to the kubelet service with --authorization -mode=Webhook  or in the 
+configuration file via "authorization": { "mode": "Webhook } . 
+Audit Method 2:  
+It is also possible to  review the running configuration of a Kubelet via the /configz 
+endpoint of the Kubernetes API. This can be achieved using kubectl  to proxy your 
+requests to the API.  
+Discover all nodes in your cluster by running the following command:  
+kubectl get nodes  
+Next, initiate a proxy with kubectl on a local port of your choice. In this example we will 
+use 8080:  
+kubectl proxy --port=8080  
+With this running, in a separate terminal run the following command for each node:  
+export NODE_NAME=my -node-name 
+curl http://localhost:8080/api/v1/nodes/${NODE_NAME}/proxy/configz     
+The curl command will return the API response which will be a JSON formatted string 
+representing the Kubelet configuration.  
+Verify that Webhook Authentication is enabled with "authentication": { 
+"webhook": { "enabled": true } }  in the API response.  
+Verify that the Authorization Mode is set to WebHook  with "authorization": { 
+"mode": "Webhook }  in the API response.  
+Remediation:  
+Remediation Method 1:  
+If configuring via the Kubelet config file, you first need to locate the file.  
+To do this, SSH to each node and execute the following command to find the kubelet 
+process:  
+ps -ef | grep kubelet  
+The output of the above command provides details of the active kubelet process, from 
+which we can see the location of the configuration file provided to the kubelet service 
+with the --config  argument. The file can be viewed with a command such as more  or 
+less , like so:  
+sudo less /path/to/kubelet -config.json  
+Enable Webhook Authentication by setting the following parameter:
+Page 43 
+Internal Only - General  "authentication": { "webhook": { "enabled": true } }  
+Next, set the Authorization Mode to Webhook  by setting the following parameter:  
+"authorization": { "mode": "Webhook }  
+Finer detail of the authentication  and authorization  fields can be found in the 
+Kubelet Configuration documentation . 
+Remediation Method 2:  
+If using executable arguments, edit the kubelet service file on each worker node and 
+ensure the below parameters are part of the KUBELET_ARGS  variable string.  
+For systems using systemd , such as the Amazon EKS Optimised Amazon Linux or 
+Bottlerocket AMIs, then this file can be found at 
+/etc/systemd/system/kubelet.service.d/10 -kubelet-args.conf . Otherwise, 
+you may need to look up documentation for your chosen operating system to determine 
+which service manager is configured:  
+--authentication -token-webhook 
+--authorization -mode=Webhook  
+For Both Remediation Steps:  
+Based on your system, restart the kubelet  service and check the service status.  
+The following example is for operating systems using systemd , such as the Amazon 
+EKS Optimised Amazon Linux or Bottlerocket AMIs, and invokes the systemctl  
+command. If systemctl  is not available then you will need to look up documentation for 
+your chosen operating system to determine which service manager is configured:  
+systemctl daemon -reload 
+systemctl restart kubelet.service  
+systemctl status kubelet -l 
+Default Value:  
+See the EKS documentation for the default value.  
+References:  
+1. https://kubernetes.io/docs/reference/command -line-tools -reference/kubelet/  
+2. https://kubernetes.io/docs/reference/access -authn -authz/kubelet -authn -
+authz/#kubelet -authentication  
+3. https://kubernetes.io/docs/reference/config -api/kubelet -config.v1beta1/
+Page 44 
+Internal Only - General  CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 5.4 Restrict Administrator Privileges to Dedicated 
+Administrator Accounts  
+ Restrict administrator privileges to dedicated administrator accounts on 
+enterprise assets. Conduct general computing activities, such as internet 
+browsing, email, and productivity suite use, from the user’s primary, non -privileged 
+account.  ● ● ● 
+v7 4.2 Change Default Passwords  
+ Before deploying any new asset, change all default passwords to have values 
+consistent with administrative level accounts.  ● ● ●
+Page 45 
+Internal Only - General  3.2.3 Ensure that a Client CA File is Configured (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Enable Kubelet authentication using certificates.  
+Rationale:  
+The connections from the apiserver to the kubelet  are used for fetching logs for pods, 
+attaching (through kubectl) to running pods, and using the kubelet’s port -forwarding 
+functionality. These connections terminate at the kubelet’s HTTPS endpoint. By default, 
+the apiserver does not verify the kubelet’s s erving certificate, which makes the 
+connection subject to man -in-the-middle attacks, and unsafe to run over untrusted 
+and/or public networks. Enabling Kubelet certificate authentication ensures that the 
+apiserver could authenticate the Kubelet before submi tting any requests.  
+Impact:  
+You require TLS to be configured on apiserver as well as kubelets.  
+Audit:  
+Audit Method 1:  
+Kubelets can accept configuration via a configuration file and in some cases via 
+command line arguments. It is important to note that parameters provided as command 
+line arguments will override their counterpart parameters in the configuration file (see --
+config  details in the Kubelet CLI Reference  for more info, where you can also find out 
+which configuration parameters can be supplied as a command line argument).  
+With this in mind, it is important to check for the existence of command line arguments 
+as well as configuration file entries when audit ing Kubelet configuration.  
+Firstly, SSH to each node and execute the following command to find the Kubelet 
+process:  
+ps -ef | grep kubelet  
+The output of the above command provides details of the active Kubelet process, from 
+which we can see the command line arguments provided to the process. Also note the 
+location of the configuration file, provided with the --config  argument, as this will be 
+needed to verify configuration. The file can be viewed with a command such as more  or 
+less , like so:
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - name: Readable KDE Name
+    requirements:
+      - req1
+      - req2
+  - name: Webhook Authentication
+    requirements:
+      - req1
+      - req2
+  - name: Authorization Mode
+    requirements:
+      - req1
+      - req2
+  - name: Webhook Authentication Enabled
+    requirements:
+      - req1
+      - req2
+  - name: Authorization Mode Set to Webhook
+    requirements:
+      - req1
+      - req2
+  - name: Remediation Method 1
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Remediation Method 2
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Authentication and Authorization Fields
+    requirements:
+      - "req1"
+      - "req2"
+  - name: CIS Controls
+    requirements:
+      - "Version Control"
+      - "IG 1"
+      - "IG 2"
+      - "IG 3"
+      - "v8"
+      - "5.4"
+      - "Restrict Administrator Privileges"
+      - "Change Default Passwords"
+      - "IG 1"
+      - "IG 2"
+      - "IG 3"
+      - "v7"
+      - "4.2"
+      - "Change Default Passwords"
+      - "v7"
+      - "4.2"
+  - name: 3.2.3 Ensure Client CA File Configured
+    requirements:
+      - "req1"
+      - "req2"
+  - name: 3.2.3 Ensure a Client CA File is Configured (Automated)
+    requirements:
+      - "req1"
+      - "req2"
+```

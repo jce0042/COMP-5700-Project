@@ -1,0 +1,36 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 48 3.2.7 Ensure that the --make-iptables-util-chains argument is set to true (Automated) Profile Applicability: •  Level 1 Description: Allow Kubelet to manage iptables. Rationale: Kubelets can automatically manage the required changes to iptables based on how you choose your networking options for the pods. It is recommended to let kubelets manage the changes to iptables. This ensures that the iptables configuration remains in sync with pods networking configuration. Manually configuring iptables with dynamic pod network configuration changes might hamper the communication between pods/containers and to the outside world. You might have iptables rules too restrictive or too open. Impact: Kubelet would manage the iptables on the system and keep it in sync. If you are using any other iptables management solution, then there might be some conflicts. Audit: Audit Method 1: First, SSH to each node: Run the following command on each node to find the Kubelet process: ps -ef | grep kubelet If the output of the above command includes the argument --make-iptables-util-chains then verify it is set to true. If the --make-iptables-util-chains argument does not exist, and there is a Kubelet config file specified by --config, verify that the file does not set makeIPTablesUtilChains to false. Audit Method 2: If using the api configz endpoint consider searching for the status of authentication... "makeIPTablesUtilChains.:true by extracting the live configuration from the nodes running kubelet. Set the local proxy port and the following variables and provide proxy port number and node name; HOSTNAME_PORT="localhost-and-port-number" NODE_NAME="The-Name-Of-Node-To-Extract-Configuration" from the output of "kubectl get nodes"
+Page 49 kubectl proxy --port=8001 &  export HOSTNAME_PORT=localhost:8001 (example host and port number) export NODE_NAME=ip-192.168.31.226.ec2.internal (example node name from "kubectl get nodes")  curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy/configz" Remediation: Remediation Method 1: If modifying the Kubelet config file, edit the kubelet-config.json file /etc/kubernetes/kubelet/kubelet-config.json and set the below parameter to true "makeIPTablesUtilChains": true Ensure that /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf does not set the --make-iptables-util-chains argument because that would override your Kubelet config file. Remediation Method 2: If using executable arguments, edit the kubelet service file /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf on each worker node and add the below parameter at the end of the KUBELET_ARGS variable string. --make-iptables-util-chains:true Remediation Method 3: If using the api configz endpoint consider searching for the status of "makeIPTablesUtilChains.: true by extracting the live configuration from the nodes running kubelet. **See detailed step-by-step configmap procedures in Reconfigure a Node's Kubelet in a Live Cluster, and then rerun the curl statement from audit process to check for kubelet configuration changes kubectl proxy --port=8001 &  export HOSTNAME_PORT=localhost:8001 (example host and port number) export NODE_NAME=ip-192.168.31.226.ec2.internal (example node name from "kubectl get nodes")  curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy/configz" For all three remediations: Based on your system, restart the kubelet service and check status systemctl daemon-reload systemctl restart kubelet.service systemctl status kubelet -l Default Value: See the Amazon EKS documentation for the default value.
+Page 50 References: 1. https://kubernetes.io/docs/admin/kubelet/ 2. https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 12.3 Securely Manage Network Infrastructure  Securely manage network infrastructure. Example implementations include version-controlled-infrastructure-as-code, and the use of secure network protocols, such as SSH and HTTPS.   ● ● v7 11.1 Maintain Standard Security Configurations for Network Devices  Maintain standard, documented security configuration standards for all authorized network devices.  ● ●
+Page 51 3.2.8 Ensure that the --hostname-override argument is not set (Manual) Profile Applicability: •  Level 1 Description: Do not override node hostnames. Rationale: Overriding hostnames could potentially break TLS setup between the kubelet and the apiserver. Additionally, with overridden hostnames, it becomes increasingly difficult to associate logs with a particular node and process them for security analytics. Hence, you should setup your kubelet nodes with resolvable FQDNs and avoid overriding the hostnames with IPs. Usage of --hostname-override also may have some undefined/unsupported behaviours. Impact: --hostname-override may not take when the kubelet also has --cloud-provider aws Audit: Audit Method 1: SSH to each node: Run the following command on each node to find the Kubelet process: ps -ef | grep kubelet Verify that --hostname-override argument does not exist in the output of the above command. Note This setting is not configurable via the Kubelet config file. Remediation: Remediation Method 1: If using executable arguments, edit the kubelet service file /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf on each worker node and remove the below parameter from the KUBELET_ARGS variable string. --hostname-override Based on your system, restart the kubelet service and check status. The example below is for systemctl:
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - Readable KDE Name
+  - Requirements:
+    - req1
+    - req2
+```

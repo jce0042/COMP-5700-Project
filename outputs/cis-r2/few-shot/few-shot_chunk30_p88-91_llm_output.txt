@@ -1,0 +1,300 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 87 
+Internal Only - General  4.2.2 Minimize the admission of containers wishing to share the 
+host process ID namespace (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Do not generally permit containers to be run with the hostPID  flag set to true.  
+Rationale:  
+A container running in the host's PID namespace can inspect processes running outside 
+the container. If the container also has access to ptrace capabilities this can be used to 
+escalate privileges outside of the container.  
+There should be at least one admission control policy defined which does not permit 
+containers to share the host PID namespace.  
+If you need to run containers which require hostPID, this should be defined in a 
+separate policy and you should carefully check to ensure that only limited service 
+accounts and users are given permission to use that policy.  
+Impact:  
+Pods defined with spec.hostPID: true  will not be permitted unless they are run under 
+a specific policy.  
+Audit:  
+List the policies in use for each namespace in the cluster, ensure that each policy 
+disallows the admission of hostPID  containers  
+Search for the hostPID Flag: In the YAML output, look for the hostPID  setting under the 
+spec section to check if it is set to true . 
+kubectl get pods --all-namespaces -o json | jq -r '.items[] | 
+select(.spec.hostPID == true) | 
+"\(.metadata.namespace)/ \(.metadata.name)"'  
+OR 
+kubectl get pods --all-namespaces -o json | jq '.items[] | 
+select(.metadata.namespace != "kube -system" and .s pec.hostPID == true) 
+| {pod: .metadata.name, namespace: .metadata.namespace, container: 
+.spec.containers[].name}'  
+When creating a Pod Security Policy, ["kube -system"] namespaces are excluded by 
+default.  
+This command retrieves all pods across all namespaces in JSON format, then uses jq 
+to filter out those with the hostPID  flag set to true , and finally formats the output to 
+show the namespace and name of each matching pod.
+Page 88 
+Internal Only - General  Remediation:  
+Add policies to each namespace in the cluster which has user workloads to restrict the 
+admission of hostPID  containers.  
+Default Value:  
+By default, there are no restrictions on the creation of hostPID  containers.  
+References:  
+1. https://kubernetes.io/docs/concepts/security/pod -security -admission/  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 5.4 Restrict Administrator Privileges to Dedicated 
+Administrator Accounts  
+ Restrict administrator privileges to dedicated administrator accounts on 
+enterprise assets. Conduct general computing activities, such as internet 
+browsing, email, and productivity suite use, from the user’s primary, non -privileged 
+account.  ● ● ● 
+v7 4.3 Ensure the Use of Dedicated Administrative Accounts  
+ Ensure that all users with administrative account access use a dedicated or 
+secondary account for elevated activities. This account should only be used for 
+administrative activities and not internet browsing, email, or similar activities.  ● ● ●
+Page 89 
+Internal Only - General  4.2.3 Minimize the admission of containers wishing to share the 
+host IPC namespace (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Do not generally permit containers to be run with the hostIPC  flag set to true.  
+Rationale:  
+A container running in the host's IPC namespace can use IPC to interact with processes 
+outside the container.  
+There should be at least one admission control policy defined which does not permit 
+containers to share the host IPC namespace.  
+If you need to run containers which require hostIPC, this should be defined in a 
+separate policy and you should carefully check to ensure that only limited service 
+accounts and users are given permission to use that policy.  
+Impact:  
+Pods defined with spec.hostIPC: true  will not be permitted unless they are run under 
+a specific policy.  
+Audit:  
+List the policies in use for each namespace in the cluster, ensure that each policy 
+disallows the admission of hostIPC  containers  
+Search for the hostIPC Flag: In the YAML output, look for the hostIPC  setting under the 
+spec section to check if it is set to true . 
+kubectl get pods --all-namespaces -o json | jq -r '.items[] | 
+select(.spec.hostIPC == true) | 
+"\(.metadata.namespace)/ \(.metadata.name)"'  
+OR 
+kubectl get pods --all-namespaces -o json | jq '.items[] | 
+select(.metadata.namespace != "kube -system" and .s pec.hostIPC == true) 
+| {pod: .metadata.name, namespace: .metadata.namespace, container: 
+.spec.containers[].name}'  
+When creating a Pod Security Policy, ["kube -system"] namespaces are excluded by 
+default.  
+This command retrieves all pods across all namespaces in JSON format, then uses jq 
+to filter out those with the hostIPC  flag set to true , and finally formats the output to 
+show the namespace and name of each matching pod.
+Page 90 
+Internal Only - General  Remediation:  
+Add policies to each namespace in the cluster which has user workloads to restrict the 
+admission of hostIPC  containers.  
+Default Value:  
+By default, there are no restrictions on the creation of hostIPC  containers.  
+References:  
+1. https://kubernetes.io/docs/concepts/security/pod -security -admission/  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 5.4 Restrict Administrator Privileges to Dedicated 
+Administrator Accounts  
+ Restrict administrator privileges to dedicated administrator accounts on 
+enterprise assets. Conduct general computing activities, such as internet 
+browsing, email, and productivity suite use, from the user’s primary, non -privileged 
+account.  ● ● ● 
+v7 4.3 Ensure the Use of Dedicated Administrative Accounts  
+ Ensure that all users with administrative account access use a dedicated or 
+secondary account for elevated activities. This account should only be used for 
+administrative activities and not internet browsing, email, or similar activities.  ● ● ●
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - name: Readable KDE Name
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Data Encryption
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Access Logging
+    requirements:
+      - "req1"
+      - "req2"
+  - name: Pod Security Policy
+    requirements:
+      - "req1"
+      - "req2"
+      - "req3"
+      - "req4"
+      - "req5"
+      - "req6"
+      - "req7"
+      - "req8"
+      - "req9"
+      - "req10"
+      - "req11"
+      - "req12"
+      - "req13"
+      - "req14"
+      - "req15"
+      - "req16"
+      - "req17"
+      - "req18"
+      - "req19"
+      - "req20"
+      - "req21"
+      - "req22"
+      - "req23"
+      - "req24"
+      - "req25"
+      - "req26"
+      - "req27"
+      - "req28"
+      - "req29"
+      - "req30"
+      - "req31"
+      - "req32"
+      - "req33"
+      - "req34"
+      - "req35"
+      - "req36"
+      - "req37"
+      - "req38"
+      - "req39"
+      - "req40"
+      - "req41"
+      - "req42"
+      - "req43"
+      - "req44"
+      - "req45"
+      - "req46"
+      - "req47"
+      - "req48"
+      - "req49"
+      - "req50"
+      - "req51"
+      - "req52"
+      - "req53"
+      - "req54"
+      - "req55"
+      - "req56"
+      - "req57"
+      - "req58"
+      - "req59"
+      - "req60"
+      - "req61"
+      - "req62"
+      - "req63"
+      - "req64"
+      - "req65"
+      - "req66"
+      - "req67"
+      - "req68"
+      - "req69"
+      - "req70"
+      - "req71"
+      - "req72"
+      - "req73"
+      - "req74"
+      - "req75"
+      - "req76"
+      - "req77"
+      - "req78"
+      - "req79"
+      - "req80"
+      - "req81"
+      - "req82"
+      - "req83"
+      - "req84"
+      - "req85"
+      - "req86"
+      - "req87"
+      - "req88"
+      - "req89"
+      - "req90"
+      - "req91"
+      - "req92"
+      - "req93"
+      - "req94"
+      - "req95"
+      - "req96"
+      - "req97"
+      - "req98"
+      - "req99"
+      - "req100"
+    requirements:
+      - "req1"
+      - "req2"
+      - "req3"
+      - "req4"
+      - "req5"
+      - "req6"
+      - "req7"
+      - "req8"
+      - "req9"
+      - "req10"
+      - "req11"
+      - "req12"
+      - "req13"
+      - "req14"
+      - "req15"
+      - "req16"
+      - "req17"
+      - "req1

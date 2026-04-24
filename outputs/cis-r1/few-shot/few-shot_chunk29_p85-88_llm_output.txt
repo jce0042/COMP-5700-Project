@@ -1,0 +1,74 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 84 apiVersion: extensions/v1beta1 kind: PodSecurityPolicy metadata:   annotations:     kubernetes.io/description: privileged allows full unrestricted access to pod features,       as if the PodSecurityPolicy controller was not enabled.     seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'   labels:     eks.amazonaws.com/component: pod-security-policy     kubernetes.io/cluster-service: "true"   name: eks.privileged spec:   allowPrivilegeEscalation: true   allowedCapabilities:   - '*'   fsGroup:     rule: RunAsAny   hostIPC: true   hostNetwork: true   hostPID: true   hostPorts:   - max: 65535     min: 0   privileged: true   runAsUser:     rule: RunAsAny   seLinux:     rule: RunAsAny   supplementalGroups:     rule: RunAsAny   volumes:   - '*' References: 1. https://kubernetes.io/docs/concepts/policy/pod-security-policy/#enabling-pod-security-policies 2. https://aws.github.io/aws-eks-best-practices/pods/#restrict-the-containers-that-can-run-as-privileged CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts  Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account. ● ● ●
+Page 85 Controls Version Control IG 1 IG 2 IG 3 v7 4.3 Ensure the Use of Dedicated Administrative Accounts  Ensure that all users with administrative account access use a dedicated or secondary account for elevated activities. This account should only be used for administrative activities and not internet browsing, email, or similar activities. ● ● ●
+Page 86 4.2.2 Minimize the admission of containers wishing to share the host process ID namespace (Automated) Profile Applicability: •  Level 1 Description: Do not generally permit containers to be run with the hostPID flag set to true. Rationale: A container running in the host's PID namespace can inspect processes running outside the container. If the container also has access to ptrace capabilities this can be used to escalate privileges outside of the container. There should be at least one PodSecurityPolicy (PSP) defined which does not permit containers to share the host PID namespace. If you need to run containers which require hostPID, this should be defined in a separate PSP and you should carefully check RBAC controls to ensure that only limited service accounts and users are given permission to access that PSP. Impact: Pods defined with spec.hostPID: true will not be permitted unless they are run under a specific PSP. Audit: Get the set of PSPs with the following command: kubectl get psp For each PSP, check whether privileged is enabled: kubectl get psp <name> -o=jsonpath='{.spec.hostPID}' Verify that there is at least one PSP which does not return true. Remediation: Create a PSP as described in the Kubernetes documentation, ensuring that the .spec.hostPID field is omitted or set to false. Default Value: By default, PodSecurityPolicies are not defined.
+Page 87 References: 1. https://kubernetes.io/docs/concepts/policy/pod-security-policy CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts  Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account. ● ● ● v7 4.3 Ensure the Use of Dedicated Administrative Accounts  Ensure that all users with administrative account access use a dedicated or secondary account for elevated activities. This account should only be used for administrative activities and not internet browsing, email, or similar activities. ● ● ●
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+The provided document is not structured in the way the example specifies. It’s a series of pages with multiple controls and descriptions.  I will create a YAML structure to represent the key data elements (KDEs) and their corresponding requirements, mirroring the requested schema.
+
+```yaml
+kde_key:
+  - name: "PodSecurityPolicy"
+    requirements:
+      - "defined"
+      - "must not allow privileged access to pod features"
+      - "must restrict administrator privileges"
+      - "must not permit containers to share the host PID namespace"
+      - "must have a specific PSP"
+      - "must be defined"
+  - name: "Controls Version Control IG 1 IG 2 IG 3 v8 5.4"
+    requirements:
+      - "restrict administrator privileges to dedicated administrator accounts"
+      - "ensure all users with administrative account access use a dedicated or secondary account for elevated activities"
+      - "ensure the use of dedicated administrative accounts"
+      - "must have a specific PSP"
+      - "must be defined"
+```

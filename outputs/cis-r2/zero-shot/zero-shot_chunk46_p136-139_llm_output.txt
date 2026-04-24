@@ -1,0 +1,142 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 135 
+Internal Only - General  Remediation:  
+aws eks update -cluster-config \ 
+    --region region -code \ 
+    --name my-cluster \ 
+    --resources -vpc-config 
+endpointPublicAccess=true,publicAccessCidrs="203.0.113.5/32",endpointPrivateA
+ccess=true  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 4.4 Implement and Manage a Firewall on Servers  
+ Implement and manage a firewall on servers, where supported. Example 
+implementations include a virtual firewall, operating system firewall, or a third -
+party firewall agent.  ● ● ● 
+v7 12 Boundary Defense  
+ Boundary Defense
+Page 136 
+Internal Only - General  5.4.4 Ensure Network Policy is Enabled and set as appropriate 
+(Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Amazon EKS provides two ways to implement network policy. You choose a network 
+policy option when you create an EKS cluster. The policy option can't be changed after 
+the cluster is created: Calico Network Policies, an open -source network and network 
+securi ty solution founded by Tigera. Both implementations use Linux IPTables to 
+enforce the specified policies. Policies are translated into sets of allowed and disallowed 
+IP pairs. These pairs are then programmed as IPTable filter rules.  
+Rationale:  
+By default, all pod to pod traffic within a cluster is allowed. Network Policy creates a 
+pod-level firewall that can be used to restrict traffic between sources. Pod traffic is 
+restricted by having a Network Policy that selects it (through the use of label s). Once 
+there is any Network Policy in a namespace selecting a particular pod, that pod will 
+reject any connections that are not allowed by any Network Policy. Other pods in the 
+namespace that are not selected by any Network Policy will continue to accept  all traffic.  
+Network Policies are managed via the Kubernetes Network Policy API and enforced by 
+a network plugin, simply creating the resource without a compatible network plugin to 
+implement it will have no effect.  
+Impact:  
+Network Policy requires the Network Policy add -on. This add -on is included 
+automatically when a cluster with Network Policy is created, but for an existing cluster, 
+needs to be added prior to enabling Network Policy.  
+Enabling/Disabling Network Policy causes a rolling update of all cluster nodes, similar to 
+performing a cluster upgrade. This operation is long -running and will block other 
+operations on the cluster (including delete) until it has run to completion.  
+Enabling Network Policy enforcement consumes additional resources in nodes. 
+Specifically, it increases the memory footprint of the kube -system process by 
+approximately 128MB, and requires approximately 300 millicores of CPU.  
+Audit:  
+Check for the following is not null and set with appropriate group id:
+Page 137 
+Internal Only - General  export CLUSTER_NAME=<your cluster name>  
+ 
+aws eks describe -cluster --name ${CLUSTER_NAME} --query 
+"cluster.resourcesVpcConfig.clusterSecurityGroupId"  
+Check for the following is True:  
+export CLUSTER_NAME=<your cluster name>  
+ 
+aws eks describe -addon --cluster-name ${CLUSTER_NAME} --addon-name vpc -cni --
+query addon.configurationValues  
+Remediation:  
+Utilize Calico or other network policy engine to segment and isolate your traffic.  
+Default Value:  
+By default, Network Policy is disabled.  
+References:  
+1. https://docs.aws.amazon.com/eks/latest/userguide/eks -networking -add-ons.html  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 12.6 Use of Secure Network Management and 
+Communication Protocols   
+ Use secure network management and communication protocols (e.g., 802.1X, 
+Wi-Fi Protected Access 2 (WPA2) Enterprise or greater).   ● ● 
+v7 9.2 Ensure Only Approved Ports, Protocols and Services 
+Are Running  
+ Ensure that only network ports, protocols, and services listening on a system 
+with validated business needs, are running on each system.   ● ● 
+v7 9.4 Apply Host -based Firewalls or Port Filtering  
+ Apply host -based firewalls or port filtering tools on end systems, with a 
+default -deny rule that drops all traffic except those services and ports that are 
+explicitly allowed.  ● ● ●
+Page 138 
+Internal Only - General  5.4.5 Encrypt traffic to HTTPS load balancers with TLS 
+certificates (Manual)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Encrypt traffic to HTTPS load balancers using TLS certificates.  
+Rationale:  
+Encrypting traffic between users and your Kubernetes workload is fundamental to 
+protecting data sent over the web.  
+Audit:  
+Your load balancer vendor can provide details on auditing the certificates and policies 
+required to utilize TLS.  
+Remediation:  
+Your load balancer vendor can provide details on configuring HTTPS with TLS.  
+References:  
+1. https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/data -
+protection.html  
+2. https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create -
+https -listener.html  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 3.10 Encrypt Sensitive Data in Transit  
+ Encrypt sensitive data in transit. Example implementations can include: 
+Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).   ● ● 
+v7 14.4 Encrypt All Sensitive Information in Transit  
+ Encrypt all sensitive information in transit.   ● ●
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - Readable KDE Name
+  - Requirements:
+    - req1
+    - req2
+```

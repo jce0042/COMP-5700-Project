@@ -1,0 +1,265 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 141 
+Internal Only - General  aws eks update -kubeconfig  
+aws eks get -token 
+Default Value:  
+For role -based access control (RBAC), system:masters permissions are configured in 
+the Amazon EKS control plane  
+References:  
+1. https://docs.aws.amazon.com/eks/latest/userguide/add -user-role.html  
+2. https://docs.aws.amazon.com/eks/latest/userguide/add -user-role.html  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 6.8 Define and Maintain Role -Based Access Control  
+ Define and maintain role -based access control, through determining and 
+documenting the access rights necessary for each role within the enterprise to 
+successfully carry out its assigned duties. Perform access control reviews of 
+enterprise assets to validat e that all privileges are authorized, on a recurring 
+schedule at a minimum annually, or more frequently.    ● 
+v7 16.2 Configure Centralized Point of Authentication  
+ Configure access for all accounts through as few centralized points of 
+authentication as possible, including network, security, and cloud systems.   ● ●
+Page 142 
+Internal Only - General  Appendix: Summary Table  
+CIS Benchmark Recommendation  Set 
+Correctly  
+Yes No 
+1 Control Plane Components  
+2 Control Plane Configuration  
+2.1 Logging  
+2.1.1  Enable audit Logs (Automated)    
+2.1.2  Ensure audit logs are collected and managed (Manual)    
+3 Worker Nodes  
+3.1 Worker Node Configuration Files  
+3.1.1  Ensure that the kubeconfig file permissions are set to 
+644 or more restrictive (Automated)    
+3.1.2  Ensure that the kubelet kubeconfig file ownership is set 
+to root:root (Automated)    
+3.1.3  Ensure that the kubelet configuration file has 
+permissions set to 644 or more restrictive (Automated)    
+3.1.4  Ensure that the kubelet configuration file ownership is 
+set to root:root (Automated)    
+3.2 Kubelet  
+3.2.1  Ensure that the Anonymous Auth is Not Enabled 
+(Automated)    
+3.2.2  Ensure that the --authorization -mode argument is not set 
+to AlwaysAllow (Automated)    
+3.2.3  Ensure that a Client CA File is Configured (Automated)    
+3.2.4  Ensure that the --read-only-port is disabled (Automated)   
+Page 143 
+Internal Only - General  CIS Benchmark Recommendation  Set 
+Correctly  
+Yes No 
+3.2.5  Ensure that the --streaming -connection -idle-timeout 
+argument is not set to 0 (Automated)    
+3.2.6  Ensure that the --make -iptables -util-chains argument is 
+set to true (Automated)    
+3.2.7  Ensure that the --eventRecordQPS  argument is set to 0 
+or a level which ensures appropriate event capture 
+(Automated)    
+3.2.8  Ensure that the --rotate -certificates argument is not 
+present or is set to true (Automated)    
+3.2.9  Ensure that the RotateKubeletServerCertificate 
+argument is set to true (Automated)    
+4 Policies  
+4.1 RBAC and Service Accounts  
+4.1.1  Ensure that the cluster -admin role is only used where 
+required (Automated)    
+4.1.2  Minimize access to secrets (Automated)    
+4.1.3  Minimize wildcard use in Roles and ClusterRoles 
+(Automated)    
+4.1.4  Minimize access to create pods (Automated)    
+4.1.5  Ensure that default service accounts are not actively 
+used. (Automated)    
+4.1.6  Ensure that Service Account Tokens are only mounted 
+where necessary (Automated)    
+4.1.7  Cluster Access Manager API to streamline and enhance 
+the management of access controls within EKS clusters 
+(Automated)    
+4.1.8  Limit use of the Bind, Impersonate and Escalate 
+permissions in the Kubernetes cluster (Manual)   
+Page 144 
+Internal Only - General  CIS Benchmark Recommendation  Set 
+Correctly  
+Yes No 
+4.2 Pod Security Standards  
+4.2.1  Minimize the admission of privileged containers 
+(Automated)    
+4.2.2  Minimize the admission of containers wishing to share 
+the host process ID namespace (Automated)    
+4.2.3  Minimize the admission of containers wishing to share 
+the host IPC namespace (Automated)    
+4.2.4  Minimize the admission of containers wishing to share 
+the host network namespace (Automated)    
+4.2.5  Minimize the admission of containers with 
+allowPrivilegeEscalation (Automated)    
+4.3 CNI Plugin  
+4.3.1  Ensure CNI plugin supports network policies. (Manual)    
+4.3.2  Ensure that all Namespaces have Network Policies 
+defined (Automated)    
+4.4 Secrets Management  
+4.4.1  Prefer using secrets as files over secrets as environment 
+variables (Automated)    
+4.4.2  Consider external secret storage (Manual)    
+4.5 General Policies  
+4.5.1  Create administrative boundaries between resources 
+using namespaces (Manual)    
+4.5.2  The default namespace should not be used (Automated)    
+5 Managed services  
+5.1 Image Registry and Image Scanning
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Password Complexity"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service Accounts"
+  - "Control Plane Components"
+  - "Control Plane Configuration"
+  - "Worker Node Configuration Files"
+  - "Kubelet Configuration Files"
+  - "Kubelet Anonymous Auth"
+  - "Kubelet --authorization -mode"
+  - "Kubelet --read-only-port"
+  - "RBAC and Service Accounts"
+  - "Pod Security Standards"
+  - "RBAC and Service

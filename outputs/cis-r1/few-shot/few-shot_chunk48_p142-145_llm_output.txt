@@ -1,0 +1,65 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 141 5.4.3 Ensure clusters are created with Private Nodes (Manual) Profile Applicability: •  Level 1 Description: Disable public IP addresses for cluster nodes, so that they only have private IP addresses. Private Nodes are nodes with no public IP addresses. Rationale: Disabling public IP addresses on cluster nodes restricts access to only internal networks, forcing attackers to obtain local network access before attempting to compromise the underlying Kubernetes hosts. Impact: To enable Private Nodes, the cluster has to also be configured with a private master IP range and IP Aliasing enabled. Private Nodes do not have outbound access to the public internet. If you want to provide outbound Internet access for your private nodes, you can use Cloud NAT or you can manage your own NAT gateway. Audit: Remediation: aws eks update-cluster-config \     --region region-code \     --name my-cluster \     --resources-vpc-config endpointPublicAccess=true,publicAccessCidrs="203.0.113.5/32",endpointPrivateAccess=true CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 4.4 Implement and Manage a Firewall on Servers  Implement and manage a firewall on servers, where supported. Example implementations include a virtual firewall, operating system firewall, or a third-party firewall agent. ● ● ● v7 12 Boundary Defense  Boundary Defense
+Page 142 5.4.4 Ensure Network Policy is Enabled and set as appropriate (Manual) Profile Applicability: •  Level 1 Description: Amazon EKS provides two ways to implement network policy. You choose a network policy option when you create an EKS cluster. The policy option can't be changed after the cluster is created: Calico Network Policies, an open-source network and network security solution founded by Tigera. Both implementations use Linux IPTables to enforce the specified policies. Policies are translated into sets of allowed and disallowed IP pairs. These pairs are then programmed as IPTable filter rules. Rationale: By default, all pod to pod traffic within a cluster is allowed. Network Policy creates a pod-level firewall that can be used to restrict traffic between sources. Pod traffic is restricted by having a Network Policy that selects it (through the use of labels). Once there is any Network Policy in a namespace selecting a particular pod, that pod will reject any connections that are not allowed by any Network Policy. Other pods in the namespace that are not selected by any Network Policy will continue to accept all traffic. Network Policies are managed via the Kubernetes Network Policy API and enforced by a network plugin, simply creating the resource without a compatible network plugin to implement it will have no effect. Impact: Network Policy requires the Network Policy add-on. This add-on is included automatically when a cluster with Network Policy is created, but for an existing cluster, needs to be added prior to enabling Network Policy. Enabling/Disabling Network Policy causes a rolling update of all cluster nodes, similar to performing a cluster upgrade. This operation is long-running and will block other operations on the cluster (including delete) until it has run to completion. Enabling Network Policy enforcement consumes additional resources in nodes. Specifically, it increases the memory footprint of the kube-system process by approximately 128MB, and requires approximately 300 millicores of CPU. Audit: Remediation: Default Value: By default, Network Policy is disabled.
+Page 143 CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 12.6 Use of Secure Network Management and Communication Protocols   Use secure network management and communication protocols (e.g., 802.1X, Wi-Fi Protected Access 2 (WPA2) Enterprise or greater).  ● ● v7 9.2 Ensure Only Approved Ports, Protocols and Services Are Running  Ensure that only network ports, protocols, and services listening on a system with validated business needs, are running on each system.  ● ● v7 9.4 Apply Host-based Firewalls or Port Filtering  Apply host-based firewalls or port filtering tools on end systems, with a default-deny rule that drops all traffic except those services and ports that are explicitly allowed. ● ● ●
+Page 144 5.4.5 Encrypt traffic to HTTPS load balancers with TLS certificates (Manual) Profile Applicability: •  Level 2 Description: Encrypt traffic to HTTPS load balancers using TLS certificates. Rationale: Encrypting traffic between users and your Kubernetes workload is fundamental to protecting data sent over the web. Audit: Remediation: References: 1. https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/data-protection.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 3.10 Encrypt Sensitive Data in Transit  Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).  ● ● v7 14.4 Encrypt All Sensitive Information in Transit  Encrypt all sensitive information in transit.  ● ●
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Password Complexity"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Network Policy"
+  - "Secure Network Management and Communication Protocols"
+  - "TLS certificates"
+  - "Sensitive Data in Transit"
+```

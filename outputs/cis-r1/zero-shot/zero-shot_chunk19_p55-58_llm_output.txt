@@ -1,0 +1,41 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 54 cat /etc/kubernetes/kubelet/kubelet-config.json If there is an entry for eventRecordQPS check that it is set to 0 or an appropriate level for the cluster. Audit Method 2: If using the api configz endpoint consider searching for the status of eventRecordQPS by extracting the live configuration from the nodes running kubelet. Set the local proxy port and the following variables and provide proxy port number and node name; HOSTNAME_PORT="localhost-and-port-number" NODE_NAME="The-Name-Of-Node-To-Extract-Configuration" from the output of "kubectl get nodes" kubectl proxy --port=8001 &  export HOSTNAME_PORT=localhost:8001 (example host and port number) export NODE_NAME=ip-192.168.31.226.ec2.internal (example node name from "kubectl get nodes")  curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy/configz" Remediation: Remediation Method 1: If modifying the Kubelet config file, edit the kubelet-config.json file /etc/kubernetes/kubelet/kubelet-config.json and set the below parameter to 5 or a value greater or equal to 0 "eventRecordQPS": 5 Check that /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf does not define an executable argument for eventRecordQPS because this would override your Kubelet config. Remediation Method 2: If using executable arguments, edit the kubelet service file /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf on each worker node and add the below parameter at the end of the KUBELET_ARGS variable string. --eventRecordQPS=5 Remediation Method 3: If using the api configz endpoint consider searching for the status of "eventRecordQPS" by extracting the live configuration from the nodes running kubelet. **See detailed step-by-step configmap procedures in Reconfigure a Node's Kubelet in a Live Cluster, and then rerun the curl statement from audit process to check for kubelet configuration changes
+Page 55 kubectl proxy --port=8001 &  export HOSTNAME_PORT=localhost:8001 (example host and port number) export NODE_NAME=ip-192.168.31.226.ec2.internal (example node name from "kubectl get nodes")  curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy/configz" For all three remediations: Based on your system, restart the kubelet service and check status systemctl daemon-reload systemctl restart kubelet.service systemctl status kubelet -l Default Value: See the Amazon EKS documentation for the default value. References: 1. https://kubernetes.io/docs/admin/kubelet/ 2. https://github.com/kubernetes/kubernetes/blob/master/pkg/kubelet/apis/kubeletconfig/v1beta1/types.go 3. https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 8.2 Collect Audit Logs  Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets. ● ● ● v8 8.5 Collect Detailed Audit Logs  Configure detailed audit logging for enterprise assets containing sensitive data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.  ● ● v7 6.2 Activate audit logging  Ensure that local logging has been enabled on all systems and networking devices. ● ● ● v7 6.3 Enable Detailed Logging  Enable system logging to include detailed information such as an event source, date, user, timestamp, source addresses, destination addresses, and other useful elements.  ● ●
+Page 56 3.2.10 Ensure that the --rotate-certificates argument is not present or is set to true (Manual) Profile Applicability: •  Level 1 Description: Enable kubelet client certificate rotation. Rationale: The --rotate-certificates setting causes the kubelet to rotate its client certificates by creating new CSRs as its existing credentials expire. This automated periodic rotation ensures that the there is no downtime due to expired certificates and thus addressing availability in the CIA (Confidentiality, Integrity, and Availability) security triad. Note: This recommendation only applies if you let kubelets get their certificates from the API server. In case your kubelet certificates come from an outside authority/tool (e.g. Vault) then you need to implement rotation yourself. Note: This feature also requires the RotateKubeletClientCertificate feature gate to be enabled. Impact: None Audit: Audit Method 1: SSH to each node and run the following command to find the Kubelet process: ps -ef | grep kubelet If the output of the command above includes the --RotateCertificate executable argument, verify that it is set to true. If the output of the command above does not include the --RotateCertificate executable argument then check the Kubelet config file. The output of the above command should return something similar to --config /etc/kubernetes/kubelet/kubelet-config.json which is the location of the Kubelet config file. Open the Kubelet config file: cat /etc/kubernetes/kubelet/kubelet-config.json Verify that the RotateCertificate argument is not present, or is set to true.
+Page 57 Remediation: Remediation Method 1: If modifying the Kubelet config file, edit the kubelet-config.json file /etc/kubernetes/kubelet/kubelet-config.json and set the below parameter to true "RotateCertificate":true Additionally, ensure that the kubelet service file /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf does not set the --RotateCertificate executable argument to false because this would override the Kubelet config file. Remediation Method 2: If using executable arguments, edit the kubelet service file /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf on each worker node and add the below parameter at the end of the KUBELET_ARGS variable string. --RotateCertificate=true Default Value: See the Amazon EKS documentation for the default value. References: 1. https://github.com/kubernetes/kubernetes/pull/41912 2. https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/#kubelet-configuration 3. https://kubernetes.io/docs/imported/release/notes/ 4. https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/ 5. https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 3.10 Encrypt Sensitive Data in Transit  Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).  ● ● v7 14.4 Encrypt All Sensitive Information in Transit  Encrypt all sensitive information in transit.  ● ●
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "RotateCertificate"
+  - "EventRecordQPS"
+  - "kubelet-config.json"
+  - "systemd/system/kubelet.service.d/10-kubelet-args.conf"
+  - "kubelet-config.json"
+  - "Kubelet"
+  - "EventRecordQPS"
+  - "certRotation"
+```

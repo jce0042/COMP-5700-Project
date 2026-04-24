@@ -1,0 +1,168 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 6 
+Internal Only - General   
+Apply the Correct Version of a Benchmark  
+Benchmarks are developed and tested for a specific set of products and versions and 
+applying an incorrect Benchmark to a system can cause the resulting pass/fail score to 
+be incorrect. This is due to the assessment of settings that do not apply to the targ et 
+systems. To assure the correct Benchmark is being assessed:  
+• Deploy the Benchmark applicable to the way settings are managed in the 
+environment:  An example of this is the Microsoft Windows family of 
+Benchmarks, which have separate Benchmarks for Group Policy, Intune, and 
+Stand -alone systems based upon how system management is deployed. 
+Applying the wrong Benchmark in this case will give invalid re sults.  
+• Use the most recent version of a Benchmark : This is true for all Benchmarks, 
+but especially true for cloud technologies. Cloud technologies change frequently 
+and using an older version of a Benchmark may have invalid methods for 
+auditing and remediation.  
+Exceptions  
+The guidance items in the Benchmarks are called recommendations and not 
+requirements, and exceptions to some of them are expected and acceptable. The 
+Benchmarks strive to be a secure baseline, or starting point, for a specific technology, 
+with known issues  identified during Benchmark development are documented in the 
+Impact section of each Recommendation. In addition, organizational, system specific 
+requirements, or local site policy may require changes as well, or an exception to a 
+Recommendation or group of Recommendations (e.g. A Benchmark could Recommend 
+that a Web server not be installed on the system, but if a system's primary purpose is to 
+function as a Webserver, there should be a documented exception to this 
+Recommendation for that specific server).  
+In the end, exceptions to some Benchmark Recommendations are common and 
+acceptable, and should be handled as follows:  
+• The reasons for the exception should be reviewed cross -functionally and be well 
+documented for audit purposes.  
+• A plan should be developed for mitigating, or eliminating, the exception in the 
+future, if applicable.  
+• If the organization decides to accept the risk of this exception (not work toward 
+mitigation or elimination), this should be documented for audit purposes.  
+It is the responsibility of the organization to determine their overall security policy, and 
+which settings are applicable to their unique needs based on the overall risk profile for 
+the organization.
+Page 7 
+Internal Only - General  Remediation  
+CIS has developed Build Kits  for many technologies to assist in the automation of 
+hardening systems. Build Kits are designed to correspond to Benchmark's 
+“Remediation” section, which provides the manual remediation steps necessary to make 
+that Recommendation compliant to the Benchmar k. 
+When remediating systems (changing configuration settings on 
+deployed systems as per the Benchmark's Recommendations), 
+please approach this with caution and test thoroughly.  
+The following is a reasonable remediation approach to follow:  
+• CIS Build Kits, or internally developed remediation methods should never be 
+applied to production systems without proper testing.  
+• Proper testing consists of the following:  
+o Understand the configuration (including installed applications) of the targeted 
+systems. Various parts of the organization may need different configurations 
+(e.g., software developers vs standard office workers).  
+o Read the Impact section of the given Recommendation to help determine if 
+there might be an issue with the targeted systems.  
+o Test the configuration changes with representative lab system(s). If issues 
+arise during testing, they can be resolved prior to deploying to any production 
+systems.  
+o When testing is complete, initially deploy to a small sub -set of production 
+systems and monitor closely for issues. If there are issues, they can be 
+resolved prior to deploying more broadly.  
+o When the initial deployment above is completes successfully, iteratively 
+deploy to additional systems and monitor closely for issues. Repeat this 
+process until the full deployment is complete.  
+Summary  
+Using the Benchmarks Certified tools, working as a team with key stakeholders, being 
+selective with exceptions, and being careful with remediation deployment, it is possible 
+to harden large numbers of deployed systems in a cost effective, efficient, and safe 
+manner.  
+NOTE : As previously stated, the PDF versions of the CIS Benchmarks ™ are 
+available for free, non -commercial use on the CIS Website . All other formats 
+of the CIS Benchmarks ™ (MS Word, Excel, and Build Kits ) are available for 
+CIS SecureSuite® members.  
+CIS-CAT® Pro is also available to CIS SecureSuite® members.
+Page 8 
+Internal Only - General  Target Technology Details  
+This document provides prescriptive guidance for running Amazon Elastic Kubernetes 
+Service (EKS) following recommended security controls. This benchmark only includes 
+controls which can be modified by an end user of Amazon EKS.  
+To obtain the latest version  of this guide, please visit www.cisecurity.org . If you have 
+questions, comments, or have identified ways to improve this guide, please write us at 
+support@cisecurity.org . 
+ 
+Intended Audience  
+This document is intended for cluster administrators, security specialists, auditors, and 
+any personnel who plan to develop, deploy, assess, or secure solutions that incorporate 
+Amazon EKS using managed and self -managed nodes.  
+Customers using Amazon EKS on  AWS Fargate are not responsible for node 
+management. Hence, this document is not scoped for Amazon EKS on AWS Fargate 
+customers.
+Page 9 
+Internal Only - General  Consensus  Guidance  
+This CIS Benchmark ™ was created using a consensus review process comprised of a 
+global community of subject matter experts. The process combines real world 
+experience with data -based information to create technology specific guidance to assist 
+users to secure their environme nts. Consensus participants provide perspective from a 
+diverse set of backgrounds including consulting, software development, audit and 
+compliance, security research, operations, government, and legal.  
+Each CIS Benchmark undergoes two phases of consensus review. The first phase 
+occurs during initial Benchmark development. During this phase, subject matter experts 
+convene to discuss, create, and test working drafts of the Benchmark. This discussion 
+occurs  until consensus has been reached on Benchmark recommendations. The 
+second phase begins after the Benchmark has been published. During this phase, all 
+feedback provided by the Internet community is reviewed by the consensus team for 
+incorporation in the Be nchmark. If you are interested in participating in the consensus 
+process, please visit https://workbench.cisecurity.org/ .
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements"
+  - "Remediation"
+  - "Target Technology Details"
+  - "Consensus Guidance"
+
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements"
+  - "Remediation"
+  - "Target Technology Details"
+  - "Consensus Guidance"
+
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements"
+  - "Remediation"
+  - "Target Technology Details"
+  - "Consensus Guidance"
+
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements"
+  - "Remediation"
+  - "Target Technology Details"
+  - "Consensus Guidance"
+
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements"
+  - "Remediation"
+  - "Target Technology Details"
+  - "Consensus Guidance"
+```

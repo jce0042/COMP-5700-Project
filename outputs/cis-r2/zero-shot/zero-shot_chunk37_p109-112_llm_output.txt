@@ -1,0 +1,104 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 108 
+Internal Only - General  References:  
+1. https://kubernetes.io/docs/concepts/overview/working -with-objects/namespaces/  
+2. http://blog.kubernetes.io/2016/08/security -best-practices -kubernetes -
+deployment.html  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 12.8 Establish and Maintain Dedicated Computing 
+Resources for All Administrative Work  
+ Establish and maintain dedicated computing resources, either physically or 
+logically separated, for all administrative tasks or tasks requiring administrative 
+access. The computing resources should be segmented from the enterprise's 
+primary network and not be allowed internet ac cess.   ● 
+v7 12.1 Maintain an Inventory of Network Boundaries  
+ Maintain an up -to-date inventory of all of the organization's network boundaries.  ● ● ●
+Page 109 
+Internal Only - General  4.5.2 The default namespace should not be used (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Kubernetes provides a default namespace, where objects are placed if no namespace 
+is specified for them. Placing objects in this namespace makes application of RBAC and 
+other controls more difficult.  
+Rationale:  
+Resources in a Kubernetes cluster should be segregated by namespace, to allow for 
+security controls to be applied at that level and to make it easier to manage resources.  
+Impact:  
+None  
+Audit:  
+Run this command to list objects in default namespace  
+kubectl get $(kubectl api -resources --verbs=list --namespaced=true -o name | 
+paste -sd, -) --ignore-not-found -n default  
+The only entries there should be system managed resources such as the kubernetes  
+service  
+OR 
+kubectl get pods -n default  
+Returning No resources found in default namespace.  
+Remediation:  
+Ensure that namespaces are created to allow for appropriate segregation of Kubernetes 
+resources and that all new resources are created in a specific namespace.  
+Default Value:  
+Unless a namespace is specific on object creation, the default  namespace will be 
+used
+Page 110 
+Internal Only - General  CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 16.7 Use Standard Hardening Configuration Templates for 
+Application Infrastructure  
+ Use standard, industry -recommended hardening configuration templates for 
+application infrastructure components. This includes underlying servers, databases, 
+and web servers, and applies to cloud containers, Platform as a Service (PaaS) 
+components, and SaaS  components. Do not allow in -house developed software to 
+weaken configuration hardening.   ● ● 
+v7 5.1 Establish Secure Configurations  
+ Maintain documented, standard security configuration standards for all 
+authorized operating systems and software.  ● ● ● 
+ 
+5 Managed services  
+This section consists of security recommendations for the Amazon EKS. These 
+recommendations are applicable for configurations that Amazon EKS customers own 
+and manage.
+Page 111 
+Internal Only - General  5.1 Image Registry and Image Scanning  
+This section contains recommendations relating to container image registries and 
+securing images in those registries, such as Amazon Elastic Container Registry (ECR).
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "IG 1"
+  - "IG 2"
+  - "IG 3"
+  - "v8"
+  - "16.7"
+  - "5.1"
+  - "5.1"
+  - "ECR"
+```

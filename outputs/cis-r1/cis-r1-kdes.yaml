@@ -1,0 +1,131 @@
+kde_key:
+  name: kde_key
+  requirements:
+  - '[''Readable KDE Name'', ''Requirements'']'
+  - '[''API Server Audit Logs'', ''Authenticator'', ''Controller Manager'', ''Scheduler'',
+    ''Cluster Logging'', ''Region Code'', ''Audit Enabled'', ''Remediation'']'
+  - '[''Readable KDE Name'', ''Kubeconfig File Permissions'', ''Secure Images'']'
+  - '[''Readable KDE Name'', ''requirements'']'
+  - '[''Readable KDE Name'', ''Requirements for File Permissions'', ''Configuration
+    File Ownership'', ''Data Access Control Lists'', ''Secure Images'']'
+  - req1
+  - req2
+  - '[''Readable KDE Name'', ''Anonymous Authentication'', ''Unauthorized Access'',
+    ''Dormant Accounts'', ''Configuration File'', ''Command Line Arguments'', ''Configuration
+    Parameter'', ''Audit Method'']'
+  - '[''Readable KDE Name'', {''Requirements'': [''req1'', ''req2'']}]'
+  - '[''Readable KDE Name'', ''Requirements for --streaming-connection-idle-timeout'',
+    ''Requirements for --protect-kernel-defaults'']'
+  - '[''Readable KDE Name'', {''requirements'': [''req1'', ''req2'']}]'
+  - '[''cluster-admin role'', ''clusterrolebinding'']'
+  - '[''Secure Configuration Process'', ''Secure Images'', ''Unique Passwords'', ''Pod
+    Security Policies'', ''Privilege Escalation'']'
+  - '[''Readable KDE Name'', ''Requirements - "req1" - "req2"'']'
+  - '[''Readable KDE Name'', ''Service Account Token'', ''Unnecessary Services'',
+    ''RBAC'']'
+  - '[''Readable KDE Name'', ''req1'', ''req2'']'
+  - '[''Restrict Administrator Privileges to Dedicated Administrator Accounts'', ''Ensure
+    that all users with administrative account access use a dedicated or secondary
+    account for elevated activities'', ''Minimize the admission of containers wishing
+    to share the host network namespace'', ''Ensure that there is at least one PodSecurityPolicy
+    (PSP) defined which does not permit containers to share the host network namespace'']'
+  - '[''Readable KDE Name'', ''IG1'', ''IG2'', ''IG3'', ''v8'', ''v7'', ''18.4'',
+    ''RBAC Policies'', ''Network Policies'', ''Deny All Policy'', ''Calico'', ''Flannel'']'
+  - '[''Readable KDE Name'', ''NetworkPolicy'', ''Firewall'']'
+  - '[''Readable KDE Name'', ''Secrets Management'', ''Secrets Storage'', ''Sensitive
+    Data'']'
+  - '[''namespace'', ''default'', ''kube-system'', ''kube-public'', ''kube-node-lease'']'
+  - '[''Readable KDE Name'', ''namespace'', ''securityContext'', ''podSecurityPolicy'',
+    ''securityContext'', ''containerSecurityContext'', ''securityContext'', ''seccomp.security.alpha.kubernetes.io/allowedProfileNames'',
+    ''seccomp.security.alpha.kubernetes.io/defaultProfileName'', ''apparmor.security.beta.kubernetes.io/allowedProfileNames'',
+    ''seccomp.security.alpha.kubernetes.io/allowedProfileNames'', ''apparmor.security.beta.kubernetes.io/defaultProfileName'',
+    ''seccomp.security.alpha.kubernetes.io/defaultProfileName'', ''privileged'', ''allowPrivilegeEscalation'',
+    ''requiredDropCapabilities'', ''seLinux'', ''MustRunAsNonRoot'', ''fsGroup'',
+    ''min'', ''max'', ''readOnlyRootFilesystem'']'
+  - '[''readable_kde_name'', ''required_drop_capabilities'', ''allowed_volume_types'',
+    ''must_run_as_nonroot'', ''seLinux_rule'', ''supplemental_groups'', ''fsGroup_rule'',
+    ''default_namespace'', ''default_namespace_usage'', ''controls_version_control'',
+    ''managed_services'']'
+  - '[''Readable KDE Name'', ''Requirements - req1 - req2'']'
+  - '[''Readable KDE Name'', ''req1'', ''req2'', ''ResourceTag'', ''AWSGlobalConditionContextKeys'',
+    ''AWSGlobalConditionKey'', ''AWSECRAction'', ''AWSECRResource'', ''AWSECRResourceType'',
+    ''AWSECRImage'', ''AWSECRBatchCheckLayerAvailability'', ''AWSECRBatchGetImage'',
+    ''AWSECRGetDownloadUrlForLayer'', ''AWSECRGetAuthorizationToken'', ''AWSECR'',
+    ''AWSECR_on_EKS'', ''NodeInstanceRole'', ''IAMPolicyPermissions'', ''IAMPolicy'',
+    ''CISControls'', ''ControlsVersion'', ''IG1'', ''IG2'', ''IG3'', ''v8'', 5.4,
+    3]'
+  - '[''Readable KDE Name'', ''IAM Permissions'', ''AWS IAM'', ''CIS Controls: Controls
+    Version Control IG 1 IG 2 IG 3 v8 2.5'', ''IAM Permissions'', ''AWS IAM'', ''CIS
+    Controls: Controls Version Control IG 1 IG 2 IG 3 v8 2.5'', ''IAM Permissions'',
+    ''AWS IAM'', ''CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 2.5'',
+    ''IAM Permissions'', ''AWS IAM'', ''CIS Controls: Controls Version Control IG
+    1 IG 2 IG 3 v8 2.5'']'
+  - req3
+  - req4
+  - '[''Readable KDE Name'', ''Requirements - req1 - req2'', ''Requirements - req3
+    - req4'', ''Requirements - req5 - req6'', ''Requirements - req7 - req8'', ''Requirements
+    - req9 - req10'', ''Requirements - req11 - req12'', ''Requirements - req13 - req14'',
+    ''Requirements - req15 - req16'', ''Requirements - req17 - req18'', ''Requirements
+    - req19 - req20'', ''Requirements - req21 - req22'', ''Requirements - req23 -
+    req24'', ''Requirements - req25 - req26'', ''Requirements - req27 - req28'', ''Requirements
+    - req29 - req30'', ''Requirements - req31 - req32'', ''Requirements - req33 -
+    req34'', ''Requirements - req35 - req36'', ''Requirements - req37 - req38'', ''Requirements
+    - req39 - req40'', ''Requirements - req41 - req42'', ''Requirements - req43 -
+    req44'', ''Requirements - req45 - req46'', ''Requirements - req47 - req48'']'
+  - '[''Readable KDE Name'', {''Requirements'': [''req1'', ''req2'']}, ''req3'', ''req4'',
+    ''req5'', ''req6'', ''req7'', ''req8'', ''req9'', ''req10'', ''req11'', ''req12'',
+    ''req13'', ''req14'', ''req15'', ''req16'', ''req17'', ''req18'', ''req19'', ''req20'',
+    ''req21'', ''req22'', ''req23'', ''req24'', ''req25'', ''req26'', ''req27'', ''req28'',
+    ''req29'', ''req30'', ''req31'', ''req32'', ''req33'', ''req34'', ''req35'', ''req36'',
+    ''req37'', ''req38'', ''req39'', ''req40'', ''req41'', ''req42'', ''req43'', ''req44'',
+    ''req45'', ''req46'', ''req47'', ''req48'', ''req49'', ''req50'', ''req51'', ''req52'',
+    ''req53'', ''req54'', ''req55'', ''req56'', ''req57'', ''req58'', ''req59'', ''req60'',
+    ''req61'', ''req62'', ''req63'', ''req64'', ''req65'', ''req66'', ''req67'', ''req68'',
+    ''req69'', ''req70'', ''req71'', ''req72'', ''req73'', ''req74'', ''req75'', ''req76'',
+    ''req77'', ''req78'', ''req79'', ''req80'', ''req81'', ''req82'', ''req83'', ''req84'',
+    ''req85'', ''req86'', ''req87'', ''req88'', ''req89'', ''req90'', ''req91'', ''req92'',
+    ''req93'', ''req94'', ''req95'', ''req96'', ''req97'', ''req98'', ''req99'', ''req100'']'
+  - '[''Readable KDE Name'', {''Requirements'': [{''req1'': ''Encryption''}, {''req2'':
+    ''TLS Certificates''}, {''req3'': ''HTTPS Load Balancers''}, {''req4'': ''IAM
+    Authenticator for Kubernetes''}, {''req5'': ''RBAC Users''}, {''req6'': ''Namespace''},
+    {''req7'': ''IAM Role''}]}]'
+  - '[''Readable KDE Name'', ''Required Network Policy'', ''Required IAM Role'', ''Required
+    Service Account'', ''Required Cluster Network Policy'', ''Required Security Context'',
+    ''Required Audit Logs'', ''Required Security Context'', ''Required IAM Role'',
+    ''Required Cluster Network Policy'', ''Required Security Context'']'
+  - '[''Readable KDE Name'', ''Requirements - req1 - req2 - req3 - req4 - req5 - req6
+    - req7 - req8'', ''req9'', ''req10'', ''req11'', ''req12'', ''req13'', ''req14'',
+    ''req15'', ''req16'', ''req17'', ''req18'', ''req19'', ''req20'']'
+  - '[''Readable KDE Name'', ''Minimum Access to Secrets'', ''Minimize Wildcard Use
+    in Roles and ClusterRoles'', ''Minimize Access to Create Pods'', ''Ensure Default
+    Service Accounts are not actively used'', ''Ensure Service Account Tokens are
+    only mounted where necessary'', ''Avoid use of System:masters group'', ''Limit
+    use of the Bind, Impersonate and Escalate permissions in the Kubernetes cluster'',
+    ''Minimize the admission of containers wishing to share the host process ID namespace'',
+    ''Minimize the admission of containers wishing to share the host IPC namespace'',
+    ''Minimize the admission of containers wishing to share the host network namespace'',
+    ''Minimize the admission of containers with allowPrivilegeEscalation'', ''Minimize
+    the admission of root containers'', ''Minimize the admission of containers with
+    added capabilities'', ''Minimize the admission of containers with capabilities
+    assigned'', ''Ensure CNI plugin supports network policies'', ''Ensure that all
+    Namespaces have Network Policies defined'', ''Prefer using secrets as files over
+    secrets as environment variables'', ''Consider external secret storage'', ''Create
+    administrative boundaries between resources using namespaces'', ''Apply Security
+    Context to Your Pods and Containers'', ''The default namespace should not be used'',
+    ''Manage Kubernetes RBAC users with AWS IAM Authenticator for Kubernetes'', ''Consider
+    Fargate for running untrusted workloads'']'
+page_6:
+  name: Consensus Guidance
+  requirements:
+  - req1
+  - req2
+page_7:
+  name: Typographical Conventions
+  requirements:
+  - req1
+  - req2
+page_8:
+  name: Recommendation Definitions
+  requirements:
+  - req1
+  - req2

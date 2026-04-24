@@ -1,0 +1,67 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 12 Recommendations 1 Control Plane Components Security is a shared responsibility between AWS and the Amazon EKS customer. The shared responsibility model describes this as security of the cloud and security in the cloud: Security of the cloud – AWS is responsible for protecting the infrastructure that runs AWS services in the AWS Cloud. For Amazon EKS, AWS is responsible for the Kubernetes control plane, which includes the control plane nodes and etcd database. Third-party auditors regularly test and verify the effectiveness of our security as part of the AWS compliance programs. To learn about the compliance programs that apply to Amazon EKS, see AWS Services in Scope by Compliance Program. Security in the cloud – Your responsibility includes the following areas. • The security configuration of the data plane, including the configuration of the security groups that allow traffic to pass from the Amazon EKS control plane into the customer VPC • The configuration of the worker nodes and the containers themselves • The worker node guest operating system (including updates and security patches) o Amazon EKS follows the shared responsibility model for CVEs and security patches on managed node groups. Because managed nodes run the Amazon EKS-optimized AMIs, Amazon EKS is responsible for building patched versions of these AMIs when bugs or issues are reported and we are able to publish a fix. However, customers are responsible for deploying these patched AMI versions to your managed node groups. • Other associated application software: o Setting up and managing network controls, such as firewall rules o Managing platform-level identity and access management, either with or in addition to IAM • The sensitivity of your data, your company’s requirements, and applicable laws and regulations AWS is responsible for securing the control plane, though you might be able to configure certain options based on your requirements. Section 2 of this Benchmark addresses these configurations.
+Page 13  2 Control Plane Configuration This section contains recommendations for Amazon EKS control plane logging configuration. Customers are able to configure logging for control plane in Amazon EKS.
+Page 14 2.1 Logging
+Page 15 2.1.1 Enable audit Logs (Manual) Profile Applicability: •  Level 1 Description: Control plane logs provide visibility into operation of the EKS Control plane component systems. The API server audit logs record all accepted and rejected requests in the cluster. When enabled via EKS configuration the control plane logs for a cluster are exported to a CloudWatch Log Group for persistence. Rationale: Audit logs enable visibility into all API server requests from authentic and anonymous sources. Stored log data can be analyzed manually or with tools to identify and understand anomalous or negative activity and lead to intelligent remediations. Audit: From Console: 1. For each EKS Cluster in each region; 2. Go to 'Amazon EKS' > 'Clusters' > 'CLUSTER_NAME' > 'Configuration' > 'Logging'. 3. This will show the control plane logging configuration: API server: Enabled / Disabled  Audit: Enabled / Disabled  Authenticator: Enabled / Disabled Controller manager: Enabled / Disabled Scheduler: Enabled / Disabled  4. Ensure that all options are set to 'Enabled'. From CLI: # For each EKS Cluster in each region; aws eks describe-cluster --name '${CLUSTER_NAME}' --query 'cluster.logging.clusterLogging' --region '${REGION_CODE}' Remediation: From Console: 1. For each EKS Cluster in each region; 2. Go to 'Amazon EKS' > 'Clusters' > '' > 'Configuration' > 'Logging'. 3. Click 'Manage logging'.
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Control Plane Configuration"
+  - "Logging"
+  - "Audit Logs"
+  - "Authenticator"
+  - "Scheduler"
+  - "API Server"
+  - "Controller Manager"
+  - "Logs"
+  - "Manage Logging"
+```

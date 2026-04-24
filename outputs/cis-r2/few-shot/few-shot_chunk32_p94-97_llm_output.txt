@@ -1,0 +1,127 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 93 
+Internal Only - General  4.2.5 Minimize the admission of containers with 
+allowPrivilegeEscalation (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Do not generally permit containers to be run with the allowPrivilegeEscalation  flag 
+set to true . Allowing this right can lead to a process running a container getting more 
+rights than it started with.  
+It's important to note that these rights are still constrained by the overall container 
+sandbox, and this setting does not relate to the use of privileged containers.  
+Rationale:  
+A container running with the allowPrivilegeEscalation  flag set to true  may have 
+processes that can gain more privileges than their parent.  
+There should be at least one admission control policy defined which does not permit 
+containers to allow privilege escalation. The option exists (and is defaulted to true) to 
+permit setuid binaries to run.  
+If you have need to run containers which use setuid binaries or require privilege 
+escalation, this should be defined in a separate policy and you should carefully check to 
+ensure that only limited service accounts and users are given permission to use that  
+policy.  
+Impact:  
+Pods defined with spec.allowPrivilegeEscalation: true  will not be permitted 
+unless they are run under a specific policy.
+Page 94 
+Internal Only - General  Audit:  
+List the policies in use for each namespace in the cluster, ensure that each policy 
+disallows the admission of containers which allow privilege escalation.  
+This command gets all pods across all namespaces, outputs their details in JSON 
+format, and uses jq to parse and filter the output for containers with 
+allowPrivilegeEscalation  set to true . 
+kubectl get pods --all-namespaces -o json | jq -r '.items[] | 
+select(any(.spec.containers[]; 
+.securityContext.allowPrivilegeEscalation == true)) | 
+"\(.metadata.namespa ce)/\(.metadata.name)"'  
+OR 
+kubectl get pods --all-namespaces -o json | jq '.items[] | 
+select(.metadata.namespace != "kube -system" and .spec.containers[]; 
+.securityContext.allowPrivilegeEscalation == true) | {pod: 
+.metadata.name, namespace: .metadata.namespace, container: 
+.spec.conta iners[].name}'  
+When creating a Pod Security Policy, ["kube -system"] namespaces are excluded by 
+default.  
+This command uses jq, a command -line JSON processor, to parse the JSON output 
+from kubectl get pods and filter out pods where a ny container has the 
+securityContext.privileged flag set to true. Please note that you might need to adjust the 
+command depending on your specific requirements and the structure of your pod 
+specifications.  
+Remediation:  
+Add policies to each namespace in the cluster which has user workloads to restrict the 
+admission of containers with .spec.allowPrivilegeEscalation  set to true . 
+Default Value:  
+By default, there are no restrictions on contained process ability to escalate privileges, 
+within the context of the container.  
+References:  
+1. https://kubernetes.io/docs/concepts/security/pod -security -admission/
+Page 95 
+Internal Only - General  CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 5.4 Restrict Administrator Privileges to Dedicated 
+Administrator Accounts  
+ Restrict administrator privileges to dedicated administrator accounts on 
+enterprise assets. Conduct general computing activities, such as internet 
+browsing, email, and productivity suite use, from the user’s primary, non -privileged 
+account.  ● ● ● 
+v7 4.3 Ensure the Use of Dedicated Administrative Accounts  
+ Ensure that all users with administrative account access use a dedicated or 
+secondary account for elevated activities. This account should only be used for 
+administrative activities and not internet browsing, email, or similar activities.  ● ● ●
+Page 96 
+Internal Only - General  4.3 CNI Plugin
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements"
+```

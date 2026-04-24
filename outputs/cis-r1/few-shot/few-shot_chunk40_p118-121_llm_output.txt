@@ -1,0 +1,84 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 117 Controls Version Control IG 1 IG 2 IG 3 v7 5.1 Establish Secure Configurations  Maintain documented, standard security configuration standards for all authorized operating systems and software. ● ● ●  5 Managed services This section consists of security recommendations for the Amazon EKS. These recommendations are applicable for configurations that Amazon EKS customers own and manage.
+Page 118 5.1 Image Registry and Image Scanning This section contains recommendations relating to container image registries and securing images in those registries, such as Amazon Elastic Container Registry (ECR).
+Page 119 5.1.1 Ensure Image Vulnerability Scanning using Amazon ECR image scanning or a third party provider (Manual) Profile Applicability: •  Level 1 Description: Scan images being deployed to Amazon EKS for vulnerabilities. Rationale: Vulnerabilities in software packages can be exploited by hackers or malicious users to obtain unauthorized access to local cloud resources. Amazon ECR and other third party products allow images to be scanned for known vulnerabilities. Impact: If you are utilizing AWS ECR The following are common image scan failures. You can view errors like this in the Amazon ECR console by displaying the image details or through the API or AWS CLI by using the DescribeImageScanFindings API. UnsupportedImageError You may get an UnsupportedImageError error when attempting to scan an image that was built using an operating system that Amazon ECR doesn't support image scanning for. Amazon ECR supports package vulnerability scanning for major versions of Amazon Linux, Amazon Linux 2, Debian, Ubuntu, CentOS, Oracle Linux, Alpine, and RHEL Linux distributions. Amazon ECR does not support scanning images built from the Docker scratch image. An UNDEFINED severity level is returned You may receive a scan finding that has a severity level of UNDEFINED. The following are the common causes for this: The vulnerability was not assigned a priority by the CVE source. The vulnerability was assigned a priority that Amazon ECR did not recognize. To determine the severity and description of a vulnerability, you can view the CVE directly from the source. Audit: Please follow AWS ECS or your 3rd party image scanning provider's guidelines for enabling Image Scanning. Remediation: To utilize AWS ECR for Image scanning please follow the steps below: To create a repository configured for scan on push (AWS CLI)
+Page 120 aws ecr create-repository --repository-name $REPO_NAME --image-scanning-configuration scanOnPush=true --region $REGION_CODE To edit the settings of an existing repository (AWS CLI) aws ecr put-image-scanning-configuration --repository-name $REPO_NAME --image-scanning-configuration scanOnPush=true --region $REGION_CODE Use the following steps to start a manual image scan using the AWS Management Console. 1. Open the Amazon ECR console at https://console.aws.amazon.com/ecr/repositories. 2. From the navigation bar, choose the Region to create your repository in. 3. In the navigation pane, choose Repositories. 4. On the Repositories page, choose the repository that contains the image to scan. 5. On the Images page, select the image to scan and then choose Scan. Default Value: Images are not scanned by Default. References: 1. https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 7.5 Perform Automated Vulnerability Scans of Internal Enterprise Assets  Perform automated vulnerability scans of internal enterprise assets on a quarterly, or more frequent, basis. Conduct both authenticated and unauthenticated scans, using a SCAP-compliant vulnerability scanning tool.  ● ● v8 7.6 Perform Automated Vulnerability Scans of Externally-Exposed Enterprise Assets  Perform automated vulnerability scans of externally-exposed enterprise assets using a SCAP-compliant vulnerability scanning tool. Perform scans on a monthly, or more frequent, basis.   ● ● v7 3.1 Run Automated Vulnerability Scanning Tools  Utilize an up-to-date SCAP-compliant vulnerability scanning tool to automatically scan all systems on the network on a weekly or more frequent basis to identify all potential vulnerabilities on the organization's systems.  ● ●
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Secure Configurations"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Image Scanning"
+  - "Image Vulnerability Scanning"
+  - "Severity Level"
+  - "Image Error"
+  - "ECR Image Scanning"
+  - "Third Party Image Scanning Provider"
+  - "Package Vulnerability Scanning"
+  - "Image Scanning Configuration"
+  - "Repository Name"
+  - "Image Name"
+  - "Region Code"
+  - "Automated Vulnerability Scans"
+  - "SCAP-Compliant Vulnerability Scanning Tool"
+  - "Vulnerability Scanning Frequency"
+  - "Authenticated Scan"
+  - "Unauthenticated Scan"
+  - "SCAP-Compliant Vulnerability Scanning Tool"
+  - "Weekly Scan"
+  - "Monthly Scan"
+  - "Repository"
+  - "Image"
+  - "ECR"
+  - "CVE"
+```

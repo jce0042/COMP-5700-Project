@@ -1,0 +1,36 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 96 4.2.7 Minimize the admission of containers with added capabilities (Manual) Profile Applicability: •  Level 1 Description: Do not generally permit containers with capabilities assigned beyond the default set. Rationale: Containers run with a default set of capabilities as assigned by the Container Runtime. Capabilities outside this set can be added to containers which could expose them to risks of container breakout attacks. There should be at least one PodSecurityPolicy (PSP) defined which prevents containers with capabilities beyond the default set from launching. If you need to run containers with additional capabilities, this should be defined in a separate PSP and you should carefully check RBAC controls to ensure that only limited service accounts and users are given permission to access that PSP. Impact: Pods with containers which require capabilities outwith the default set will not be permitted. Audit: Get the set of PSPs with the following command: kubectl get psp Verify that there are no PSPs present which have allowedCapabilities set to anything other than an empty array. Remediation: Ensure that allowedCapabilities is not present in PSPs for the cluster unless it is set to an empty array. Default Value: By default, PodSecurityPolicies are not defined. References: 1. https://kubernetes.io/docs/concepts/policy/pod-security-policy/#enabling-pod-security-policies
+Page 97 2. https://www.nccgroup.trust/uk/our-research/abusing-privileged-and-unprivileged-linux-containers/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts  Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account. ● ● ● v7 4.3 Ensure the Use of Dedicated Administrative Accounts  Ensure that all users with administrative account access use a dedicated or secondary account for elevated activities. This account should only be used for administrative activities and not internet browsing, email, or similar activities. ● ● ●
+Page 98 4.2.8 Minimize the admission of containers with capabilities assigned (Automated) Profile Applicability: •  Level 1 Description: Do not generally permit containers with capabilities Rationale: Containers run with a default set of capabilities as assigned by the Container Runtime. Capabilities are parts of the rights generally granted on a Linux system to the root user. In many cases applications running in containers do not require any capabilities to operate, so from the perspective of the principal of least privilege use of capabilities should be minimized. Impact: Pods with containers require capabilities to operate will not be permitted. Audit: Get the set of PSPs with the following command: kubectl get psp For each PSP, check whether capabilities have been forbidden: kubectl get psp <name> -o=jsonpath='{.spec.requiredDropCapabilities}' Remediation: Review the use of capabilities in applications running on your cluster. Where a namespace contains applications which do not require any Linux capabilities to operate consider adding a PSP which forbids the admission of containers which do not drop all capabilities. Default Value: By default, PodSecurityPolicies are not defined. References: 1. https://kubernetes.io/docs/concepts/policy/pod-security-policy/#enabling-pod-security-policies 2. https://www.nccgroup.trust/uk/our-research/abusing-privileged-and-unprivileged-linux-containers/
+Page 99 CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts  Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account. ● ● ● v7 4.3 Ensure the Use of Dedicated Administrative Accounts  Ensure that all users with administrative account access use a dedicated or secondary account for elevated activities. This account should only be used for administrative activities and not internet browsing, email, or similar activities. ● ● ●
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - Readable KDE Name
+  - Requirements
+    - "req1"
+    - "req2"
+```

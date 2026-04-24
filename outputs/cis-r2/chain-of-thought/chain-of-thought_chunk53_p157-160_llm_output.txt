@@ -1,0 +1,276 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 156 
+Internal Only - General  Appendix: CIS Controls v8 IG 1 Mapped 
+Recommendations  
+Recommendation  Set 
+Correctly  
+Yes No 
+2.1.1  Enable audit Logs    
+2.1.2  Ensure audit logs are collected and managed    
+3.1.1  Ensure that the kubeconfig  file permissions are set to 
+644 or more restrictive    
+3.1.2  Ensure that the kubelet kubeconfig file ownership is set 
+to root:root    
+3.1.3  Ensure that the kubelet  configuration file has permissions 
+set to 644 or more restrictive    
+3.1.4  Ensure that the kubelet configuration file ownership is set 
+to root:root    
+3.2.1  Ensure that the Anonymous Auth is Not Enabled    
+3.2.2  Ensure that the --authorization -mode argument is not set 
+to AlwaysAllow    
+3.2.7  Ensure that the --eventRecordQPS  argument is set to 0 
+or a level which ensures appropriate event capture    
+4.1.1  Ensure that the cluster -admin role is only used where 
+required    
+4.1.2  Minimize access to secrets    
+4.1.3  Minimize wildcard use in Roles and ClusterRoles    
+4.1.5  Ensure that default service accounts are not actively 
+used.    
+4.2.1  Minimize the admission of privileged containers    
+4.2.2  Minimize the admission of containers wishing to share 
+the host process ID namespace    
+4.2.3  Minimize the admission of containers wishing to share 
+the host IPC namespace    
+4.2.4  Minimize the admission of containers wishing to share 
+the host network namespace    
+4.2.5  Minimize the admission of containers with 
+allowPrivilegeEscalation   
+Page 157 
+Internal Only - General  Recommendation  Set 
+Correctly  
+Yes No 
+4.3.1  Ensure CNI plugin supports network policies.    
+4.3.2  Ensure that all Namespaces have Network Policies 
+defined    
+5.1.2  Minimize user access to Amazon ECR    
+5.1.3  Minimize cluster access to read -only for Amazon ECR    
+5.4.1  Restrict Access to the Control Plane Endpoint    
+5.4.2  Ensure clusters are created with Private Endpoint 
+Enabled and Public Access Disabled    
+5.4.3  Ensure clusters are created with Private Nodes   
+Page 158 
+Internal Only - General  Appendix: CIS Controls v8 IG 2 Mapped 
+Recommendations  
+Recommendation  Set 
+Correctly  
+Yes No 
+2.1.1  Enable audit Logs    
+2.1.2  Ensure audit logs are collected and managed    
+3.1.1  Ensure that the kubeconfig  file permissions are set to 
+644 or more restrictive    
+3.1.2  Ensure that the kubelet kubeconfig file ownership is set 
+to root:root    
+3.1.3  Ensure that the kubelet  configuration file has permissions 
+set to 644 or more restrictive    
+3.1.4  Ensure that the kubelet configuration file ownership is set 
+to root:root    
+3.2.1  Ensure that the Anonymous Auth is Not Enabled    
+3.2.2  Ensure that the --authorization -mode argument is not set 
+to AlwaysAllow    
+3.2.3  Ensure that a Client CA File is Configured    
+3.2.4  Ensure that the --read-only-port is disabled    
+3.2.5  Ensure that the --streaming -connection -idle-timeout 
+argument is not set to 0    
+3.2.6  Ensure that the --make -iptables -util-chains argument is 
+set to true    
+3.2.7  Ensure that the --eventRecordQPS  argument is set to 0 
+or a level which ensures appropriate event capture    
+3.2.8  Ensure that the --rotate -certificates argument is not 
+present or is set to true    
+3.2.9  Ensure that the RotateKubeletServerCertificate  argument 
+is set to true    
+4.1.1  Ensure that the cluster -admin role is only used where 
+required    
+4.1.2  Minimize access to secrets    
+4.1.3  Minimize wildcard use in Roles and ClusterRoles   
+Page 159 
+Internal Only - General  Recommendation  Set 
+Correctly  
+Yes No 
+4.1.5  Ensure that default service accounts are not actively 
+used.    
+4.1.6  Ensure that Service Account Tokens are only mounted 
+where necessary    
+4.1.7  Cluster Access Manager API to streamline and enhance 
+the management of access controls within EKS clusters    
+4.1.8  Limit use of the Bind, Impersonate and Escalate 
+permissions in the Kubernetes cluster    
+4.2.1  Minimize the admission of privileged containers    
+4.2.2  Minimize the admission of containers wishing to share 
+the host process ID namespace    
+4.2.3  Minimize the admission of containers wishing to share 
+the host IPC namespace    
+4.2.4  Minimize the admission of containers wishing to share 
+the host network namespace    
+4.2.5  Minimize the admission of containers with 
+allowPrivilegeEscalation    
+4.3.1  Ensure CNI plugin supports network policies.    
+4.3.2  Ensure that all Namespaces have Network Policies 
+defined    
+4.4.1  Prefer using secrets as files over secrets as environment 
+variables    
+4.4.2  Consider external secret storage    
+4.5.2  The default namespace should not be used    
+5.1.1  Ensure Image Vulnerability Scanning using Amazon ECR 
+image scanning or a third party provider    
+5.1.2  Minimize user access to Amazon ECR    
+5.1.3  Minimize cluster access to read -only for Amazon ECR    
+5.1.4  Minimize Container Registries to only those approved    
+5.3.1  Ensure Kubernetes Secrets are encrypted using 
+Customer Master Keys (CMKs) managed in AWS KMS    
+5.4.1  Restrict Access to the Control Plane Endpoint    
+5.4.2  Ensure clusters are created with Private Endpoint 
+Enabled and Public Access Disabled    
+5.4.3  Ensure clusters are created with Private Nodes   
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "req1"
+  - "req2"
+  - "req3"
+  - "req4"
+  - "req5"
+  - "req6"
+  - "req7"
+  - "req8"
+  - "req9"
+  - "req10"
+  - "req11"
+  - "req12"
+  - "req13"
+  - "req14"
+  - "req15"
+  - "req16"
+  - "req17"
+  - "req18"
+  - "req19"
+  - "req20"
+  - "req21"
+  - "req22"
+  - "req23"
+  - "req24"
+  - "req25"
+  - "req26"
+  - "req27"
+  - "req28"
+  - "req29"
+  - "req30"
+  - "req31"
+  - "req32"
+  - "req33"
+  - "req34"
+  - "req35"
+  - "req36"
+  - "req37"
+  - "req38"
+  - "req39"
+  - "req40"
+  - "req41"
+  - "req42"
+  - "req43"
+  - "req44"
+  - "req45"
+  - "req46"
+  - "req47"
+  - "req48"
+  - "req49"
+  - "req50"
+  - "req51"
+  - "req52"
+  - "req53"
+  - "req54"
+  - "req55"
+  - "req56"
+  - "req57"
+  - "req58"
+  - "req59"
+  - "req60"
+  - "req61"
+  - "req62"
+  - "req63"
+  - "req64"
+  - "req65"
+  - "req66"
+  - "req67"
+  - "req68"
+  - "req69"
+  - "req70"
+  - "req71"
+  - "req72"
+  - "req73"
+  - "req74"
+  - "req75"
+  - "req76"
+  - "req77"
+  - "req78"
+  - "req79"
+  - "req80"
+  - "req81"
+  - "req82"
+  - "req83"
+  - "req84"
+  - "req85"
+  - "req86"
+  - "req87"
+  - "req88"
+  - "req89"
+  - "req90"
+  - "req91"
+  - "req92"
+  - "req93"
+  - "req94"
+  - "req95"
+  - "req96"
+  - "req97"
+  - "req98"
+  - "req99"
+  - "req100"
+  - "req101"
+  - "req102"
+  - "req103"
+  - "req104"
+  - "req105"
+  - "req106"
+  - "req107"
+  - "req108"
+  - "req109"
+  - "req110"
+  - "req111"
+  - "req112"
+  - "req113"
+  - "req114"
+  - "req115"
+  - "req116"
+  - "req117"
+  - "req118"
+  - "req119"
+  - "req120"
+  - "req121"
+  - "req122"
+  - "req123"
+  - "req124"
+

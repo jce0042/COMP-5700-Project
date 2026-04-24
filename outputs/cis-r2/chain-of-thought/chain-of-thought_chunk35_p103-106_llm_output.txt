@@ -1,0 +1,134 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 102 
+Internal Only - General  4.4.1 Prefer using secrets as files over secrets as environment 
+variables (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Kubernetes supports mounting secrets as data volumes or as environment variables. 
+Minimize the use of environment variable secrets.  
+Rationale:  
+It is reasonably common for application code to log out its environment (particularly in 
+the event of an error). This will include any secret values passed in as environment 
+variables, so secrets can easily be exposed to any user or entity who has access t o the 
+logs.  
+Impact:  
+Application code which expects to read secrets in the form of environment variables 
+would need modification  
+Audit:  
+Run the following command to find references to objects which use environment 
+variables defined from secrets.  
+kubectl get all -o jsonpath='{range .items[?(@..secretKeyRef)]} {.kind} 
+{.metadata.name} {" \n"}{end}' -A 
+Remediation:  
+If possible, rewrite application code to read secrets from mounted secret files, rather 
+than from environment variables.  
+Default Value:  
+By default, secrets are not defined  
+References:  
+1. https://kubernetes.io/docs/concepts/configuration/secret/#using -secrets  
+Additional Information:  
+Mounting secrets as volumes has the additional benefit that secret values can be 
+updated without restarting the pod
+Page 103 
+Internal Only - General  CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 3.10 Encrypt Sensitive Data in Transit  
+ Encrypt sensitive data in transit. Example implementations can include: 
+Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).   ● ● 
+v7 14.4 Encrypt All Sensitive Information in Transit  
+ Encrypt all sensitive information in transit.   ● ● 
+v7 14.8 Encrypt Sensitive Information at Rest  
+ Encrypt all sensitive information at rest using a tool that requires a secondary 
+authentication mechanism not integrated into the operating system, in order to 
+access the information.    ●
+Page 104 
+Internal Only - General  4.4.2 Consider external secret storage (Manual)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Consider the use of an external secrets storage and management system, instead of 
+using Kubernetes Secrets directly, if you have more complex secret management 
+needs. Ensure the solution requires authentication to access secrets, has auditing of 
+access to and use of secrets, and encrypts secrets. Some solutions also make it easier 
+to rotate secrets.  
+Rationale:  
+Kubernetes supports secrets as first -class objects, but care needs to be taken to ensure 
+that access to secrets is carefully limited. Using an external secrets provider can ease 
+the management of access to secrets, especially where secrests are used across  both 
+Kubernetes and non -Kubernetes environments.  
+Impact:  
+None  
+Audit:  
+Review your secrets management implementation.  
+Remediation:  
+Refer to the secrets management options offered by your cloud provider or a third -party 
+secrets management solution.  
+Default Value:  
+By default, no external secret management is configured.  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 3.11 Encrypt Sensitive Data at Rest  
+ Encrypt sensitive data at rest on servers, applications, and databases containing 
+sensitive data. Storage -layer encryption, also known as server -side encryption, 
+meets the minimum requirement of this Safeguard. Additional encryption methods 
+may include app lication -layer encryption, also known as client -side encryption, 
+where access to the data storage device(s) does not permit access to the plain -text 
+data.   ● ●
+Page 105 
+Internal Only - General  Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v7 14.8 Encrypt Sensitive Information at Rest  
+ Encrypt all sensitive information at rest using a tool that requires a secondary 
+authentication mechanism not integrated into the operating system, in order to 
+access the information.    ●
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Secret File"
+  - "External Secret Storage"
+  - "Secrets Management"
+  - "Encryption"
+  - "TLS"
+  - "OpenSSH"
+  - "Server-Side Encryption"
+  - "Client-Side Encryption"
+  - "Secret Key Ref"
+  - "Secret File Access"
+  - "External Secret Storage Access"
+  - "Secret Access"
+  - "Audit"
+  - "Remediation"
+  - "Secrets Management Options"
+  - "Encryption Methods"
+  - "TLS Encryption"
+  - "OpenSSH Encryption"
+  - "Server-Side Encryption"
+  - "Client-Side Encryption"
+```

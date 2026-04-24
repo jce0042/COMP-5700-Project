@@ -1,0 +1,65 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 126 {     "Version": "2012-10-17",     "Statement": [         {             "Effect": "Allow",             "Action": [                 "ecr:BatchCheckLayerAvailability",                 "ecr:BatchGetImage",                 "ecr:GetDownloadUrlForLayer",                 "ecr:GetAuthorizationToken"             ],             "Resource": "*"         }     ] } Default Value: If you used eksctl or the AWS CloudFormation templates in Getting Started with Amazon EKS to create your cluster and worker node groups, these IAM permissions are applied to your worker node IAM role by default. References: 1. https://docs.aws.amazon.com/AmazonECR/latest/userguide/ECR_on_EKS.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts  Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account. ● ● ● v7 4.3 Ensure the Use of Dedicated Administrative Accounts  Ensure that all users with administrative account access use a dedicated or secondary account for elevated activities. This account should only be used for administrative activities and not internet browsing, email, or similar activities. ● ● ●
+Page 127 5.1.4 Minimize Container Registries to only those approved (Manual) Profile Applicability: •  Level 2 Description: Use approved container registries. Rationale: Allowing unrestricted access to external container registries provides the opportunity for malicious or unapproved containers to be deployed into the cluster. Allowlisting only approved container registries reduces this risk. Impact: All container images to be deployed to the cluster must be hosted within an approved container image registry. Audit: Remediation: References: 1. https://aws.amazon.com/blogs/opensource/using-open-policy-agent-on-amazon-eks/ CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 2.5 Allowlist Authorized Software  Use technical controls, such as application allowlisting, to ensure that only authorized software can execute or be accessed. Reassess bi-annually, or more frequently.  ● ● v7 5.3 Securely Store Master Images  Store the master images and templates on securely configured servers, validated with integrity monitoring tools, to ensure that only authorized changes to the images are possible.  ● ● v7 13.4 Only Allow Access to Authorized Cloud Storage or Email Providers  Only allow access to authorized cloud storage or email providers.  ● ●
+Page 128
+Page 129 5.2 Identity and Access Management (IAM) This section contains recommendations relating to using AWS IAM with Amazon EKS.
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Restrict Administrator Privileges"
+  - "Minimize Container Registries"
+  - "Securely Store Master Images"
+  - "Allowlist Authorized Software"
+  - "Only Allow Access to Authorized Cloud Storage or Email Providers"
+```

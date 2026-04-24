@@ -1,0 +1,159 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 126 
+Internal Only - General  5.3.1 Ensure Kubernetes Secrets are encrypted using Customer 
+Master Keys (CMKs) managed in AWS KMS (Manual)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Encrypt Kubernetes secrets, stored in etcd, using secrets encryption feature during 
+Amazon EKS cluster creation.  
+Rationale:  
+Kubernetes can store secrets that pods can access via a mounted volume. Today, 
+Kubernetes secrets are stored with Base64 encoding, but encrypting is the 
+recommended approach. Amazon EKS clusters version 1.13 and higher support the 
+capability of encrypting your Kubernetes secrets using AWS Key Management Service 
+(KMS) Customer Managed Keys (CMK). The only requirement is to enable the 
+encryption provider support during EKS cluster creation.  
+Use AWS Key Management Service (KMS) keys to provide envelope encryption of 
+Kubernetes secrets stored in Amazon EKS. Implementing envelope encryption is 
+considered a security best practice for applications that store sensitive data and is part 
+of a defense  in depth security strategy.  
+Application -layer Secrets Encryption provides an additional layer of security for sensitive 
+data, such as user defined Secrets and Secrets required for the operation of the cluster, 
+such as service account keys, which are all stored in etcd.  
+Using this functionality, you can use a key, that you manage in AWS KMS, to encrypt 
+data at the application layer. This protects against attackers in the event that they 
+manage to gain access to etcd.  
+Audit:  
+For Amazon EKS clusters with Secrets Encryption enabled, run the AWS CLI 
+command:  
+aws eks describe -cluster --name=<cluster -name> 
+From the output of the command, search if the following configuration exist with valid 
+AWS keyArn  :
+Page 127 
+Internal Only - General  "encryptionConfig": [  
+         {  
+            "provider": {  
+               "keyArn": "string"  
+            }, 
+            "resources": [ "string" ]  
+         } 
+      ], 
+Remediation:  
+This process can only be performed during Cluster Creation.  
+Enable 'Secrets Encryption' during Amazon EKS cluster creation as described in the 
+links within the 'References' section.  
+Default Value:  
+By default secrets created using the Kubernetes API are stored in tmpfs  and are 
+encrypted at rest.  
+References:  
+1. https://aws.amazon.com/about -aws/whats -new/2020/03/amazon -eks-adds -
+envelope -encryption -for-secrets -with-aws-kms/ 
+2. https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeCluster.html  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 3.11 Encrypt Sensitive Data at Rest  
+ Encrypt sensitive data at rest on servers, applications, and databases containing 
+sensitive data. Storage -layer encryption, also known as server -side encryption, 
+meets the minimum requirement of this Safeguard. Additional encryption methods 
+may include app lication -layer encryption, also known as client -side encryption, 
+where access to the data storage device(s) does not permit access to the plain -text 
+data.   ● ● 
+v7 14.8 Encrypt Sensitive Information at Rest  
+ Encrypt all sensitive information at rest using a tool that requires a secondary 
+authentication mechanism not integrated into the operating system, in order to 
+access the information.    ●
+Page 128 
+Internal Only - General  5.4 Cluster Networking  
+This section contains recommendations relating to network security configurations in 
+Amazon EKS.
+Page 129 
+Internal Only - General  5.4.1 Restrict Access to the Control Plane Endpoint (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Enable Endpoint Private Access to restrict access to the cluster's control plane to only 
+an allowlist of authorized IPs.  
+Rationale:  
+Authorized networks are a way of specifying a restricted range of IP addresses that are 
+permitted to access your cluster's control plane. Kubernetes Engine uses both 
+Transport Layer Security (TLS) and authentication to provide secure access to your 
+cluster 's control plane from the public internet. This provides you the flexibility to 
+administer your cluster from anywhere; however, you might want to further restrict 
+access to a set of IP addresses that you control. You can set this restriction by 
+specifying an authorized network.  
+Restricting access to an authorized network can provide additional security benefits for 
+your container cluster, including:  
+• Better protection from outsider attacks: Authorized networks provide an 
+additional layer of security by limiting external access to a specific set of 
+addresses you designate, such as those that originate from your premises. This 
+helps protect access to you r cluster in the case of a vulnerability in the cluster's 
+authentication or authorization mechanism.  
+• Better protection from insider attacks: Authorized networks help protect your 
+cluster from accidental leaks of master certificates from your company's 
+premises. Leaked certificates used from outside Cloud Services and outside the 
+authorized IP ranges (for example, from addresses outside your company) are 
+still denied access.  
+Impact:  
+When implementing Endpoint Private Access, be careful to ensure all desired networks 
+are on the allowlist (whitelist) to prevent inadvertently blocking external access to your 
+cluster's control plane.  
+Audit:  
+Check for the following to be 'enabled: true'
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements"
+  - "Encryption"
+  - "Access Logging"
+```

@@ -1,0 +1,109 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 81 
+Internal Only - General  4.1.8 Limit use of the Bind, Impersonate and Escalate 
+permissions in the Kubernetes cluster (Manual)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Cluster roles and roles with the impersonate, bind or escalate permissions should not 
+be granted unless strictly required. Each of these permissions allow a particular subject 
+to escalate their privileges beyond those explicitly granted by cluster administrators  
+Rationale:  
+The impersonate privilege allows a subject to impersonate other users gaining their 
+rights to the cluster. The bind privilege allows the subject to add a binding to a cluster 
+role or role which escalates their effective permissions in the cluster. The escalate 
+privilege allows a subject to modify cluster roles to which they are bound, increasing 
+their rights to that level.  
+Each of these permissions has the potential to allow for privilege escalation to cluster -
+admin level.  
+Impact:  
+There are some cases where these permissions are required for cluster service 
+operation, and care should be taken before removing these permissions from system 
+service accounts.  
+Audit:  
+Review the users who have access to cluster roles or roles which provide the 
+impersonate, bind or escalate privileges.  
+Remediation:  
+Where possible, remove the impersonate, bind and escalate rights from subjects.  
+Default Value:  
+In a default kubeadm cluster, the system:masters group and clusterrole -aggregation -
+controller service account have access to the escalate privilege. The system:masters 
+group also has access to bind and impersonate.  
+References:  
+1. https://www.impidio.com/blog/kubernetes -rbac-security -pitfalls  
+2. https://raesene.github.io/blog/2020/12/12/Escalating_Away/  
+3. https://raesene.github.io/blog/2021/01/16/Getting -Into-A-Bind-with-Kubernetes/
+Page 82 
+Internal Only - General  CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 4.8 Uninstall or Disable Unnecessary Services on 
+Enterprise Assets and Software  
+ Uninstall or disable unnecessary services on enterprise assets and software, 
+such as an unused file sharing service, web application module, or service 
+function.   ● ● 
+v7 14.7 Enforce Access Control to Data through Automated 
+Tools  
+ Use an automated tool, such as host -based Data Loss Prevention, to enforce 
+access controls to data even when data is copied off a system.    ●
+Page 83 
+Internal Only - General  4.2 Pod Security Standards  
+Pod Security Standards (PSS) are recommendations for securing deployed workloads 
+to reduce the risks of container breakout. There are a number of ways if implementing 
+PSS, including the built -in Pod Security Admission controller, or external policy control  
+systems which integrate with Kubernetes via validating and mutating webhooks.  
+The previous feature described in this document, pod security policy (preview), was 
+deprecated with version 1.21, and removed as of version 1.25. After pod security policy 
+(preview) is deprecated, you must disable the feature on any existing clusters using  the 
+deprecated feature to perform future cluster upgrades and stay within Azure support.
+Page 84 
+Internal Only - General  4.2.1 Minimize the admission of privileged containers (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Do not generally permit containers to be run with the securityContext.privileged  
+flag set to true . 
+Rationale:  
+Privileged containers have access to all Linux Kernel capabilities and devices. A 
+container running with full privileges can do almost everything that the host can do. This 
+flag exists to allow special use -cases, like manipulating the network stack and 
+accessing devices.  
+There should be at least one admission control policy defined which does not permit 
+privileged containers.  
+If you need to run privileged containers, this should be defined in a separate policy and 
+you should carefully check to ensure that only limited service accounts and users are 
+given permission to use that policy.  
+Impact:  
+Pods defined with spec.containers[].securityContext.privileged: true , 
+spec.initContainers[].securityContext.privileged: true  and 
+spec.ephemeralContainers[].securityContext.privileged: true  will not be 
+permitted.
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "requirements"
+```

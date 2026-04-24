@@ -1,0 +1,92 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 171 Recommendation Set Correctly Yes No 4.1.2 Minimize access to secrets o o 4.1.3 Minimize wildcard use in Roles and ClusterRoles o o 4.1.4 Minimize access to create pods o o 4.1.5 Ensure that default service accounts are not actively used. o o 4.1.6 Ensure that Service Account Tokens are only mounted where necessary o o 4.1.7 Avoid use of system:masters group o o 4.1.8 Limit use of the Bind, Impersonate and Escalate permissions in the Kubernetes cluster o o 4.2.1 Minimize the admission of privileged containers o o 4.2.2 Minimize the admission of containers wishing to share the host process ID namespace o o 4.2.3 Minimize the admission of containers wishing to share the host IPC namespace o o 4.2.4 Minimize the admission of containers wishing to share the host network namespace o o 4.2.5 Minimize the admission of containers with allowPrivilegeEscalation o o 4.2.6 Minimize the admission of root containers o o 4.2.7 Minimize the admission of containers with added capabilities o o 4.2.8 Minimize the admission of containers with capabilities assigned o o 4.3.1 Ensure CNI plugin supports network policies. o o 4.3.2 Ensure that all Namespaces have Network Policies defined o o 4.4.1 Prefer using secrets as files over secrets as environment variables o o 4.4.2 Consider external secret storage o o 4.6.1 Create administrative boundaries between resources using namespaces o o 4.6.2 Apply Security Context to Your Pods and Containers o o 4.6.3 The default namespace should not be used o o
+Page 172 Recommendation Set Correctly Yes No 5.1.1 Ensure Image Vulnerability Scanning using Amazon ECR image scanning or a third party provider o o 5.1.2 Minimize user access to Amazon ECR o o 5.1.3 Minimize cluster access to read-only for Amazon ECR o o 5.1.4 Minimize Container Registries to only those approved o o 5.2.1 Prefer using dedicated EKS Service Accounts o o 5.3.1 Ensure Kubernetes Secrets are encrypted using Customer Master Keys (CMKs) managed in AWS KMS o o 5.4.1 Restrict Access to the Control Plane Endpoint o o 5.4.2 Ensure clusters are created with Private Endpoint Enabled and Public Access Disabled o o 5.4.3 Ensure clusters are created with Private Nodes o o 5.4.4 Ensure Network Policy is Enabled and set as appropriate o o 5.4.5 Encrypt traffic to HTTPS load balancers with TLS certificates o o 5.5.1 Manage Kubernetes RBAC users with AWS IAM Authenticator for Kubernetes o o 5.6.1 Consider Fargate for running untrusted workloads o o
+Page 173 Appendix:	CIS	Controls	v8	Unmapped	Recommendations	Recommendation Set Correctly Yes No  No unmapped recommendations to CIS Controls v8.0 o o
+Page 174 Appendix: Change History Date Version Changes for this version 11/14/2022 1.2.0 Ticket #15928 – Recommendation 3.2.9 updated 11/14/2022 1.2.0 Ticket #15915 – Pod Security Policy deprecated 11/12/2022 1.2.0 Ticket #15913 – recommendation 3.2.9 updated Event QPS deprecated 11/12/2022 1.2.0 Ticket # 16516 – recommendation 3.2.2 updated configuration guidance regarding “always allow” 11/12/2022 1.2.0 Ticket #15485 – ELS Audit Log impact statement updated. 11/12/2022 1.2.0 Ticket #15654 – recommendation 3.2.3 audit  11/01/2022 1.2.0 Ticket #15618 – recommendation 3.2.9 profile updated to level 2 11/01/2022 1.2.0 Ticket #15616 – recommendation 3.2.8 -hostname-overide remdiation process updated. 11/01/2022 1.2.0 Ticket #15805 – recommendation 3.3.1 audit procedure updated.
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Password Complexity"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Image Vulnerability Scanning"
+  - "Kubernetes Secrets"
+  - "Container Registries"
+  - "CNI Plugin Support"
+  - "Network Policies"
+  - "Namespaces"
+  - "Security Context"
+  - "Service Account Tokens"
+  - "Control Plane Endpoint"
+  - "Private Endpoint Enabled"
+  - "Public Access Disabled"
+  - "RBAC Users"
+  - "ECR Image Scanning"
+  - "TLS Certificates"
+  - "Kubernetes RBAC"
+  - "K8s Secrets"
+  - "CIS Controls v8"
+  - "Change History Date"
+  - "Version Changes"
+  - "Ticket #15928"
+  - "Ticket #15915"
+  - "Ticket #15913"
+  - "Ticket #15916"
+  - "Ticket #15485"
+  - "Ticket #15654"
+  - "Ticket #15618"
+  - "Ticket #15616"
+  - "Ticket #15805"
+  - "Ticket #15618"
+```

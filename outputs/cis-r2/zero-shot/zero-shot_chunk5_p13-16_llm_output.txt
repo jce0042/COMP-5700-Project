@@ -1,0 +1,125 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 12 
+Internal Only - General  Impact Statement  
+Any security, functionality, or operational consequences that can result from following 
+the recommendation.  
+Audit Procedure  
+Systematic instructions for determining if the target system complies with the 
+recommendation.  
+Remediation Procedure  
+Systematic instructions for applying recommendations to the target system to bring it 
+into compliance according to the recommendation.  
+Default Value  
+Default value for the given setting in this recommendation, if known. If not known, either 
+not configured or not defined will be applied.  
+References  
+Additional documentation relative to the recommendation.  
+CIS Critical Security Controls® (CIS Controls®) 
+The mapping between a recommendation and the CIS Controls is organized by CIS 
+Controls version, Safeguard, and Implementation Group (IG). The Benchmark in its 
+entirety addresses the CIS Controls safeguards of (v7) “5.1 - Establish Secure 
+Configurations” an d (v8) '4.1 - Establish and Maintain a Secure Configuration Process” 
+so individual recommendations will not be mapped to these safeguards.  
+Additional Information  
+Supplementary information that does not correspond to any other field but may be 
+useful to the user.
+Page 13 
+Internal Only - General  Profile Definitions  
+The following configuration profiles are defined by this Benchmark:  
+• Level 1  
+Level 1 Configuration Profile  
+• Level 2  
+Extends Level 1
+Page 14 
+Internal Only - General   
+ 
+Acknowledgements  
+This Benchmark exemplifies the great things a community of users, vendors, and 
+subject matter experts can accomplish through consensus collaboration. The CIS 
+community thanks the entire consensus team with special recognition to the following 
+individuals w ho contributed greatly to the creation of this guide:  
+Thanks to Authors: Paavan Mistry and Randall Mowen  
+with special thanks to contributors: Rory MCcune and Tony Wilwerding  
+ 
+Authors:  
+Paavan Mistry  
+Randall Mowen  
+Editor:  
+Randall Mowen  
+ 
+Contributors   
+Mark Larinde  
+Rory MCcune  
+Tony Wilwerding  
+James Stocks  
+Daniel Burns  
+Joe Bowbeer
+Page 15 
+Internal Only - General  Recommendations  
+1 Control Plane Components  
+Security is a shared responsibility between AWS and the Amazon EKS customer. The 
+shared responsibility model  describes this as security of the cloud and security in the 
+cloud:  
+Security of the cloud  – AWS is responsible for protecting the infrastructure that runs 
+AWS services in the AWS Cloud. For Amazon EKS, AWS is responsible for the 
+Kubernetes control plane, which includes the control plane nodes and etcd database. 
+Third -party auditors regularly t est and verify the effectiveness of our security as part of 
+the AWS compliance programs . To learn about the compliance programs that apply to 
+Amazon EKS, see AWS Services in Scope by Compliance Program.  
+Security in the cloud – Your responsibility includes the following areas.  
+• The security configuration of the data plane, including the configuration of the 
+security groups that allow traffic to pass from the Amazon EKS control plane into 
+the customer VPC  
+• The configuration of the worker nodes and the containers themselves  
+• The worker node guest operating system (including updates and security 
+patches)  
+o Amazon EKS follows the shared responsibility model for CVEs and 
+security patches on managed node groups. Because managed nodes run 
+the Amazon EKS -optimized AMIs, Amazon EKS is responsible for building 
+patched versions of these AMIs when bugs or issues are reported and we 
+are able to publish a fix. However, customers are responsible for 
+deploying these patched AMI versions to your managed node groups.  
+• Other associated application software:  
+o Setting up and managing network controls, such as firewall rules  
+o Managing platform -level identity and access management, either with or in 
+addition to IAM  
+• The sensitivity of your data, your company’s requirements, and applicable laws 
+and regulations  
+AWS is responsible for securing the control plane, though you might be able to 
+configure certain options based on your requirements. Section 2 of this Benchmark 
+addresses these configurations.  
+2 Control Plane Configuration  
+This section contains recommendations for Amazon EKS control plane logging 
+configuration. Customers are able to configure logging for control plane in Amazon 
+EKS.
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "req1"
+  - "req2"
+
+```

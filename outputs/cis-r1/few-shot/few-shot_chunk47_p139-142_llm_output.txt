@@ -1,0 +1,68 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 138 Controls Version Control IG 1 IG 2 IG 3 v7 7.4 Maintain and Enforce Network-Based URL Filters  Enforce network-based URL filters that limit a system's ability to connect to websites not approved by the organization. This filtering shall be enforced for each of the organization's systems, whether they are physically at an organization's facilities or not.  ● ●
+Page 139 5.4.2 Ensure clusters are created with Private Endpoint Enabled and Public Access Disabled (Manual) Profile Applicability: •  Level 2 Description: Disable access to the Kubernetes API from outside the node network if it is not required. Rationale: In a private cluster, the master node has two endpoints, a private and public endpoint. The private endpoint is the internal IP address of the master, behind an internal load balancer in the master's VPC network. Nodes communicate with the master using the private endpoint. The public endpoint enables the Kubernetes API to be accessed from outside the master's VPC network. Although Kubernetes API requires an authorized token to perform sensitive actions, a vulnerability could potentially expose the Kubernetes publically with unrestricted access. Additionally, an attacker may be able to identify the current cluster and Kubernetes API version and determine whether it is vulnerable to an attack. Unless required, disabling public endpoint will help prevent such threats, and require the attacker to be on the master's VPC network to perform any attack on the Kubernetes API. Impact: Configure the EKS cluster endpoint to be private. 1. Leave the cluster endpoint public and specify which CIDR blocks can communicate with the cluster endpoint. The blocks are effectively a whitelisted set of public IP addresses that are allowed to access the cluster endpoint. 2. Configure public access with a set of whitelisted CIDR blocks and set private endpoint access to enabled. This will allow public access from a specific range of public IPs while forcing all network traffic between the kubelets (workers) and the Kubernetes API through the cross-account ENIs that get provisioned into the cluster VPC when the control plane is provisioned. Audit: Check for private endpoint access to the Kubernetes API server
+Page 140 Remediation: By enabling private endpoint access to the Kubernetes API server, all communication between your nodes and the API server stays within your VPC. With this in mind, you can update your cluster accordingly using the AWS CLI to ensure that Private Endpoint Access is enabled. For example, the following command would enable private access to the Kubernetes API and ensure that no public access is permitted: aws eks update-cluster-config --region $AWS_REGION --name $CLUSTER_NAME --resources-vpc-config endpointPrivateAccess=true, endpointPublicAccess=false Note: For more detailed information, see the EKS Cluster Endpoint documentation link in the references section. Default Value: By default, the Public Endpoint is disabled. References: 1. https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 4.4 Implement and Manage a Firewall on Servers  Implement and manage a firewall on servers, where supported. Example implementations include a virtual firewall, operating system firewall, or a third-party firewall agent. ● ● ● v7 12 Boundary Defense  Boundary Defense
+Page 141 5.4.3 Ensure clusters are created with Private Nodes (Manual) Profile Applicability: •  Level 1 Description: Disable public IP addresses for cluster nodes, so that they only have private IP addresses. Private Nodes are nodes with no public IP addresses. Rationale: Disabling public IP addresses on cluster nodes restricts access to only internal networks, forcing attackers to obtain local network access before attempting to compromise the underlying Kubernetes hosts. Impact: To enable Private Nodes, the cluster has to also be configured with a private master IP range and IP Aliasing enabled. Private Nodes do not have outbound access to the public internet. If you want to provide outbound Internet access for your private nodes, you can use Cloud NAT or you can manage your own NAT gateway. Audit: Remediation: aws eks update-cluster-config \     --region region-code \     --name my-cluster \     --resources-vpc-config endpointPublicAccess=true,publicAccessCidrs="203.0.113.5/32",endpointPrivateAccess=true CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 4.4 Implement and Manage a Firewall on Servers  Implement and manage a firewall on servers, where supported. Example implementations include a virtual firewall, operating system firewall, or a third-party firewall agent. ● ● ● v7 12 Boundary Defense  Boundary Defense
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Password Complexity"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Firewall on Servers"
+  - "Private Endpoint Enabled"
+  - "Public Access Disabled"
+  - "Private Nodes (Manual)"
+  - "Private IP Addresses"
+  - "Cloud NAT"
+  - "CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v7 7.4"
+```

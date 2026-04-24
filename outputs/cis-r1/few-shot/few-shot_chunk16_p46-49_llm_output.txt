@@ -1,0 +1,63 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 45 3.2.6 Ensure that the --protect-kernel-defaults argument is set to true (Automated) Profile Applicability: •  Level 1 Description: Protect tuned kernel parameters from overriding kubelet default kernel parameter values. Rationale: Kernel parameters are usually tuned and hardened by the system administrators before putting the systems into production. These parameters protect the kernel and the system. Your kubelet kernel defaults that rely on such parameters should be appropriately set to match the desired secured system state. Ignoring this could potentially lead to running pods with undesired kernel behavior. Impact: You would have to re-tune kernel parameters to match kubelet parameters. Audit: Audit Method 1: Run the following command on each node to find the kubelet process: ps -ef | grep kubelet Verify that the command line for kubelet includes this argument set to true: --protect-kernel-defaults=true If the --protect-kernel-defaults argument is not present, check that there is a Kubelet config file specified by --config, and that the file sets protectKernelDefaults to true. Audit Method 2: If using the api configz endpoint consider searching for the status of "protectKernelDefaults" by extracting the live configuration from the nodes running kubelet. Set the local proxy port and the following variables and provide proxy port number and node name; HOSTNAME_PORT="localhost-and-port-number" NODE_NAME="The-Name-Of-Node-To-Extract-Configuration" from the output of "kubectl get nodes"
+Page 46 kubectl proxy --port=8001 &  export HOSTNAME_PORT=localhost:8001 (example host and port number) export NODE_NAME=ip-192.168.31.226.ec2.internal (example node name from "kubectl get nodes")  curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy/configz" Remediation: Remediation Method 1: If modifying the Kubelet config file, edit the kubelet-config.json file /etc/kubernetes/kubelet/kubelet-config.json and set the below parameter to true "protectKernelDefaults":  Remediation Method 2: If using executable arguments, edit the kubelet service file /etc/systemd/system/kubelet.service.d/10-kubelet-args.conf on each worker node and add the below parameter at the end of the KUBELET_ARGS variable string. ----protect-kernel-defaults=true Remediation Method 3: If using the api configz endpoint consider searching for the status of "protectKernelDefaults": by extracting the live configuration from the nodes running kubelet. **See detailed step-by-step configmap procedures in Reconfigure a Node's Kubelet in a Live Cluster, and then rerun the curl statement from audit process to check for kubelet configuration changes kubectl proxy --port=8001 &  export HOSTNAME_PORT=localhost:8001 (example host and port number) export NODE_NAME=ip-192.168.31.226.ec2.internal (example node name from "kubectl get nodes")  curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy/configz" For all three remediations: Based on your system, restart the kubelet service and check status systemctl daemon-reload systemctl restart kubelet.service systemctl status kubelet -l Default Value: See the EKS documentation for the default value. References: 1. https://kubernetes.io/docs/admin/kubelet/
+Page 47 CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 16.7 Use Standard Hardening Configuration Templates for Application Infrastructure  Use standard, industry-recommended hardening configuration templates for application infrastructure components. This includes underlying servers, databases, and web servers, and applies to cloud containers, Platform as a Service (PaaS) components, and SaaS components. Do not allow in-house developed software to weaken configuration hardening.  ● ● v7 5.5 Implement Automated Configuration Monitoring Systems  Utilize a Security Content Automation Protocol (SCAP) compliant configuration monitoring system to verify all security configuration elements, catalog approved exceptions, and alert when unauthorized changes occur.  ● ●
+Page 48 3.2.7 Ensure that the --make-iptables-util-chains argument is set to true (Automated) Profile Applicability: •  Level 1 Description: Allow Kubelet to manage iptables. Rationale: Kubelets can automatically manage the required changes to iptables based on how you choose your networking options for the pods. It is recommended to let kubelets manage the changes to iptables. This ensures that the iptables configuration remains in sync with pods networking configuration. Manually configuring iptables with dynamic pod network configuration changes might hamper the communication between pods/containers and to the outside world. You might have iptables rules too restrictive or too open. Impact: Kubelet would manage the iptables on the system and keep it in sync. If you are using any other iptables management solution, then there might be some conflicts. Audit: Audit Method 1: First, SSH to each node: Run the following command on each node to find the Kubelet process: ps -ef | grep kubelet If the output of the above command includes the argument --make-iptables-util-chains then verify it is set to true. If the --make-iptables-util-chains argument does not exist, and there is a Kubelet config file specified by --config, verify that the file does not set makeIPTablesUtilChains to false. Audit Method 2: If using the api configz endpoint consider searching for the status of authentication... "makeIPTablesUtilChains.:true by extracting the live configuration from the nodes running kubelet. Set the local proxy port and the following variables and provide proxy port number and node name; HOSTNAME_PORT="localhost-and-port-number" NODE_NAME="The-Name-Of-Node-To-Extract-Configuration" from the output of "kubectl get nodes"
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "Requirements"
+  - "Data Encryption"
+  - "Access Logging"
+  - "Protect Kernel Defaults"
+  - "iptables-util-chains"
+```

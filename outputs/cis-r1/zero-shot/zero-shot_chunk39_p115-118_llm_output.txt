@@ -1,0 +1,38 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 114 apiVersion: policy/v1beta1 kind: PodSecurityPolicy metadata:     name: restricted     annotations:     seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default,runtime/default'     apparmor.security.beta.kubernetes.io/allowedProfileNames: 'runtime/default'     seccomp.security.alpha.kubernetes.io/defaultProfileName:  'runtime/default'     apparmor.security.beta.kubernetes.io/defaultProfileName:  'runtime/default' spec:     privileged: false     # Required to prevent escalations to root.     allowPrivilegeEscalation: false     # This is redundant with non-root + disallow privilege escalation,     # but we can provide it for defense in depth.     requiredDropCapabilities:     - ALL     # Allow core volume types.     volumes:     - 'configMap'     - 'emptyDir'     - 'projected'     - 'secret'     - 'downwardAPI'     # Assume that persistentVolumes set up by the cluster admin are safe to use.     - 'persistentVolumeClaim'     hostNetwork: false     hostIPC: false     hostPID: false     runAsUser:     # Require the container to run without root privileges.     rule: 'MustRunAsNonRoot'     seLinux:     # This policy assumes the nodes are using AppArmor rather than SELinux.     rule: 'RunAsAny'     supplementalGroups:     rule: 'MustRunAs'     ranges:         # Forbid adding the root group.         - min: 1         max: 65535     fsGroup:     rule: 'MustRunAs'     ranges:         # Forbid adding the root group.         - min: 1         max: 65535     readOnlyRootFilesystem: false
+Page 115 This policy prevents pods from running as privileged or escalating privileges. It also restricts the types of volumes that can be mounted and the root supplemental groups that can be added. Another, albeit similar, approach is to start with policy that locks everything down and incrementally add exceptions for applications that need looser restrictions such as logging agents which need the ability to mount a host path. Default Value: By default, no security contexts are automatically applied to pods. References: 1. https://kubernetes.io/docs/concepts/policy/security-context/ 2. https://learn.cisecurity.org/benchmarks 3. https://aws.github.io/aws-eks-best-practices/pods/#restrict-the-containers-that-can-run-as-privileged CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 16.7 Use Standard Hardening Configuration Templates for Application Infrastructure  Use standard, industry-recommended hardening configuration templates for application infrastructure components. This includes underlying servers, databases, and web servers, and applies to cloud containers, Platform as a Service (PaaS) components, and SaaS components. Do not allow in-house developed software to weaken configuration hardening.  ● ● v7 5.1 Establish Secure Configurations  Maintain documented, standard security configuration standards for all authorized operating systems and software. ● ● ●
+Page 116 4.6.3 The default namespace should not be used (Manual) Profile Applicability: •  Level 2 Description: Kubernetes provides a default namespace, where objects are placed if no namespace is specified for them. Placing objects in this namespace makes application of RBAC and other controls more difficult. Rationale: Resources in a Kubernetes cluster should be segregated by namespace, to allow for security controls to be applied at that level and to make it easier to manage resources. Impact: None Audit: Run this command to list objects in default namespace kubectl get $(kubectl api-resources --verbs=list --namespaced=true -o name | paste -sd, -) --ignore-not-found -n default The only entries there should be system managed resources such as the kubernetes service Remediation: Ensure that namespaces are created to allow for appropriate segregation of Kubernetes resources and that all new resources are created in a specific namespace. Default Value: Unless a namespace is specific on object creation, the default namespace will be used CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 16.7 Use Standard Hardening Configuration Templates for Application Infrastructure  Use standard, industry-recommended hardening configuration templates for application infrastructure components. This includes underlying servers, databases, and web servers, and applies to cloud containers, Platform as a Service (PaaS) components, and SaaS components. Do not allow in-house developed software to weaken configuration hardening.  ● ●
+Page 117 Controls Version Control IG 1 IG 2 IG 3 v7 5.1 Establish Secure Configurations  Maintain documented, standard security configuration standards for all authorized operating systems and software. ● ● ●  5 Managed services This section consists of security recommendations for the Amazon EKS. These recommendations are applicable for configurations that Amazon EKS customers own and manage.
+
+[/INST]
+
+*Prompt Type*
+zero-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "RequiredDropCapabilities"
+  - "MustRunAsNonRoot"
+  - "RunAsAny"
+  - "MustRunAs"
+  - "fsGroup"
+```

@@ -1,0 +1,36 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. First, think step-by-step about how to identify the KDEs and their requirements. Second, for each KDE, provide a name and a list of requirements associated with it. Finally, structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Document:
+Page 147 References: 1. https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html 2. https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 6.8 Define and Maintain Role-Based Access Control  Define and maintain role-based access control, through determining and documenting the access rights necessary for each role within the enterprise to successfully carry out its assigned duties. Perform access control reviews of enterprise assets to validate that all privileges are authorized, on a recurring schedule at a minimum annually, or more frequently.   ● v7 16.2 Configure Centralized Point of Authentication  Configure access for all accounts through as few centralized points of authentication as possible, including network, security, and cloud systems.  ● ●
+Page 148 5.6 Other Cluster Configurations This section contains recommendations relating to any remaining security-related cluster configurations in Amazon EKS.
+Page 149 5.6.1 Consider Fargate for running untrusted workloads (Manual) Profile Applicability: •  Level 1 Description: It is Best Practice to restrict or fence untrusted workloads when running in a multi-tenant environment. Rationale: Audit: Remediation: Create a Fargate profile for your cluster Before you can schedule pods running on Fargate in your cluster, you must define a Fargate profile that specifies which pods should use Fargate when they are launched. For more information, see AWS Fargate profile. Note If you created your cluster with eksctl using the --fargate option, then a Fargate profile has already been created for your cluster with selectors for all pods in the kube-system and default namespaces. Use the following procedure to create Fargate profiles for any other namespaces you would like to use with Fargate. via eksctl CLI Create your Fargate profile with the following eksctl command, replacing the variable text with your own values. You must specify a namespace, but the labels option is not required. eksctl create fargateprofile --cluster cluster_name --name fargate_profile_name --namespace kubernetes_namespace --labels key=value via AWS Management Console To create a Fargate profile for a cluster with the AWS Management Console 1. Open the Amazon EKS console at https://console.aws.amazon.com/eks/home#/clusters. 2. Choose the cluster to create a Fargate profile for. 3. Under Fargate profiles, choose Add Fargate profile. 4. On the Configure Fargate profile page, enter the following information and choose Next. • For Name, enter a unique name for your Fargate profile. • For Pod execution role, choose the pod execution role to use with your Fargate profile. Only IAM roles with the eks-fargate-pods.amazonaws.com service principal are shown. If you do not see any roles listed here, you must create one. For more information, see Pod execution role.
+Page 150 • For Subnets, choose the subnets to use for your pods. By default, all subnets in your cluster's VPC are selected. Only private subnets are supported for pods running on Fargate; you must deselect any public subnets. • For Tags, you can optionally tag your Fargate profile. These tags do not propagate to other resources associated with the profile, such as its pods.  5. On the Configure pods selection page, enter the following information and choose Next. • list text hereFor Namespace, enter a namespace to match for pods, such as kube-system or default. • Add Kubernetes labels to the selector that pods in the specified namespace must have to match the selector. For example, you could add the label infrastructure: fargate to the selector so that only pods in the specified namespace that also have the infrastructure: fargate Kubernetes label match the selector.  6. On the Review and create page, review the information for your Fargate profile and choose Create. Default Value: By default, AWS Fargate is not utilized. References: 1. https://docs.aws.amazon.com/eks/latest/userguide/fargate.html CIS Controls: Controls Version Control IG 1 IG 2 IG 3 v8 16.8 Separate Production and Non-Production Systems  Maintain separate environments for production and non-production systems.  ● ● v7 18.9 Separate Production and Non-Production Systems  Maintain separate environments for production and nonproduction systems. Developers should not have unmonitored access to production environments.  ● ●
+
+[/INST]
+
+*Prompt Type*
+chain-of-thought
+
+*LLM Output*
+```yaml
+kde_key:
+  - Readable KDE Name
+  - Requirements:
+    - req1
+    - req2
+```

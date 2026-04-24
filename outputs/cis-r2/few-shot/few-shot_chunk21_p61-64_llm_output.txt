@@ -1,0 +1,170 @@
+*LLM Name*
+google/gemma-3-1b-it
+
+*Prompt Used*
+[INST]
+Analyze the following security document and identify the key data elements (KDEs) and their corresponding requirements. For each KDE, provide a name and a list of requirements associated with it. Structure the output as a nested dictionary where each key is a KDE, and the value is another dictionary containing the 'name' of the KDE and a 'requirements' list.
+
+Return ONLY YAML matching this schema:
+
+kde_key:
+  name: "Readable KDE Name"
+  requirements:
+    - "req1"
+    - "req2"
+
+No code fences, no extra text.
+
+Here are some examples:
+
+Example 1:
+Document: "The system shall enforce password complexity. Passwords must be at least 8 characters long and contain a mix of uppercase, lowercase, and numeric characters."
+Output:
+password_complexity:
+  name: "Password Complexity"
+  requirements:
+    - "at least 8 characters long"
+    - "contain a mix of uppercase, lowercase, and numeric characters"
+
+Example 2:
+Document: "All sensitive data must be encrypted at rest using AES-256. Access to encrypted data should be logged."
+Output:
+data_encryption:
+  name: "Data Encryption"
+  requirements:
+    - "encrypted at rest using AES-256"
+access_logging:
+  name: "Access Logging"
+  requirements:
+    - "Access to encrypted data should be logged"
+
+Now, analyze the following document:
+
+Document:
+Page 60 
+Internal Only - General  3.2.9 Ensure that the RotateKubeletServerCertificate argument is 
+set to true (Automated)  
+Profile Applicability:  
+•  Level 1  
+Description:  
+Enable kubelet server certificate rotation.  
+Rationale:  
+RotateKubeletServerCertificate  causes the kubelet  to both request a serving 
+certificate after bootstrapping its client credentials and rotate the certificate as its 
+existing credentials expire. This automated periodic rotation ensures that the there are 
+no downtimes due to expired certificates and thus a ddressing availability in the CIA 
+(Confidentiality, Integrity, and Availability) security triad.  
+Note: This recommendation only applies if you let kubelets get their certificates from the 
+API server. In case your kubelet certificates come from an outside authority/tool (e.g. 
+Vault) then you need to implement rotation yourself.  
+Impact:  
+None  
+Audit:  
+Audit Method 1:  
+First, SSH to each node:  
+Run the following command on each node to find the Kubelet process:  
+ps -ef | grep kubelet  
+If the output of the command above includes the --rotate-kubelet-server-
+certificate  executable argument verify that it is set to true.  
+If the process does not have the --rotate-kubelet-server-certificate  executable 
+argument then check the Kubelet config file. The output of the above command should 
+return something similar to --config /etc/kubernetes/kubelet/kubelet -
+config.json  which is the location of the Kubelet config file.  
+Open the Kubelet config file:
+Page 61 
+Internal Only - General  cat /etc/kubernetes/kubelet/kubelet -config.json  
+Verify that RotateKubeletServerCertificate  argument exists in the featureGates  
+section and is set to true . 
+Audit Method 2:  
+If using the api configz endpoint consider searching for the status of 
+"RotateKubeletServerCertificate":true  by extracting the live configuration from 
+the nodes running kubelet.  
+Set the local proxy port and the following variables and provide proxy port number and 
+node name;  
+HOSTNAME_PORT="localhost -and-port-number"  
+NODE_NAME="The -Name-Of-Node-To-Extract-Configuration" from the output 
+of "kubectl get nodes"  
+kubectl proxy --port=8001 &  
+ 
+export HOSTNAME_PORT=localhost:8001 (example host and port number)  
+export NODE_NAME=ip -192.168.31.226.ec2.internal (example node name from 
+"kubectl get nodes")  
+ 
+curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy /configz"  
+Remediation:  
+Remediation Method 1:  
+If modifying the Kubelet config file, edit the kubelet -config.json file 
+/etc/kubernetes/kubelet/kubelet -config.json  and set the below parameter to 
+true 
+"featureGates": {  
+  "RotateKubeletServerCertificate":true  
+}, 
+Additionally, ensure that the kubelet service file 
+/etc/systemd/system/kubelet.service.d/10 -kubelet-args.conf  does not set 
+the --rotate-kubelet-server-certificate  executable argument to false because 
+this would override the Kubelet config file.  
+Remediation Method 2:  
+If using executable arguments, edit the kubelet service file 
+/etc/systemd/system/kubelet.service.d/10 -kubelet-args.conf  on each 
+worker node and add the below parameter at the end of the KUBELET_ARGS  variable 
+string.
+Page 62 
+Internal Only - General  --rotate-kubelet-server-certificate=true  
+Remediation Method 3:  
+If using the api configz endpoint consider searching for the status of 
+"RotateKubeletServerCertificate":  by extracting the live configuration from the 
+nodes running kubelet.  
+**See detailed step -by-step configmap procedures in Reconfigure a Node's Kubelet in a 
+Live Cluster , and then rerun the curl statement from audit process to check for kubelet 
+configuration changes  
+kubectl proxy --port=8001 &  
+ 
+export HOSTNAME_PORT=localhost:8001 (example host and port number)  
+export NODE_NAME=ip -192.168.31.226.ec2.internal (example node name from 
+"kubectl get nodes")  
+ 
+curl -sSL "http://${HOSTNAME_PORT}/api/v1/nodes/${NODE_NAME}/proxy /configz"  
+For all three remediation methods:  
+Restart the kubelet  service and check status. The example below is for when using 
+systemctl to manage services:  
+systemctl daemon -reload 
+systemctl restart kubelet.service  
+systemctl status kubelet -l 
+Default Value:  
+See the Amazon EKS documentation for the default value.  
+References:  
+1. https://github.com/kubernetes/kubernetes/pull/45059  
+2. https://kubernetes.io/docs/admin/kubelet -tls-bootstrapping/#kubelet -configuration  
+CIS Controls:  
+Controls 
+Version  Control  IG 1 IG 2 IG 3 
+v8 3.10 Encrypt Sensitive Data in Transit  
+ Encrypt sensitive data in transit. Example implementations can include: 
+Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).   ● ● 
+v7 14.4 Encrypt All Sensitive Information in Transit  
+ Encrypt all sensitive information in transit.   ● ●
+Page 63 
+Internal Only - General  4 Policies  
+This section contains recommendations for various Kubernetes policies which are 
+important to the security of Amazon EKS customer environment.
+
+[/INST]
+
+*Prompt Type*
+few-shot
+
+*LLM Output*
+```yaml
+kde_key:
+  - "Readable KDE Name"
+  - "RotateKubeletServerCertificate"
+  - "Data Encryption"
+  - "Access Logging"
+  - "FeatureGates"
+  - "Version Control"
+  - "IG 1 IG 2 IG 3"
+  - "Encrypt Sensitive Data in Transit"
+  - "Encrypt Sensitive Data in Transit"
+  - "TLS"
+  - "OpenSSH"
+```
